@@ -137,6 +137,7 @@
       var speed = ((height)/(boardSize+2))/25; // 1/4 square/frame?
       let xpos = window.innerWidth/4+window.innerWidth/40;
       let ypos = ((height)/(boardSize+2)*1.5);
+      var pointsArr = [xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
       var xd = 0;
       var yd = speed;
 
@@ -148,17 +149,26 @@
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           //await sleep(2);
           drawboard();
-          drawcircle(xpos,ypos,(height)/(boardSize*2.2));
+          let i = 0;
+          while (i <= pointsArr.length-1){
+            drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2));
+            i += 2;
+          }
           xpos += xd;
           ypos += yd;
           counter += 1;
           await sleep(2);
           //console.log('drew at '+xpos+' '+ypos);
+          pointsArr.push(xpos);
+          pointsArr.push(ypos);
+          pointsArr.shift();
+          pointsArr.shift();
         }
         //console.log('did whole thing');
         alert('You lost');
       })();
 
+      (async () => {
       window.addEventListener("keydown", function(event) {
 
         if (event.defaultPrevented) {
@@ -174,23 +184,65 @@
         if (actkey == 'ArrowLeft' || actkey == 'A'){
           xd = -speed;
           yd = 0;
+          let ct1 = ((height)/(boardSize+2)*1.5);
+          while (ct1 < ypos){
+            ct1 += (height)/(boardSize+2);
+          }
+          let ct2 = ct1 - (height)/(boardSize+2);
+
+          if (yd < 0){
+            ct1 = ct2;
+          }
+
+          ypos = ct1;
         }
         if (actkey == 'ArrowRight' || actkey == 'D'){
           xd = speed;
           yd = 0;
+          let ct1 = ((height)/(boardSize+2)*1.5);
+          while (ct1 < ypos){
+            ct1 += (height)/(boardSize+2);
+          }
+          let ct2 = ct1 - (height)/(boardSize+2);
+
+          if (Math.abs(ct1 - ypos) > Math.abs(ct2 - ypos)){
+            //ct1 = ct2;
+          }
+          ypos = ct1;
         }
         if (actkey == 'ArrowUp' || actkey == 'W'){
           xd = 0;
           yd = -speed;
+          let ct1 = window.innerWidth/4+window.innerWidth/40;
+          while (ct1 < xpos){
+            ct1 += (height)/(boardSize+2);
+          }
+          let ct2 = ct1 - (height)/(boardSize+2);
+
+          if (Math.abs(ct1 - xpos) > Math.abs(ct2 - xpos)){
+            //ct1 = ct2;
+          }
+          xpos = ct1;
         }
         if (actkey == 'ArrowDown' || actkey == 'S'){
           xd = 0;
           yd = speed;
+          let ct1 = window.innerWidth/4+window.innerWidth/40;
+          while (ct1 < xpos){
+            ct1 += (height)/(boardSize+2);
+          }
+          let ct2 = ct1 - (height)/(boardSize+2);
+
+          if (Math.abs(ct1 - xpos) > Math.abs(ct2 - xpos)){
+            //ct1 = ct2;
+          }
+          xpos = ct1;
         }
 
         //actkey is just the thing
 
         }, true);
+      })();
 
     </script>
 
