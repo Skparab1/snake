@@ -68,9 +68,11 @@
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       const bordercolor = 'rgb(0,100,0)'; //bordercolor
-      const snakecolor = 'rgb(0,0,150)'; //snakecolor
+      const snakecolor1 = 'rgb(0,0,100)'; //snakecolor1
+      const snakecolor2 = 'rgb(0,0,255)'; //snakecolor2
       const snakeheadcolor = 'rgb(200,100,0)'; //apple color
       const applecolor = 'rgb(150,0,0)'; //apple color
+      const seglength = 75; //snake segment length in pixels
       
       // dont do anythign below this
       const turningPrecision = true;
@@ -173,7 +175,11 @@
             if (i > (pointsArr.length-10)){
               drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakeheadcolor);
             } else {
-              drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor);
+              if (i % seglength*2 < seglength){
+                drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor1);
+              } else {
+                drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor2);
+              }
             }
             i += 2;
           }
