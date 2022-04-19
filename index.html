@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake game</title>
+    <style>
+          body {background-color: rgb(0, 0, 0);}
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      h1{
+        color:rgb(200, 200, 200);
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #555555;
+      }
+      li {
+        display: inline;
+        float: left;
+      }
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover {
+        background-color: #f78a41;
+      }
+
+      .center {
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li><a href="https://skparab1.github.io">Home</a></li>
+      <li><a href="https://skparab1.github.io/wordle/random">Wordle</a></li>
+      <li><a href="https://skparab1.github.io/snake">Snake</a></li>
+    </ul> 
+
+    <h1>Snake game</h1>
+
+    <canvas class="myCanvas">
+      <p>Rip ur browser doesnt support canvas :(( u shud switch to a better browser...</p>
+      <canvas id="the-canvas" width="320" height="240" style="position:relative; right:300px;"></canvas>
+    </canvas>
+
+    <script>
+
+      function drawline(x,y,x1,y1,clr){
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = clr;
+        ctx.moveTo(x,y);
+        ctx.lineTo(x1,y1)
+        ctx.stroke();
+      }
+
+      const canvas = document.querySelector('.myCanvas');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
+      const height = canvas.height = window.innerHeight-100;
+      canvas.style.left = "100px";
+      canvas.style.top = "100px";
+
+
+      ctx.strokeStyle = 'rgb(125,125,125)';
+      ctx.strokeRect(0, 0, width, height);
+      console.log('printeddd');
+
+      let x = 0;
+      let actx = 0;
+      let clrnow = 'rgb(0,150,0)';
+      while (x < 40){
+        let y = 0;
+        let acty = 0;
+        while (y < 40){
+          if (clrnow == 'rgb(0,150,0)'){
+            clrnow = 'rgb(0,190,0)';
+          } else {
+            clrnow = 'rgb(0,150,0)';
+          }
+          ctx.fillStyle = clrnow;
+          ctx.fillRect(actx, acty, height/40, height/40);
+          acty += (height)/40;
+          y += 1;
+          console.log('drew smth');
+          }
+        
+        if (clrnow == 'rgb(0,150,0)'){
+          clrnow = 'rgb(0,190,0)';
+        } else {
+          clrnow = 'rgb(0,150,0)';
+        }
+        actx += (height)/40;
+        x += 1;
+      }
+
+      window.addEventListener("keydown", function(event) {
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        const ctx = canvas.getContext('2d');
+        
+        let actkey = event.code.replace('Key','')
+        let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+
+        //actkey is just the thing
+
+        }, true);
+
+    </script>
+
+    <script type="text/javascript">
+
+      function getMousePosition(canvas, event) {
+          let rect = canvas.getBoundingClientRect();
+          let x = event.clientX - rect.left;
+          let y = event.clientY - rect.top;
+          console.log("Coordinate x: " + x, 
+                      "Coordinate y: " + y);
+          // these are clickables
+          if (x >= 110 && x <= 340 && y >= 180 && y <= 240){
+            //window.open('https://skparab1.github.io/login/auth=false&pwdchallenge=true&goto=skparab1.github.io&s&homepage',"_self")
+          }
+          if (x >= 388 && x <= 612 && y >= 180 && y <= 240){
+            //window.open('https://skparab1.github.io/search/&software=false&article=false',"_self")
+          }
+          // if (x >= 110 && x <= 340 && y >= 180 && y <= 240){
+          //   window.open('https://skparab1.github.io/login/auth=false&pwdchallenge=true&goto=skparab1.github.io&s&homepage',"_self")
+          // }
+      }
+
+      let canvasElem = document.querySelector("canvas");
+        
+      canvasElem.addEventListener("mousedown", function(e)
+      {
+          getMousePosition(canvasElem, e);
+      });
+    </script>
+    <h1 style="color:rgb(225, 252, 71);"></h1> Skparab1 Software</h1>
+    <h1 style="color:rgb(225, 252, 71);"></h1> hello</h1>
+    <h1 style="color:rgb(225, 252, 71);"> If you see this then you probably should reload so that the canvas auto resizes</h1>
+    <h1 style="color:rgb(225, 252, 71);"></h1> Skparab1 Software</h1>
+  </body>
+</html>
