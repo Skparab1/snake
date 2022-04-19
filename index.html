@@ -69,6 +69,8 @@
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       const bordercolor = 'rgb(0,100,0)'; //bordercolor
       const snakecolor = 'rgb(0,0,150)'; //snakecolor
+      const snakeheadcolor = 'rgb(200,100,0)'; //apple color
+      const applecolor = 'rgb(150,0,0)'; //apple color
       
       // dont do anythign below this
       const turningPrecision = true;
@@ -121,9 +123,16 @@
         bounderies = [window.innerWidth/4,0,(window.innerWidth/4+height*((boardSize-1)/boardSize)),height*(boardSize-1)/boardSize];
       }
 
-      function drawcircle(x,y,rad){
+      function drawcircle(x,y,rad,circlr){
         ctx.beginPath();
-        ctx.fillStyle = snakecolor;
+        ctx.fillStyle = circlr;
+        ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
+        ctx.fill(); 
+      }
+
+      function drawapple(x,y){
+        ctx.beginPath();
+        ctx.fillStyle = applecolor;
         ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
         ctx.fill(); 
       }
@@ -161,7 +170,11 @@
           drawboard();
           let i = 0;
           while (i <= pointsArr.length-1){
-            drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2));
+            if (i > (pointsArr.length-10)){
+              drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakeheadcolor);
+            } else {
+              drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor);
+            }
             i += 2;
           }
           xpos += xd;
