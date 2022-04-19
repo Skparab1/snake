@@ -64,6 +64,13 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
+      const speedfactor = 75; //about these many pixels per second (but not exactly)
+      const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
+      const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
+      const bordercolor = 'rgb(0,100,0)'; //bordercolor
+      const snakecolor = 'rgb(0,0,150)'; //snakecolor
+      
+      // dont do anythign below this
       const turningPrecision = true;
 
       function drawline(x,y,x1,y1,clr){
@@ -79,20 +86,20 @@
         ctx.beginPath();
         let x = 0;
         let actx = window.innerWidth/4;
-        let clrnow = 'rgb(0,150,0)';
+        let clrnow = pixelbackground1;
         while (x < boardSize+2){
           let y = 0;
           let acty = 0;
           while (y < boardSize+4){
-            if (clrnow == 'rgb(0,150,0)'){
-              clrnow = 'rgb(0,190,0)';
+            if (clrnow == pixelbackground1){
+              clrnow = pixelbackground2;
             } else {
-              clrnow = 'rgb(0,150,0)';
+              clrnow = pixelbackground1;
             }
             ctx.fillStyle = clrnow;
             if (x == 0 || x == boardSize+1 || y == 0 || y == boardSize+1){
               let reserve = clrnow;
-              ctx.fillStyle = 'rgb(0,100,0)';
+              ctx.fillStyle = bordercolor;
               ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2));
               clrnow = reserve;
             } else {
@@ -103,10 +110,10 @@
             //console.log('drew smth');
             }
           
-          if (clrnow == 'rgb(0,150,0)'){
-            clrnow = 'rgb(0,190,0)';
+          if (clrnow == pixelbackground1){
+            clrnow = pixelbackground2;
           } else {
-            clrnow = 'rgb(0,150,0)';
+            clrnow = pixelbackground1;
           }
           actx += (height)/(boardSize+2);
           x += 1;
@@ -116,7 +123,7 @@
 
       function drawcircle(x,y,rad){
         ctx.beginPath();
-        ctx.fillStyle = 'rgb(0,0,150)';
+        ctx.fillStyle = snakecolor;
         ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
         ctx.fill(); 
       }
@@ -129,18 +136,20 @@
       canvas.style.left = "100px";
       canvas.style.top = "100px";
 
-      ctx.strokeStyle = 'rgb(125,125,125)';
+      //canvas outline
+      //ctx.strokeStyle = 'rgb(125,125,125)';
       ctx.strokeRect(0, 0, width, height);
       //console.log('printeddd');
 
       drawboard();
 
-      var speed = ((height)/(boardSize+2))/25; // 1/4 square/frame?
+      var speed = ((height)/(boardSize+2))/(100-speedfactor); // 1/4 square/frame?
       let xpos = window.innerWidth/4+window.innerWidth/40;
       let ypos = ((height)/(boardSize+2)*1.5);
       var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
       var xd = 0;
       var yd = speed;
+      var waiter = '';
 
       const sleep = ms => new Promise(res => setTimeout(res, ms));
 
@@ -164,6 +173,37 @@
           pointsArr.push(ypos);
           pointsArr.shift();
           pointsArr.shift();
+
+          let ct3 = window.innerWidth/4+window.innerWidth/40;
+          while (ct3 < xpos + (height)/(boardSize+2) && xd != 0){
+            if (Math.abs(ct3-xpos) < 2){
+              if (waiter == 'up'){
+                xd = 0;
+                yd = -speed;
+              } else if (waiter == 'down'){
+                xd = 0;
+                yd = speed;
+              }
+              waiter = '';
+            }
+           ct3 += (height)/(boardSize+2);
+          }
+
+          ct3 = ((height)/(boardSize+2)*1.5);
+          while (ct3 < ypos + (height)/(boardSize+2) && yd != 0){
+            if (Math.abs(ct3-ypos) < 2){
+              if (waiter == 'right'){
+                xd = speed;
+                yd = 0;
+              } else if (waiter == 'left'){
+                xd = -speed;
+                yd = 0;
+              }
+              waiter = '';
+            }
+           ct3 += (height)/(boardSize+2);
+          }
+          //   ct1 += (height)/(boardSize+2);
         }
         //console.log('did whole thing');
         alert('You lost');
@@ -183,70 +223,24 @@
         console.log('pressed'+actkey);
 
         if (actkey == 'ArrowLeft' || actkey == 'A'){
-          xd = -speed;
-          yd = 0;
-          let ct1 = ((height)/(boardSize+2)*1.5);
-          while (ct1 < ypos){
-            ct1 += (height)/(boardSize+2);
-          }
-          let ct2 = ct1 - (height)/(boardSize+2);
-
-          // if (yd < 0){
-          //   ct1 = ct2;
-          // }
-
-          if (turningPrecision){
-            ypos = ct1;
-          }
+          waiter = 'left';
         }
         if (actkey == 'ArrowRight' || actkey == 'D'){
-          xd = speed;
-          yd = 0;
-          let ct1 = ((height)/(boardSize+2)*1.5);
-          while (ct1 < ypos){
-            ct1 += (height)/(boardSize+2);
-          }
-          let ct2 = ct1 - (height)/(boardSize+2);
-
-          if (Math.abs(ct1 - ypos) > Math.abs(ct2 - ypos)){
-            ct1 = ct2;
-          }
-          if (turningPrecision){
-            ypos = ct1;
-          }
+          // while (ct1 < ypos){
+          //   ct1 += (height)/(boardSize+2);
+          // }
+          waiter = 'right';
         }
         if (actkey == 'ArrowUp' || actkey == 'W'){
-          xd = 0;
-          yd = -speed;
-          let ct1 = window.innerWidth/4+window.innerWidth/40;
-          while (ct1 < xpos){
-            ct1 += (height)/(boardSize+2);
-          }
-          let ct2 = ct1 - (height)/(boardSize+2);
-
-          if (Math.abs(ct1 - xpos) > Math.abs(ct2 - xpos)){
-            ct1 = ct2;
-          }
-          if (turningPrecision){
-            xpos = ct1;
-          }
+          waiter = 'up';
         }
         if (actkey == 'ArrowDown' || actkey == 'S'){
-          xd = 0;
-          yd = speed;
-          let ct1 = window.innerWidth/4+window.innerWidth/40;
-          while (ct1 < xpos){
-            ct1 += (height)/(boardSize+2);
-          }
-          let ct2 = ct1 - (height)/(boardSize+2);
-
-          if (Math.abs(ct1 - xpos) > Math.abs(ct2 - xpos)){
-            ct1 = ct2;
-          }
-          if (turningPrecision){
-            xpos = ct1;
-          }
+          waiter = 'down';
         }
+
+        // i think i get how to do it
+        // just have a waiter variable thats set by this 
+        // and then chnage directsion when it gets to the ting and clear the waiter
 
         //actkey is just the thing
 
