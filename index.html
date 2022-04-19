@@ -84,20 +84,27 @@
       console.log('printeddd');
 
       let x = 0;
-      let actx = 0;
+      let actx = window.innerWidth/4;
       let clrnow = 'rgb(0,150,0)';
-      while (x < 40){
+      while (x < 20){
         let y = 0;
         let acty = 0;
-        while (y < 40){
+        while (y < 20){
           if (clrnow == 'rgb(0,150,0)'){
             clrnow = 'rgb(0,190,0)';
           } else {
             clrnow = 'rgb(0,150,0)';
           }
           ctx.fillStyle = clrnow;
-          ctx.fillRect(actx, acty, height/40, height/40);
-          acty += (height)/40;
+          if (x == 0 || x == 19 || y == 0 || y == 19){
+            let reserve = clrnow;
+            ctx.fillStyle = 'rgb(0,100,0)';
+            ctx.fillRect(actx, acty, height/20, height/20);
+            clrnow = reserve;
+          } else {
+            ctx.fillRect(actx, acty, height/20, height/20);
+          }
+          acty += (height)/20;
           y += 1;
           console.log('drew smth');
           }
@@ -107,7 +114,7 @@
         } else {
           clrnow = 'rgb(0,150,0)';
         }
-        actx += (height)/40;
+        actx += (height)/20;
         x += 1;
       }
 
