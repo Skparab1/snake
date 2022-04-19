@@ -64,6 +64,7 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
+      const turningPrecision = true;
 
       function drawline(x,y,x1,y1,clr){
         ctx.beginPath();
@@ -137,7 +138,7 @@
       var speed = ((height)/(boardSize+2))/25; // 1/4 square/frame?
       let xpos = window.innerWidth/4+window.innerWidth/40;
       let ypos = ((height)/(boardSize+2)*1.5);
-      var pointsArr = [xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
       var xd = 0;
       var yd = speed;
 
@@ -190,11 +191,13 @@
           }
           let ct2 = ct1 - (height)/(boardSize+2);
 
-          if (yd < 0){
-            ct1 = ct2;
-          }
+          // if (yd < 0){
+          //   ct1 = ct2;
+          // }
 
-          ypos = ct1;
+          if (turningPrecision){
+            ypos = ct1;
+          }
         }
         if (actkey == 'ArrowRight' || actkey == 'D'){
           xd = speed;
@@ -206,9 +209,11 @@
           let ct2 = ct1 - (height)/(boardSize+2);
 
           if (Math.abs(ct1 - ypos) > Math.abs(ct2 - ypos)){
-            //ct1 = ct2;
+            ct1 = ct2;
           }
-          ypos = ct1;
+          if (turningPrecision){
+            ypos = ct1;
+          }
         }
         if (actkey == 'ArrowUp' || actkey == 'W'){
           xd = 0;
@@ -220,9 +225,11 @@
           let ct2 = ct1 - (height)/(boardSize+2);
 
           if (Math.abs(ct1 - xpos) > Math.abs(ct2 - xpos)){
-            //ct1 = ct2;
+            ct1 = ct2;
           }
-          xpos = ct1;
+          if (turningPrecision){
+            xpos = ct1;
+          }
         }
         if (actkey == 'ArrowDown' || actkey == 'S'){
           xd = 0;
@@ -234,9 +241,11 @@
           let ct2 = ct1 - (height)/(boardSize+2);
 
           if (Math.abs(ct1 - xpos) > Math.abs(ct2 - xpos)){
-            //ct1 = ct2;
+            ct1 = ct2;
           }
-          xpos = ct1;
+          if (turningPrecision){
+            xpos = ct1;
+          }
         }
 
         //actkey is just the thing
