@@ -62,6 +62,9 @@
 
     <script>
 
+      // alr anindit here are the toggle constants
+      const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
+
       function drawline(x,y,x1,y1,clr){
         ctx.beginPath();
         ctx.lineWidth = 3;
@@ -72,46 +75,48 @@
       }
 
       function drawboard(){
+        ctx.beginPath();
         let x = 0;
-      let actx = window.innerWidth/4;
-      let clrnow = 'rgb(0,150,0)';
-      while (x < 20){
-        let y = 0;
-        let acty = 0;
-        while (y < 20){
+        let actx = window.innerWidth/4;
+        let clrnow = 'rgb(0,150,0)';
+        while (x < boardSize+2){
+          let y = 0;
+          let acty = 0;
+          while (y < boardSize+4){
+            if (clrnow == 'rgb(0,150,0)'){
+              clrnow = 'rgb(0,190,0)';
+            } else {
+              clrnow = 'rgb(0,150,0)';
+            }
+            ctx.fillStyle = clrnow;
+            if (x == 0 || x == boardSize+1 || y == 0 || y == boardSize+1){
+              let reserve = clrnow;
+              ctx.fillStyle = 'rgb(0,100,0)';
+              ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2));
+              clrnow = reserve;
+            } else {
+              ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2));
+            }
+            acty += (height)/(boardSize+2);
+            y += 1;
+            //console.log('drew smth');
+            }
+          
           if (clrnow == 'rgb(0,150,0)'){
             clrnow = 'rgb(0,190,0)';
           } else {
             clrnow = 'rgb(0,150,0)';
           }
-          ctx.fillStyle = clrnow;
-          if (x == 0 || x == 19 || y == 0 || y == 19){
-            let reserve = clrnow;
-            ctx.fillStyle = 'rgb(0,100,0)';
-            ctx.fillRect(actx, acty, height/20, height/20);
-            clrnow = reserve;
-          } else {
-            ctx.fillRect(actx, acty, height/20, height/20);
-          }
-          acty += (height)/20;
-          y += 1;
-          console.log('drew smth');
-          }
-        
-        if (clrnow == 'rgb(0,150,0)'){
-          clrnow = 'rgb(0,190,0)';
-        } else {
-          clrnow = 'rgb(0,150,0)';
+          actx += (height)/(boardSize+2);
+          x += 1;
         }
-        actx += (height)/20;
-        x += 1;
-      }
+        bounderies = [window.innerWidth/4,0,(window.innerWidth/4+height*((boardSize-1)/boardSize)),height*(boardSize-1)/boardSize];
       }
 
       function drawcircle(x,y,rad){
-        //ctx.beginPath();
+        ctx.beginPath();
         ctx.fillStyle = 'rgb(0,0,150)';
-        ctx.arc(x, y, rad, 0, 2 * Math.PI);
+        ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
         ctx.fill(); 
       }
 
@@ -119,36 +124,40 @@
       const ctx = canvas.getContext('2d');
       const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
       const height = canvas.height = window.innerHeight-100;
-      var xd = 1;
-      var yd = 2;
+      var bounderies = [0,0,0,0];
       canvas.style.left = "100px";
       canvas.style.top = "100px";
 
       ctx.strokeStyle = 'rgb(125,125,125)';
       ctx.strokeRect(0, 0, width, height);
-      console.log('printeddd');
+      //console.log('printeddd');
 
       drawboard();
 
+      var speed = ((height)/(boardSize+2))/25; // 1/4 square/frame?
       let xpos = window.innerWidth/4+window.innerWidth/40;
-      let ypos = window.innerHeight/15;
+      let ypos = ((height)/(boardSize+2)*1.5);
+      var xd = 0;
+      var yd = speed;
 
       const sleep = ms => new Promise(res => setTimeout(res, ms));
 
       (async () => {
         let counter = 0;
-        while (counter <= 300){
+        while (xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3]){
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           //await sleep(2);
           drawboard();
-          drawcircle(xpos,ypos,(height)/30);
+          drawcircle(xpos,ypos,(height)/(boardSize*2.2));
           xpos += xd;
           ypos += yd;
           counter += 1;
           await sleep(2);
-          console.log('drew at '+xpos+' '+ypos);
+          //console.log('drew at '+xpos+' '+ypos);
         }
-        })();
+        //console.log('did whole thing');
+        alert('You lost');
+      })();
 
       window.addEventListener("keydown", function(event) {
 
@@ -160,6 +169,24 @@
         
         let actkey = event.code.replace('Key','')
         let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+        console.log('pressed'+actkey);
+
+        if (actkey == 'ArrowLeft' || actkey == 'A'){
+          xd = -speed;
+          yd = 0;
+        }
+        if (actkey == 'ArrowRight' || actkey == 'D'){
+          xd = speed;
+          yd = 0;
+        }
+        if (actkey == 'ArrowUp' || actkey == 'W'){
+          xd = 0;
+          yd = -speed;
+        }
+        if (actkey == 'ArrowDown' || actkey == 'S'){
+          xd = 0;
+          yd = speed;
+        }
 
         //actkey is just the thing
 
