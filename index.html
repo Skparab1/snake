@@ -71,19 +71,8 @@
         ctx.stroke();
       }
 
-      const canvas = document.querySelector('.myCanvas');
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
-      const height = canvas.height = window.innerHeight-100;
-      canvas.style.left = "100px";
-      canvas.style.top = "100px";
-
-
-      ctx.strokeStyle = 'rgb(125,125,125)';
-      ctx.strokeRect(0, 0, width, height);
-      console.log('printeddd');
-
-      let x = 0;
+      function drawboard(){
+        let x = 0;
       let actx = window.innerWidth/4;
       let clrnow = 'rgb(0,150,0)';
       while (x < 20){
@@ -117,6 +106,49 @@
         actx += (height)/20;
         x += 1;
       }
+      }
+
+      function drawcircle(x,y,rad){
+        //ctx.beginPath();
+        ctx.fillStyle = 'rgb(0,0,150)';
+        ctx.arc(x, y, rad, 0, 2 * Math.PI);
+        ctx.fill(); 
+      }
+
+      const canvas = document.querySelector('.myCanvas');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
+      const height = canvas.height = window.innerHeight-100;
+      var xd = 1;
+      var yd = 2;
+      canvas.style.left = "100px";
+      canvas.style.top = "100px";
+
+      ctx.strokeStyle = 'rgb(125,125,125)';
+      ctx.strokeRect(0, 0, width, height);
+      console.log('printeddd');
+
+      drawboard();
+
+      let xpos = window.innerWidth/4+window.innerWidth/40;
+      let ypos = window.innerHeight/15;
+
+      const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+      (async () => {
+        let counter = 0;
+        while (counter <= 300){
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          //await sleep(2);
+          drawboard();
+          drawcircle(xpos,ypos,(height)/30);
+          xpos += xd;
+          ypos += yd;
+          counter += 1;
+          await sleep(2);
+          console.log('drew at '+xpos+' '+ypos);
+        }
+        })();
 
       window.addEventListener("keydown", function(event) {
 
