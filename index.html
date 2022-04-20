@@ -160,11 +160,11 @@
       drawboard();
 
       var speed = ((height)/(boardSize+2))/(100-speedfactor); // 1/4 square/frame?
-      let xpos = window.innerWidth/4+window.innerWidth/40;
-      let ypos = ((height)/(boardSize+2)*1.5);
+      let xpos = window.innerWidth/4+window.innerWidth/40+(height)/(boardSize+2)*0;
+      let ypos = ((height)/(boardSize+2)*1.5)+(height)/(boardSize+2)*(boardSize/2);
       var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-      var xd = 0;
-      var yd = speed;
+      var xd = speed;
+      var yd = 0;
       var waiter = '';
       var applepos = [Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
