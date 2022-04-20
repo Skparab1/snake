@@ -164,6 +164,7 @@
       var speed = ((height)/(boardSize+2))/(100-speedfactor); // 1/4 square/frame?
       let xpos = window.innerWidth/4+window.innerWidth/40+(height)/(boardSize+2)*2;
       let ypos = ((height)/(boardSize+2)*1.5)+(height)/(boardSize+2)*(boardSize/2);
+      let startingpos = [xpos,ypos];
       var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
       var xd = 0;
       var yd = 0;
@@ -180,7 +181,7 @@
         let counter = 0;
         while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3]) || waiter != '' || waiter2 != ''){
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          speed = ((height)/(boardSize+2))/(100-speedfactor);
+          speed = speed * 1.0001;
           //await sleep(2);
           drawboard();
           let i = 0;
@@ -194,6 +195,19 @@
                 drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor2);
               }
             }
+
+            let j = 0;
+            if (j <= pointsArr.length-1 && false){
+              if (pointsArr[i] == pointsArr[j] && pointsArr[i+1] == pointsArr[j+1] && i != j && pointsArr[j] != 0 && pointsArr[j+1] != 0 && pointsArr[j] != xpos && pointsArr[j] != ypos){
+                // let z4 = document.getElementById('display');
+                // z4.textContent = 'YOU HIT YOURSELF!';
+                console.log('hit urself');
+                //console.log(i,j);
+                //console.log(pointsArr[i],pointsArr[j]);
+              }
+              j += 1;
+            }
+
             i += 2;
           }
           drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
@@ -224,7 +238,7 @@
             while (z <= addlength){
               pointsArr.push(-100);
               pointsArr.push(-100);
-              z += 1;
+              z += 50;
             }
           }
 
@@ -276,6 +290,8 @@
           //   ct1 += (height)/(boardSize+2);
         }
         //console.log('did whole thing');
+        let z3 = document.getElementById('display');
+        z3.textContent = 'Game over! reload to play again';
         alert('You lost');
       })();
 
