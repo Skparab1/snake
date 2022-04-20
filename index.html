@@ -55,10 +55,13 @@
 
     <h1>Snake game</h1>
 
+    <!div class="center" style="width: 100%">
+    <div style="float: left">
     <canvas class="myCanvas">
       <p>Rip ur browser doesnt support canvas :(( u shud switch to a better browser...</p>
       <canvas id="the-canvas" width="320" height="240" style="position:relative; right:300px;"></canvas>
     </canvas>
+    </div>
 
     <script>
 
@@ -73,6 +76,7 @@
       const snakeheadcolor = 'rgb(200,100,0)'; //apple color
       const applecolor = 'rgb(150,0,0)'; //apple color
       const seglength = 75; //snake segment length in pixels
+      const addlength = 100; //increase snake length by these many pixels when it eats an apple
       
       // dont do anythign below this
       const turningPrecision = true;
@@ -122,7 +126,7 @@
           actx += (height)/(boardSize+2);
           x += 1;
         }
-        bounderies = [window.innerWidth/4,0,(window.innerWidth/4+height*((boardSize-1)/boardSize)),height*(boardSize-1)/boardSize];
+        bounderies = [window.innerWidth/4+(height)/(boardSize+2)*1.5,(height)/(boardSize+2)*1.5,(window.innerWidth/4+height*((boardSize-1)/boardSize))-(height)/(boardSize+2)/2.5,height*(boardSize-1)/boardSize-(height)/(boardSize+2)/2];
       }
 
       function drawcircle(x,y,rad,circlr){
@@ -132,7 +136,7 @@
         ctx.fill(); 
       }
 
-      function drawapple(x,y){
+      function drawapple(x,y,rad){
         ctx.beginPath();
         ctx.fillStyle = applecolor;
         ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
@@ -144,6 +148,7 @@
       const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
       const height = canvas.height = window.innerHeight-100;
       var bounderies = [0,0,0,0];
+      var score = 0;
       canvas.style.left = "100px";
       canvas.style.top = "100px";
 
@@ -161,6 +166,9 @@
       var xd = 0;
       var yd = speed;
       var waiter = '';
+      var applepos = [Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+
+      console.log(applepos);
 
       const sleep = ms => new Promise(res => setTimeout(res, ms));
 
@@ -183,6 +191,7 @@
             }
             i += 2;
           }
+          drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
           xpos += xd;
           ypos += yd;
           counter += 1;
@@ -192,6 +201,25 @@
           pointsArr.push(ypos);
           pointsArr.shift();
           pointsArr.shift();
+
+          if (Math.abs(xpos-applepos[0]) < 2 && Math.abs(ypos-applepos[1]) < 2){
+            //basically you got it
+            //relocate apple
+            applepos = [Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+
+            //update score
+            score += 1;
+            var z1 = document.getElementById('score');
+            z1.textContent = 'Score: '+score;
+
+            //update length
+            let z = 0;
+            while (z <= addlength){
+              pointsArr.push(-100);
+              pointsArr.push(-100);
+              z += 1;
+            }
+          }
 
           let ct3 = window.innerWidth/4+window.innerWidth/40;
           while (ct3 < xpos + (height)/(boardSize+2) && xd != 0){
@@ -267,37 +295,10 @@
       })();
 
     </script>
-
-    <script type="text/javascript">
-
-      function getMousePosition(canvas, event) {
-          let rect = canvas.getBoundingClientRect();
-          let x = event.clientX - rect.left;
-          let y = event.clientY - rect.top;
-          console.log("Coordinate x: " + x, 
-                      "Coordinate y: " + y);
-          // these are clickables
-          if (x >= 110 && x <= 340 && y >= 180 && y <= 240){
-            //window.open('https://skparab1.github.io/login/auth=false&pwdchallenge=true&goto=skparab1.github.io&s&homepage',"_self")
-          }
-          if (x >= 388 && x <= 612 && y >= 180 && y <= 240){
-            //window.open('https://skparab1.github.io/search/&software=false&article=false',"_self")
-          }
-          // if (x >= 110 && x <= 340 && y >= 180 && y <= 240){
-          //   window.open('https://skparab1.github.io/login/auth=false&pwdchallenge=true&goto=skparab1.github.io&s&homepage',"_self")
-          // }
-      }
-
-      let canvasElem = document.querySelector("canvas");
-        
-      canvasElem.addEventListener("mousedown", function(e)
-      {
-          getMousePosition(canvasElem, e);
-      });
-    </script>
-    <h1 style="color:rgb(225, 252, 71);"></h1> Skparab1 Software</h1>
-    <h1 style="color:rgb(225, 252, 71);"></h1> hello</h1>
-    <h1 style="color:rgb(225, 252, 71);"> If you see this then you probably should reload so that the canvas auto resizes</h1>
-    <h1 style="color:rgb(225, 252, 71);"></h1> Skparab1 Software</h1>
+    </div style="float: left">
+      <h1 id="score">Score: 0</h1>
+    </div>
+    <!/div>
+    <h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the wholw height of the screen, then reload.</h1>
   </body>
 </html>
