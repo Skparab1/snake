@@ -166,7 +166,7 @@
       var xd = speed;
       var yd = 0;
       var waiter = '';
-      var applepos = [Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+      var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
       console.log(applepos);
 
@@ -205,7 +205,7 @@
           if (Math.abs(xpos-applepos[0]) < 2 && Math.abs(ypos-applepos[1]) < 2){
             //basically you got it
             //relocate apple
-            applepos = [Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*boardSize)*(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+            applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
             //update score
             score += 1;
@@ -299,6 +299,6 @@
       <h1 id="score">Score: 0</h1>
     </div>
     <!/div>
-    <h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the wholw height of the screen, then reload.</h1>
+    <h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the whole height of the screen, then reload.</h1>
   </body>
 </html>
