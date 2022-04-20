@@ -77,6 +77,7 @@
       const applecolor = 'rgb(150,0,0)'; //apple color
       const seglength = 75; //snake segment length in pixels
       const addlength = 100; //increase snake length by these many pixels when it eats an apple
+      const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
       
       // dont do anythign below this
       const turningPrecision = true;
@@ -126,7 +127,8 @@
           actx += (height)/(boardSize+2);
           x += 1;
         }
-        bounderies = [window.innerWidth/4+(height)/(boardSize+2)*1.5,(height)/(boardSize+2)*1.5,(window.innerWidth/4+height*((boardSize-1)/boardSize))-(height)/(boardSize+2)/2.5,height*(boardSize-1)/boardSize-(height)/(boardSize+2)/2];
+        let leniance = ((height)/(boardSize+2))*borderleniance;
+        bounderies = [window.innerWidth/4+(height)/(boardSize+2)*1.5-leniance,(height)/(boardSize+2)*1.5-leniance,(window.innerWidth/4+height*((boardSize-1)/boardSize))-(height)/(boardSize+2)/2.5+leniance,height*(boardSize-1)/boardSize-(height)/(boardSize+2)/2+leniance];
       }
 
       function drawcircle(x,y,rad,circlr){
@@ -166,6 +168,7 @@
       var xd = speed;
       var yd = 0;
       var waiter = '';
+      var waiter2 = '';
       var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
       console.log(applepos);
@@ -174,7 +177,7 @@
 
       (async () => {
         let counter = 0;
-        while (xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3]){
+        while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3]) || waiter != '' || waiter2 != ''){
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           //await sleep(2);
           drawboard();
@@ -232,6 +235,14 @@
                 yd = speed;
               }
               waiter = '';
+              if (waiter2 == 'up'){
+                xd = 0;
+                yd = -speed;
+              } else if (waiter2 == 'down'){
+                xd = 0;
+                yd = speed;
+              }
+              waiter2 = '';
             }
            ct3 += (height)/(boardSize+2);
           }
@@ -247,6 +258,14 @@
                 yd = 0;
               }
               waiter = '';
+              if (waiter2 == 'right'){
+                xd = speed;
+                yd = 0;
+              } else if (waiter2 == 'left'){
+                xd = -speed;
+                yd = 0;
+              }
+              waiter2 = '';
             }
            ct3 += (height)/(boardSize+2);
           }
@@ -269,20 +288,32 @@
         let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
         console.log('pressed'+actkey);
 
-        if (actkey == 'ArrowLeft' || actkey == 'A'){
-          waiter = 'left';
-        }
-        if (actkey == 'ArrowRight' || actkey == 'D'){
-          // while (ct1 < ypos){
-          //   ct1 += (height)/(boardSize+2);
-          // }
-          waiter = 'right';
-        }
-        if (actkey == 'ArrowUp' || actkey == 'W'){
-          waiter = 'up';
-        }
-        if (actkey == 'ArrowDown' || actkey == 'S'){
-          waiter = 'down';
+        if (waiter == ''){
+          if (actkey == 'ArrowLeft' || actkey == 'A'){
+            waiter = 'left';
+          }
+          if (actkey == 'ArrowRight' || actkey == 'D'){
+            waiter = 'right';
+          }
+          if (actkey == 'ArrowUp' || actkey == 'W'){
+            waiter = 'up';
+          }
+          if (actkey == 'ArrowDown' || actkey == 'S'){
+            waiter = 'down';
+          }
+        } else {
+          if (actkey == 'ArrowLeft' || actkey == 'A'){
+            waiter2 = 'left';
+          }
+          if (actkey == 'ArrowRight' || actkey == 'D'){
+            waiter2 = 'right';
+          }
+          if (actkey == 'ArrowUp' || actkey == 'W'){
+            waiter2 = 'up';
+          }
+          if (actkey == 'ArrowDown' || actkey == 'S'){
+            waiter2 = 'down';
+          }
         }
 
         // i think i get how to do it
