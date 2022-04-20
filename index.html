@@ -76,9 +76,10 @@
       const snakeheadcolor = 'rgb(200,100,0)'; //apple color
       const applecolor = 'rgb(150,0,0)'; //apple color
       const seglength = 75; //snake segment length in pixels
-      const addlength = 100; //increase snake length by these many pixels when it eats an apple
+      const addlength = 75; //increase snake length by these many pixels when it eats an apple
       const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
-      
+      const rendertime = 10 // render every 10 snake circles
+
       // dont do anythign below this
       const turningPrecision = true;
 
@@ -235,10 +236,10 @@
 
             //update length
             let z = 0;
-            while (z <= addlength){
+            while (z < addlength){
               pointsArr.push(-100);
               pointsArr.push(-100);
-              z += 50;
+              z += 1;
             }
           }
 
