@@ -79,6 +79,13 @@
       const addlength = 75; //increase snake length by these many pixels when it eats an apple
       const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
       const rendertime = 10 // render every 10 snake circles
+      var autopilot; // this is for fun but it turns on with the url parameter query
+
+      if (window.location.href.includes('?autopilot=true')){
+        autopilot = true;
+      } else {
+        autopilot = false;
+      }
 
       // dont do anythign below this
       const turningPrecision = true;
@@ -187,7 +194,7 @@
           drawboard();
           let i = 0;
           while (i <= pointsArr.length-1){
-            if (i > (pointsArr.length-10)){
+            if (i > (pointsArr.length-15)){
               drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakeheadcolor);
             } else {
               if (i % seglength*2 < seglength){
@@ -211,6 +218,7 @@
 
             i += 2;
           }
+
           drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
           xpos += xd;
           ypos += yd;
@@ -289,6 +297,75 @@
            ct3 += (height)/(boardSize+2);
           }
           //   ct1 += (height)/(boardSize+2);
+
+          if (autopilot){
+            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 1){ // x coord is same and itsa not vertically moving
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+              console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
+            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 2){ // y coord is same
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+              console.log(pointsArr[pointsArr.length-1], applepos[1]);
+            }
+          }
+
+          if (autopilot){
+            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 7){ // x coord is same and itsa not vertically moving
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+              console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
+            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 7){ // y coord is same
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+              console.log(pointsArr[pointsArr.length-1], applepos[1]);
+            }
+
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 25 && yd == 0){ // close to left boundery
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+              console.log('got triggered1');
+            }
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 25 && xd == 0){
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+              console.log('got triggered');
+            }
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 25 && yd == 0){
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+            }
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[3]) <= 25 && xd == 0){
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+            }
+
+          }
+
         }
         //console.log('did whole thing');
         let z3 = document.getElementById('display');
