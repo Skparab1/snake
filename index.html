@@ -180,6 +180,11 @@
       var waiter2 = '';
       var startwaiter = false;
       var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+      var scalefactor = window.innerWidth/2048;
+      var initxpos = xpos;
+      var initypos = ypos;
+      var breaker = false;
+      var eatwaiter = 0;
 
       console.log(applepos);
 
@@ -235,6 +240,9 @@
             //relocate apple
             applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
+            //ignore overlap for some time
+            eatwaiter = 100;
+
             //update score
             score += 1;
             var z1 = document.getElementById('score');
@@ -250,6 +258,8 @@
               z += 1;
             }
           }
+
+          eatwaiter -= 1;
 
           let ct3 = window.innerWidth/4+window.innerWidth/40;
           while (ct3 < xpos + (height)/(boardSize+2) && xd != 0){
@@ -298,15 +308,34 @@
           }
           //   ct1 += (height)/(boardSize+2);
 
+          // overlap experiment below
+          let overlapgetter = 0;
+          while (overlapgetter < pointsArr.length){
+            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/2 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75 && eatwaiter < 0){
+              //overlapped
+              console.log(pointsArr.length-2,overlapgetter);
+              console.log('overlapped');
+              alert('you lost');
+              break;
+              breaker = true;
+            }
+            overlapgetter += 2;
+          }
+
+          if (breaker){
+            break;
+          }
+
+          // autopilot stuff below
           if (autopilot){
-            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 1){ // x coord is same and itsa not vertically moving
+            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 2*scalefactor){ // x coord is same and itsa not vertically moving
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
                 waiter = 'up';
               } else {
                 waiter = 'down';
               }
               console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
-            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 2){ // y coord is same
+            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 2*scalefactor){ // y coord is same
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
@@ -317,14 +346,14 @@
           }
 
           if (autopilot){
-            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 7){ // x coord is same and itsa not vertically moving
+            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 7*scalefactor){ // x coord is same and itsa not vertically moving
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
                 waiter = 'up';
               } else {
                 waiter = 'down';
               }
               console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
-            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 7){ // y coord is same
+            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 7*scalefactor){ // y coord is same
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
@@ -333,7 +362,7 @@
               console.log(pointsArr[pointsArr.length-1], applepos[1]);
             }
 
-            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 25 && yd == 0){ // close to left boundery
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 25*scalefactor && yd == 0){ // close to left boundery
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
                 waiter = 'up';
               } else {
@@ -341,7 +370,7 @@
               }
               console.log('got triggered1');
             }
-            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 25 && xd == 0){
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 25*scalefactor && xd == 0){
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
@@ -349,14 +378,14 @@
               }
               console.log('got triggered');
             }
-            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 25 && yd == 0){
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 25*scalefactor && yd == 0){
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
                 waiter = 'up';
               } else {
                 waiter = 'down';
               }
             }
-            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[3]) <= 25 && xd == 0){
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[3]) <= 25*scalefactor && xd == 0){
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
@@ -365,7 +394,11 @@
             }
 
           }
-
+          console.log('end of biggest loop');
+          if (breaker){
+            break;
+            breaker = false;
+          }
         }
         //console.log('did whole thing');
         let z3 = document.getElementById('display');
@@ -419,6 +452,9 @@
           if (actkey == 'ArrowDown' || actkey == 'S'){
             waiter2 = 'down';
           }
+
+          let g = document.getElementById('ap notif');
+          g.textcontent = 'Autopilot: On';
         }
 
         // i think i get how to do it
@@ -433,9 +469,10 @@
     </script>
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
-      <h1 id="display">Press any key to start</h1>
+      <h1 id="display">Press any key to start</h1><br>
+      <h1 id="ap notif">Autopilot: Off</h1>
     </div>
     <!/div>
     <h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the whole height of the screen, then reload.</h1>
-  </body>
+   </body>
 </html>
