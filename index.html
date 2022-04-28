@@ -67,7 +67,7 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
-      const speedfactor = 85; //about these many pixels per second (but not exactly)
+      const speedfactor = 188; //about 200-these many pixels per second (but not exactly)
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       const bordercolor = 'rgb(0,100,0)'; //bordercolor
@@ -169,7 +169,7 @@
 
       drawboard();
 
-      var speed = ((height)/(boardSize+2))/(100-speedfactor); // 1/4 square/frame?
+      var speed = ((height)/(boardSize+2))/(200-speedfactor); // 1/4 square/frame?
       let xpos = window.innerWidth/4+window.innerWidth/40+(height)/(boardSize+2)*2;
       let ypos = ((height)/(boardSize+2)*1.5)+(height)/(boardSize+2)*(boardSize/2);
       let startingpos = [xpos,ypos];
@@ -185,6 +185,7 @@
       var initypos = ypos;
       var breaker = false;
       var eatwaiter = 0;
+      var lastapple = [0,0];
 
       console.log(applepos);
 
@@ -192,7 +193,7 @@
 
       (async () => {
         let counter = 0;
-        while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3]) || waiter != '' || waiter2 != ''){
+        while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3])){ // took out waiters  || waiter != '' || waiter2 != ''
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           speed = speed * 1.0001;
           //await sleep(2);
@@ -209,17 +210,18 @@
               }
             }
 
-            let j = 0;
-            if (j <= pointsArr.length-1 && false){
-              if (pointsArr[i] == pointsArr[j] && pointsArr[i+1] == pointsArr[j+1] && i != j && pointsArr[j] != 0 && pointsArr[j+1] != 0 && pointsArr[j] != xpos && pointsArr[j] != ypos){
-                // let z4 = document.getElementById('display');
-                // z4.textContent = 'YOU HIT YOURSELF!';
-                console.log('hit urself');
-                //console.log(i,j);
-                //console.log(pointsArr[i],pointsArr[j]);
-              }
-              j += 1;
-            }
+            //old overlapper
+            // let j = 0;
+            // if (j <= pointsArr.length-1 && false){
+            //   if (pointsArr[i] == pointsArr[j] && pointsArr[i+1] == pointsArr[j+1] && i != j && pointsArr[j] != 0 && pointsArr[j+1] != 0 && pointsArr[j] != xpos && pointsArr[j] != ypos){
+            //     // let z4 = document.getElementById('display');
+            //     // z4.textContent = 'YOU HIT YOURSELF!';
+            //     console.log('hit urself');
+            //     //console.log(i,j);
+            //     //console.log(pointsArr[i],pointsArr[j]);
+            //   }
+            //   j += 1;
+            // }
 
             i += 2;
           }
@@ -237,6 +239,9 @@
 
           if (Math.abs(xpos-applepos[0]) < 2 && Math.abs(ypos-applepos[1]) < 2){
             //basically you got it
+            // set lastapple
+            lastapple = applepos;
+
             //relocate apple
             applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
@@ -253,8 +258,8 @@
             //update length
             let z = 0;
             while (z < addlength){
-              pointsArr.push(-100);
-              pointsArr.push(-100);
+              pointsArr.push(0);
+              pointsArr.push(0);
               z += 1;
             }
           }
@@ -311,13 +316,16 @@
           // overlap experiment below
           let overlapgetter = 0;
           while (overlapgetter < pointsArr.length){
-            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/2 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75 && eatwaiter < 0){
+            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/2 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
               //overlapped
-              console.log(pointsArr.length-2,overlapgetter);
-              console.log('overlapped');
-              alert('you lost');
-              break;
-              breaker = true;
+              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/2 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/2)){
+                // checked to make sure wasnt last apple pos
+                console.log(pointsArr.length-2,overlapgetter);
+                console.log('overlapped');
+                alert('you lost');
+                break;
+                breaker = true;
+              }
             }
             overlapgetter += 2;
           }
