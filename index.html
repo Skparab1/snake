@@ -496,7 +496,7 @@
 
           let endgame = 0;
           while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
-            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame)
+            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]-(height)/(boardSize+2), bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame+(height)/(boardSize+2))
             ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
             endgame += 4;
             await sleep(endcurtainspeed);
