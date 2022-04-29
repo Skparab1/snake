@@ -44,6 +44,40 @@
         padding: 10px;
       }
 
+      .game-key{
+        background-color: black;
+        border: 2px solid white; 
+        color: white; 
+        height: 50px; 
+        padding: 10px 5px; 
+        text-align: center; 
+        width: 5%; 
+        display: inline-block; 
+        font-size: 14px; 
+        transition: all 0.2s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom:0.5;
+      }
+
+      .game-key:hover{
+        background-color: white;
+        border: 2px solid black; 
+        color: black; 
+        transition: all 0.1s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom: 0.5;
+      }
+      
+      .blank-key{
+        background-color: black;
+        border: 2px solid black; 
+        height: 50px; 
+        padding: 10px 5px; 
+        text-align: center; 
+        width: 5%; 
+        display: inline-block; 
+      }
+
     </style>
   </head>
   <body>
@@ -246,7 +280,7 @@
             applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
 
             //ignore overlap for some time
-            eatwaiter = 100;
+            eatwaiter = 7;
 
             //update score
             score += 1;
@@ -322,9 +356,9 @@
                 // checked to make sure wasnt last apple pos
                 console.log(pointsArr.length-2,overlapgetter);
                 console.log('overlapped');
-                alert('you lost');
-                break;
+                //alert('you lost');
                 breaker = true;
+                break;
               }
             }
             overlapgetter += 2;
@@ -402,7 +436,7 @@
             }
 
           }
-          console.log('end of biggest loop');
+          console.log('end of biggest loop ', breaker);
           if (breaker){
             break;
             breaker = false;
@@ -412,6 +446,19 @@
         let z3 = document.getElementById('display');
         z3.textContent = 'Game over! reload to play again';
         alert('You lost');
+
+        // game over animation
+        ctx.beginPath;
+        ctx.fillStyle = 'rgb(0,200,0)';
+
+        (async () => {
+          let endgame = 0;
+          while (endgame <= 100){
+            ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2))
+            endgame += 1;
+          }
+        })();
+  
       })();
 
       (async () => {
@@ -481,6 +528,29 @@
       <h1 id="ap notif">Autopilot: Off</h1>
     </div>
     <!/div>
-    <h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the whole height of the screen, then reload.</h1>
-   </body>
+    <!h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the whole height of the screen, then reload.</h1>
+    <h1 style="color:white"> Game controls</h1>
+    <button class="blank-key"></button>
+    <button class="game-key" onclick="up();">↑</button>
+    <button class="blank-key"></button>
+    <br>
+    <button class="game-key" onclick="left();">←</button>
+    <button class="game-key" onclick="down();">↓</button>
+    <button class="game-key" onclick="right();">→</button>
+
+    <script>
+      function left(){
+        waiter = 'left';
+      }
+      function up(){
+        waiter = 'up';
+      }
+      function down(){
+        waiter = 'down';
+      }
+      function right(){
+        waiter = 'right';
+      }
+    </script>
+  </body>
 </html>
