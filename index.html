@@ -78,6 +78,29 @@
         display: inline-block; 
       }
 
+      .endgame-key{
+        background-color: black;
+        border: 2px solid white; 
+        color: white; 
+        height: 50px; 
+        text-align: center; 
+        width: 100%; 
+        display: inline-block; 
+        font-size: 14px; 
+        transition: all 0.2s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom: 50px;
+      }
+
+      .endgame-key:hover{
+        background-color: white;
+        border: 2px solid black; 
+        color: black; 
+        transition: all 0.1s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom: 0.5;
+      }
+
     </style>
   </head>
   <body>
@@ -108,11 +131,17 @@
       const snakecolor1 = 'rgb(0,0,100)'; //snakecolor1
       const snakecolor2 = 'rgb(0,0,255)'; //snakecolor2
       const snakeheadcolor = 'rgb(200,100,0)'; //apple color
+      // arrays for the same things above for logistical things
+      var snakecolor1ARR = [0,100,0]; //snakecolor1
+      var snakecolor2ARR = [0,0,255]; //snakecolor2
+      var snakeheadcolorARR = [200,100,0];; //apple color
+
       const applecolor = 'rgb(150,0,0)'; //apple color
       const seglength = 75; //snake segment length in pixels
       const addlength = 75; //increase snake length by these many pixels when it eats an apple
       const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
       const rendertime = 10 // render every 10 snake circles
+      const endcurtainspeed = 0.25 // seconds wait in between frames of each pixel expansion (for game over animation)
       var autopilot; // this is for fun but it turns on with the url parameter query
 
       if (window.location.href.includes('?autopilot=true')){
@@ -445,17 +474,57 @@
         //console.log('did whole thing');
         let z3 = document.getElementById('display');
         z3.textContent = 'Game over! reload to play again';
-        alert('You lost');
+        //alert('You lost');
+
+        //set up buttons for endgame
+
+        let displaydiv = document.getElementById('endgame-display');
+        displaydiv.style.left = bounderies[0]+(1/10*(bounderies[2]-bounderies[0]))+"px";
+        displaydiv.style.top = bounderies[1]+(1/5*(bounderies[3]-bounderies[1]))+"px";
+        displaydiv.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
+        displaydiv.style.width = bounderies[0]+(1/25*(bounderies[2]-bounderies[0]))+"px";
+        //displaydiv.style.margin-bottom = 50*scalefactor+"px";
 
         // game over animation
         ctx.beginPath;
-        ctx.fillStyle = 'rgb(0,200,0)';
 
         (async () => {
+      
+          await(2000);
+          ctx.beginPath;
+          ctx.fillStyle = bordercolor;
+
           let endgame = 0;
-          while (endgame <= 100){
-            ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2))
-            endgame += 1;
+          while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
+            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame)
+            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
+            endgame += 4;
+            await sleep(endcurtainspeed);
+          }
+          endgame = 0;
+          while (endgame <= bounderies[3]-(height)/(boardSize+2)){
+            drawboard();
+            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), bounderies[3]-endgame)
+            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -(bounderies[3]-endgame))
+            endgame += 10;
+            await sleep(endcurtainspeed);
+          }
+          displaydiv.style.display = "inline-block";
+          endgame = 0;
+          ctx.strokeStyle = 'rgb(0,0,0)';
+          ctx.font = 64*scalefactor+"px Arial";
+          ctx.lineWidth = '10px';
+          while (endgame <= bounderies[3]/2+(height)/(boardSize+2)/2){
+            drawboard();
+            ctx.fillStyle = pixelbackground2;
+            //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
+            ctx.fillStyle = 'rgb(0,0,0)';
+            ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4, bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
+            ctx.fillStyle = bordercolor;
+            ctx.fillRect(bounderies[0], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])/2-endgame, (height)/(boardSize+2)*2);
+            ctx.fillRect(bounderies[2], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),-((bounderies[2]-bounderies[0])/2-endgame), (height)/(boardSize+2)*2);
+            endgame += 10;
+            await sleep(endcurtainspeed);
           }
         })();
   
@@ -522,6 +591,12 @@
       })();
 
     </script>
+    <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
+      <button class="endgame-key">Play again</button>
+      <br>
+      <button class="endgame-key">Leaderboard</button>
+    </div>
+
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
       <h1 id="display">Press any key to start</h1><br>
