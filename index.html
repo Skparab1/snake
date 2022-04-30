@@ -72,21 +72,20 @@
         background-color: black;
         border: 2px solid black; 
         height: 50px; 
-        padding: 10px 5px; 
         text-align: center; 
         width: 5%; 
         display: inline-block; 
       }
 
       .endgame-key{
-        background-color: black;
-        border: 2px solid white; 
-        color: white; 
+        background-color: rgb(0,100,0);
+        border: 2px solid rgb(0,100,0); 
+        color: rgb(0,200,0); 
         height: 50px; 
         text-align: center; 
         width: 100%; 
         display: inline-block; 
-        font-size: 14px; 
+        font-size: 64px; 
         transition: all 0.2s ease-in-out; 
         cursor: pointer; 
         margin-bottom: 50px;
@@ -235,12 +234,13 @@
                   }
                   let reserve = clrnow;
                   ctx.fillStyle = bordercolor;
-                  ctx.fillRect(actx, acty, height/(boardSize+2), (height/(boardSize+2))*anim/100);
+                  ctx.fillRect(actx, acty, (height/(boardSize+2))*anim/100, (height/(boardSize+2))*anim/100);
                   clrnow = reserve;
                   //console.log(anim,'in first');
                 } else {
+                  //clrnow = 'rgb(0,0,0)';
                   ctx.fillStyle = clrnow;
-                  ctx.fillRect(actx, acty, height/(boardSize+2), (height/(boardSize+2))*anim/100);
+                  ctx.fillRect(actx, acty, (height/(boardSize+2)), (height/(boardSize+2))*anim/100);
                   //console.log(anim,'in');
                 }
                 acty += (height)/(boardSize+2);
@@ -547,10 +547,20 @@
         //set up buttons for endgame
 
         let displaydiv = document.getElementById('endgame-display');
-        displaydiv.style.left = bounderies[0]+(1/10*(bounderies[2]-bounderies[0]))+"px";
+        let displaydiv1 = document.getElementById('endgame-display1');
+        let play_again = document.getElementById('play_again');
+        let leaderboard = document.getElementById('leaderboard');
+        displaydiv.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
         displaydiv.style.top = bounderies[1]+(1/5*(bounderies[3]-bounderies[1]))+"px";
         displaydiv.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
-        displaydiv.style.width = bounderies[0]+(1/25*(bounderies[2]-bounderies[0]))+"px";
+        displaydiv1.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
+        displaydiv1.style.top = bounderies[1]+(4/5)*(bounderies[3]-bounderies[1])+"px";
+        displaydiv1.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
+        play_again.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
+        play_again.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
+        leaderboard.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
+        //displaydiv.style.paddingBottom = (3/5)*(bounderies[3]-bounderies[1])+"px";
         //displaydiv.style.margin-bottom = 50*scalefactor+"px";
 
         // game over animation
@@ -631,6 +641,7 @@
                 await sleep(endcurtainspeed);
               }
               displaydiv.style.display = "inline-block";
+              displaydiv1.style.display = "inline-block";
               endgame = 0;
               ctx.strokeStyle = 'rgb(0,0,0)';
               ctx.font = 64*scalefactor+"px Arial";
@@ -714,9 +725,10 @@
 
     </script>
     <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
-      <button class="endgame-key" onclick="window.location.reload();" >Play again</button>
-      <br>
-      <button class="endgame-key" onclick="window.location.href='https:skparab1.github.io/snake/leaderboard'">Leaderboard</button>
+      <button class="endgame-key" id="play_again" onclick="window.location.reload();" >Play again</button>
+    </div>
+    <div id="endgame-display1" style="position: absolute; left: 500px; top: 100px; display: none">
+      <button class="endgame-key" id="leaderboard" onclick="window.location.href='https:skparab1.github.io/snake/leaderboard'">Leaderboard</button>
     </div>
 
     </div style="float: left">
