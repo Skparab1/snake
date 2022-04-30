@@ -620,7 +620,11 @@
               }
               endgame = 0;
               while (endgame <= bounderies[3]-(height)/(boardSize+2)){
-                drawboard();
+                ctx.fillStyle = pixelbackground2;
+                ctx.fillRect(bounderies[0],bounderies[1],bounderies[2]-bounderies[0],bounderies[3]-bounderies[1]);
+                
+
+                ctx.fillStyle = bordercolor;
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), bounderies[3]-endgame)
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -(bounderies[3]-endgame))
                 endgame += 10;
@@ -632,8 +636,8 @@
               ctx.font = 64*scalefactor+"px Arial";
               ctx.lineWidth = '10px';
               while (endgame <= bounderies[3]/2+(height)/(boardSize+2)/2){
-                drawboard();
                 ctx.fillStyle = pixelbackground2;
+                ctx.fillRect(bounderies[0],bounderies[1],bounderies[2]-bounderies[0],bounderies[3]-bounderies[1]);
                 //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
                 ctx.fillStyle = 'rgb(0,0,0)';
                 ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
