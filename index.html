@@ -519,7 +519,7 @@
             ctx.fillStyle = pixelbackground2;
             //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
             ctx.fillStyle = 'rgb(0,0,0)';
-            ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4, bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
+            ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
             ctx.fillStyle = bordercolor;
             ctx.fillRect(bounderies[0], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])/2-endgame, (height)/(boardSize+2)*2);
             ctx.fillRect(bounderies[2], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),-((bounderies[2]-bounderies[0])/2-endgame), (height)/(boardSize+2)*2);
