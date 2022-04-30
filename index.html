@@ -127,6 +127,9 @@
       const speedfactor = 188; //about 200-these many pixels per second (but not exactly)
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
+      // emphasis background colors
+      const pixelbackground1EMP = 'rgb(0,120,0)';
+      const pixelbackground2EMP = 'rgb(0,160,0)';
       const bordercolor = 'rgb(0,100,0)'; //bordercolor
       const snakecolor1 = 'rgb(0,0,100)'; //snakecolor1
       const snakecolor2 = 'rgb(0,0,255)'; //snakecolor2
@@ -200,6 +203,64 @@
         }
         let leniance = ((height)/(boardSize+2))*borderleniance;
         bounderies = [window.innerWidth/4+(height)/(boardSize+2)*1.5-leniance,(height)/(boardSize+2)*1.5-leniance,(window.innerWidth/4+height*((boardSize-1)/boardSize))-(height)/(boardSize+2)/2.5+leniance,height*(boardSize-1)/boardSize-(height)/(boardSize+2)/2+leniance];
+      }
+
+      function animateboard(){
+        ctx.beginPath();
+        (async () => {
+          let anim = 0;
+          while (anim < 101){
+            let x = 0;
+            let actx = window.innerWidth/4;
+            let clrnow = pixelbackground1EMP;
+
+            while (x < boardSize+2){
+              let y = 0;
+              let acty = 0;
+              while (y < boardSize+4){
+                
+                if (clrnow == pixelbackground1EMP){
+                  clrnow = pixelbackground2EMP;
+                } else {
+                  clrnow = pixelbackground1EMP;
+                }
+
+                //console.log(anim,'wut');
+                ctx.fillStyle = clrnow;
+                if (x == 0 || x == boardSize+1 || y == 0 || y == boardSize+1){
+                  if (clrnow == pixelbackground1EMP){
+                    clrnow = pixelbackground2EMP;
+                  } else {
+                    clrnow = pixelbackground1EMP;
+                  }
+                  let reserve = clrnow;
+                  ctx.fillStyle = bordercolor;
+                  ctx.fillRect(actx, acty, height/(boardSize+2), (height/(boardSize+2))*anim/100);
+                  clrnow = reserve;
+                  //console.log(anim,'in first');
+                } else {
+                  ctx.fillStyle = clrnow;
+                  ctx.fillRect(actx, acty, height/(boardSize+2), (height/(boardSize+2))*anim/100);
+                  //console.log(anim,'in');
+                }
+                acty += (height)/(boardSize+2);
+                y += 1;
+                //console.log('drew smth');
+                }
+              
+              if (clrnow == pixelbackground1EMP){
+                clrnow = pixelbackground2EMP;
+              } else {
+                clrnow = pixelbackground1EMP;
+              }
+              actx += (height)/(boardSize+2);
+              x += 1;
+            }
+            //console.log(anim,'in but out');
+            await sleep(2);
+            anim += 2;
+          }
+        })();
       }
 
       function drawcircle(x,y,rad,circlr){
@@ -528,17 +589,33 @@
           },0);
 
           setTimeout(function(){
+            animateboard();
+          }, 1200);
 
+          setTimeout(function(){
+            // this might be cool if we do it right
+            // ok so basically draw the board but do it nicely
+            
             (async () => {
             
+              // ok now do what anindit said
+
               ctx.beginPath;
               ctx.fillStyle = bordercolor;
 
               let endgame = 0;
+              let bordereraser = 0;
               while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
+                ctx.fillStyle = 'rgb(0,0,0)';
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1], -bordereraser, bounderies[3]-bounderies[1]);
+                ctx.fillRect(bounderies[0], bounderies[1], bounderies[2]-bounderies[0], -bordereraser);
+                ctx.fillRect(bounderies[2]+(height)/(boardSize+2), bounderies[1], bordereraser, bounderies[3]-bounderies[1]);
+                ctx.fillRect(bounderies[2], bounderies[3], bounderies[2]-bounderies[0], bordereraser);
+                ctx.fillStyle = bordercolor;
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]-(height)/(boardSize+2), bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame+(height)/(boardSize+2))
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
                 endgame += 4;
+                bordereraser += 1;
                 await sleep(endcurtainspeed);
               }
               endgame = 0;
@@ -567,7 +644,7 @@
                 await sleep(endcurtainspeed);
               }
             })();
-          },1000);
+          },1500);
         })();
       })();
 
