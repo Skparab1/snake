@@ -209,6 +209,13 @@
         ctx.fill(); 
       }
 
+      function cir(x,y,rad,circlr,start,end){
+        ctx.beginPath();
+        ctx.fillStyle = circlr;
+        ctx.arc(x, y, rad, start * Math.PI, end * Math.PI); //-((height)/(boardSize+2)/2)
+        ctx.fill(); 
+      }
+
       function drawapple(x,y,rad){
         ctx.beginPath();
         ctx.fillStyle = applecolor;
@@ -489,45 +496,79 @@
         ctx.beginPath;
 
         (async () => {
-      
-          await(2000);
-          ctx.beginPath;
-          ctx.fillStyle = bordercolor;
 
-          let endgame = 0;
-          while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
-            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]-(height)/(boardSize+2), bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame+(height)/(boardSize+2))
-            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
-            endgame += 4;
-            await sleep(endcurtainspeed);
-          }
-          endgame = 0;
-          while (endgame <= bounderies[3]-(height)/(boardSize+2)){
-            drawboard();
-            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), bounderies[3]-endgame)
-            ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -(bounderies[3]-endgame))
-            endgame += 10;
-            await sleep(endcurtainspeed);
-          }
-          displaydiv.style.display = "inline-block";
-          endgame = 0;
-          ctx.strokeStyle = 'rgb(0,0,0)';
-          ctx.font = 64*scalefactor+"px Arial";
-          ctx.lineWidth = '10px';
-          while (endgame <= bounderies[3]/2+(height)/(boardSize+2)/2){
-            drawboard();
-            ctx.fillStyle = pixelbackground2;
-            //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
-            ctx.fillStyle = 'rgb(0,0,0)';
-            ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
-            ctx.fillStyle = bordercolor;
-            ctx.fillRect(bounderies[0], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])/2-endgame, (height)/(boardSize+2)*2);
-            ctx.fillRect(bounderies[2], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),-((bounderies[2]-bounderies[0])/2-endgame), (height)/(boardSize+2)*2);
-            endgame += 10;
-            await sleep(endcurtainspeed);
-          }
+          setTimeout(function(){
+
+            (async () => {
+              let z = 0;
+              while (z < 50){
+                //drawboard();
+                let i = 0;
+                while (i <= pointsArr.length-1){
+                  if (i <= (pointsArr.length-15)){
+                    if (i % seglength*2 < seglength){
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor1,0,2);
+                    } else {
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor2,0,2);
+                    }
+                  } else {
+                    // this is the head
+                    let se = 0;
+                    while (se < 2){
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2)+z, snakeheadcolor,se,se+0.1);
+                      se += 0.2;
+                    }
+                  }
+                  i += 2;
+                }
+                await sleep(2);
+                z += (55-z)/20;
+              }
+            })();
+          },0);
+
+          setTimeout(function(){
+
+            (async () => {
+            
+              ctx.beginPath;
+              ctx.fillStyle = bordercolor;
+
+              let endgame = 0;
+              while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]-(height)/(boardSize+2), bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame+(height)/(boardSize+2))
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
+                endgame += 4;
+                await sleep(endcurtainspeed);
+              }
+              endgame = 0;
+              while (endgame <= bounderies[3]-(height)/(boardSize+2)){
+                drawboard();
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), bounderies[3]-endgame)
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -(bounderies[3]-endgame))
+                endgame += 10;
+                await sleep(endcurtainspeed);
+              }
+              displaydiv.style.display = "inline-block";
+              endgame = 0;
+              ctx.strokeStyle = 'rgb(0,0,0)';
+              ctx.font = 64*scalefactor+"px Arial";
+              ctx.lineWidth = '10px';
+              while (endgame <= bounderies[3]/2+(height)/(boardSize+2)/2){
+                drawboard();
+                ctx.fillStyle = pixelbackground2;
+                //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
+                ctx.fillStyle = 'rgb(0,0,0)';
+                ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
+                ctx.fillStyle = bordercolor;
+                ctx.fillRect(bounderies[0], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])/2-endgame, (height)/(boardSize+2)*2);
+                ctx.fillRect(bounderies[2], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),-((bounderies[2]-bounderies[0])/2-endgame), (height)/(boardSize+2)*2);
+                endgame += 10;
+                await sleep(endcurtainspeed);
+              }
+            })();
+          },1000);
         })();
-  
       })();
 
       (async () => {
