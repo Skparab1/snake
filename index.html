@@ -668,8 +668,6 @@
             // ok so basically draw the board but do it nicely
             
             (async () => {
-            
-              // ok now do what anindit said
 
               ctx.beginPath;
               ctx.fillStyle = bordercolor;
@@ -689,11 +687,21 @@
                 bordereraser += 1;
                 await sleep(endcurtainspeed);
               }
+
+              displaydiv.style.display = "inline-block";
+              displaydiv1.style.display = "inline-block";
+              
+              leaderboard.style.color = "rgb(0,"+100+",0)";
+              play_again.style.color = "rgb(0,"+100+",0)";
+              play_again.style.bordercolor = "rgb(0,"+100+",0)";
+
               endgame = 0;
               while (endgame <= bounderies[3]-(height)/(boardSize+2)){
                 ctx.fillStyle = pixelbackground2;
                 ctx.fillRect(bounderies[0],bounderies[1],bounderies[2]-bounderies[0],bounderies[3]-bounderies[1]);
                 
+                play_again.style.color = "rgb(0,"+(100*endgame/(bounderies[3]-(height)/(boardSize+2))+100)+",0)";
+                leaderboard.style.color = "rgb(0,"+(100*endgame/(bounderies[3]-(height)/(boardSize+2))+100)+",0)";
 
                 ctx.fillStyle = bordercolor;
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), bounderies[3]-endgame)
@@ -701,8 +709,7 @@
                 endgame += 10;
                 await sleep(endcurtainspeed);
               }
-              displaydiv.style.display = "inline-block";
-              displaydiv1.style.display = "inline-block";
+            
               endgame = 0;
               ctx.strokeStyle = 'rgb(0,0,0)';
               ctx.font = 64*scalefactor+"px Arial";
