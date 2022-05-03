@@ -12,7 +12,7 @@
       }
 
       h1{
-        color:rgb(200, 200, 200);
+        color:rgb(255, 255, 255);
       }
 
       ul {
@@ -69,7 +69,7 @@
         width: 26px;
         left: 4px;
         bottom: 4px;
-        background-color: white;
+        background-color: lightgray;
         -webkit-transition: .4s;
         transition: .4s;
       }
@@ -151,9 +151,9 @@
       }
 
       .endgame-key:hover{
-        background-color: rgb(0,200,0); ;
-        border: 2px solid rgb(0,100,0); ; 
-        color: rgb(0,100,0); ; 
+        background-color: rgb(0,125,0);
+        border-radius: 25px;
+        text-emphasis-color: rgb(0,100,0);
         transition: all 0.1s ease-in-out; 
         cursor: pointer; 
         margin-bottom: 0.5;
@@ -163,12 +163,12 @@
   </head>
   <body>
     <ul>
-      <li><a href="https://skparab1.github.io">Home</a></li>
-      <li><a href="https://skparab1.github.io/wordle/random">Wordle</a></li>
-      <li><a href="https://skparab1.github.io/snake">Snake</a></li>
+      <li><a href="https://skparab1.github.io"><h7 id="header">Home</h7></a></li>
+      <li><a href="https://skparab1.github.io/wordle/random"><h7 id="header1">Wordle</h7></a></li>
+      <li><a href="https://skparab1.github.io/snake"><h7 id="header2">Snake</h7></a></li>
     </ul> 
 
-    <h1>Snake game</h1>
+    <h1 id="header3">Snake game</h1>
 
     <!div class="center" style="width: 100%">
     <div style="float: left">
@@ -204,6 +204,7 @@
       const rendertime = 10 // render every 10 snake circles
       const endcurtainspeed = 0.25 // seconds wait in between frames of each pixel expansion (for game over animation)
       var autopilot; // this is for fun but it turns on with the url parameter query
+      var theme = "black";
 
       if (window.location.href.includes('?autopilot=true')){
         autopilot = true;
@@ -354,7 +355,8 @@
 
       //canvas outline
       //ctx.strokeStyle = 'rgb(125,125,125)';
-      ctx.strokeRect(0, 0, width, height);
+      ctx.fillStyle = theme;
+      ctx.fillRect(0, 0, width, height);
       //console.log('printeddd');
 
       drawboard();
@@ -675,11 +677,11 @@
               let endgame = 0;
               let bordereraser = 0;
               while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
-                ctx.fillStyle = 'rgb(0,0,0)';
+                ctx.fillStyle = theme;
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1], -bordereraser, bounderies[3]-bounderies[1]);
                 ctx.fillRect(bounderies[0], bounderies[1], bounderies[2]-bounderies[0], -bordereraser);
                 ctx.fillRect(bounderies[2]+(height)/(boardSize+2), bounderies[1], bordereraser, bounderies[3]-bounderies[1]);
-                ctx.fillRect(bounderies[2], bounderies[3], bounderies[2]-bounderies[0], bordereraser);
+                //ctx.fillRect(bounderies[2], bounderies[3], bounderies[2]-bounderies[0], bordereraser);
                 ctx.fillStyle = bordercolor;
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]-(height)/(boardSize+2), bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame+(height)/(boardSize+2))
                 ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
@@ -799,27 +801,29 @@
       <button class="endgame-key" id="leaderboard" onclick="window.location.href='https:skparab1.github.io/snake/leaderboard'">Leaderboard</button>
     </div>
 
+    <div class="empty" id="all">
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
       <h1 id="display">Press any key to start</h1><br>
       <h1 id="ap notif">Autopilot: Off</h1>
     </div>
     <!/div>
-    <!h1 style="color:rgb(225, 252, 71);"> Note: if the game canvas does not cover the whole height of the screen, then reload.</h1>
-    <h1 style="color:white"> Game controls</h1>
-    <button class="blank-key"></button>
-    <button class="game-key" onclick="up();">↑</button>
-    <button class="blank-key"></button>
+    <h1 style="color:white" id="gc"> Game controls</h1>
+    <button id="playbtn1" class="blank-key"></button>
+    <button id="playbtn2" class="game-key" onclick="up();">↑</button>
+    <button id="playbtn3" class="blank-key"></button>
     <br>
-    <button class="game-key" onclick="left();">←</button>
-    <button class="game-key" onclick="down();">↓</button>
-    <button class="game-key" onclick="right();">→</button>
+    <button id="playbtn4" class="game-key" onclick="left();">←</button>
+    <button id="playbtn5" class="game-key" onclick="down();">↓</button>
+    <button id="playbtn6" class="game-key" onclick="right();">→</button>
     <br>
-    <h1 style="color: white">Settings</h1>
+    <h1 style="color: white" id="settings">Settings</h1>
     <label class="switch">
-      <input type="checkbox">
+      <input type="checkbox" onclick="toggletheme();">
       <span class="slider round"></span>
     </label>
+    <h2 style="color: white" id="themedisp">Theme: Dark</h2>
+    </div>
 
     <script>
       function left(){
@@ -833,6 +837,81 @@
       }
       function right(){
         waiter = 'right';
+      }
+      function maketheme(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.color = clr;
+      }
+      function clrbtn(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.backgroundColor = clr;
+        ab.style.borderColor = clr;
+      }
+      function clrbtn1(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.borderColor = clr;
+      }
+      function toggletheme(){
+        if (theme == "black" || theme == "rgb(0,0,0)"){
+          (async () => {
+            let a = 0;
+            while (a <= 255){
+              document.body.style.backgroundColor = 'rgb('+a+','+a+','+a+')';
+              theme = 'rgb('+a+','+a+','+a+')';
+              let setclr = 'rgb('+(255-a)+','+(255-a)+','+(255-a)+')';
+              maketheme('score',setclr);
+              maketheme('display',setclr);
+              maketheme('ap notif',setclr);
+              maketheme('header',setclr);
+              maketheme('header1',setclr);
+              maketheme('header2',setclr);
+              maketheme('header3',setclr);
+              maketheme('gc',setclr);
+              maketheme('themedisp',setclr);
+              maketheme('settings',setclr);
+              clrbtn('playbtn1',theme);
+              clrbtn('playbtn2',setclr);
+              clrbtn('playbtn3',theme);
+              clrbtn('playbtn4',setclr);
+              clrbtn('playbtn5',setclr);
+              clrbtn('playbtn6',setclr);
+              
+              a += 3;
+              await sleep(2);
+            }
+          })();
+          let aa = document.getElementById('themedisp');
+          aa.innerHTML = "Theme: Light"
+        } else {
+          (async () => {
+            let a = 255;
+            while (a >= 0){
+              document.body.style.backgroundColor = 'rgb('+a+','+a+','+a+')';
+              theme = 'rgb('+a+','+a+','+a+')';
+              let setclr = 'rgb('+(255-a)+','+(255-a)+','+(255-a)+')';
+              maketheme('score',setclr);
+              maketheme('display',setclr);
+              maketheme('ap notif',setclr);
+              maketheme('header',setclr);
+              maketheme('header1',setclr);
+              maketheme('header2',setclr);
+              maketheme('header3',setclr);
+              maketheme('gc',setclr);
+              maketheme('themedisp',setclr);
+              maketheme('settings',setclr);
+              clrbtn('playbtn1',theme);
+              clrbtn1('playbtn2',setclr);
+              clrbtn('playbtn3',theme);
+              clrbtn1('playbtn4',setclr);
+              clrbtn1('playbtn5',setclr);
+              clrbtn1('playbtn6',setclr);
+              a -= 3;
+              await sleep(2);
+            }
+          })();
+          let aa = document.getElementById('themedisp');
+          aa.innerHTML = "Theme: Dark"
+        }
       }
     </script>
   </body>
