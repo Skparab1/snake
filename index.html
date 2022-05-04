@@ -362,7 +362,7 @@
       drawboard();
 
       var speed = ((height)/(boardSize+2))/(200-speedfactor); // 1/4 square/frame?
-      let xpos = window.innerWidth/4+window.innerWidth/40+(height)/(boardSize+2)*2;
+      let xpos = window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2)*2;
       let ypos = ((height)/(boardSize+2)*1.5)+(height)/(boardSize+2)*(boardSize/2);
       let startingpos = [xpos,ypos];
       var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -371,7 +371,7 @@
       var waiter = '';
       var waiter2 = '';
       var startwaiter = false;
-      var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+      var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
       var scalefactor = window.innerWidth/2048;
       var initxpos = xpos;
       var initypos = ypos;
@@ -380,6 +380,7 @@
       var lastapple = [0,0];
 
       console.log(applepos);
+      speed = speed;//*(scalefactor);
 
       const sleep = ms => new Promise(res => setTimeout(res, ms));
 
@@ -435,8 +436,7 @@
             lastapple = applepos;
 
             //relocate apple
-            applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+window.innerWidth/4+window.innerWidth/40, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
-
+            applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
             //ignore overlap for some time
             eatwaiter = 7;
 
@@ -458,7 +458,7 @@
 
           eatwaiter -= 1;
 
-          let ct3 = window.innerWidth/4+window.innerWidth/40;
+          let ct3 = window.innerWidth/4+(height)/(boardSize+2)*1.5;
           while (ct3 < xpos + (height)/(boardSize+2) && xd != 0){
             if (Math.abs(ct3-xpos) < 2){
               if (waiter == 'up'){
@@ -649,7 +649,7 @@
                     // this is the head
                     let se = 0;
                     while (se < 2){
-                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2)+z, snakeheadcolor,se,se+0.1);
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2)+z*scalefactor, snakeheadcolor,se,se+0.1);
                       se += 0.2;
                     }
                   }
