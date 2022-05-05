@@ -204,6 +204,7 @@
       const rendertime = 10 // render every 10 snake circles
       const endcurtainspeed = 0.25 // seconds wait in between frames of each pixel expansion (for game over animation)
       var autopilot; // this is for fun but it turns on with the url parameter query
+
       var theme = "black";
 
       if (window.location.href.includes('?autopilot=true')){
@@ -341,6 +342,10 @@
         ctx.beginPath();
         ctx.fillStyle = applecolor;
         ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
+        ctx.fill(); 
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(0,255,0)';
+        ctx.arc(x, y-rad/2, rad/4, 0, 2 * Math.PI);
         ctx.fill(); 
       }
 
@@ -805,7 +810,7 @@
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
       <h1 id="display">Press any key to start</h1><br>
-      <h1 id="ap notif">Autopilot: Off</h1>
+      <!h1 id="ap notif">Autopilot: Off</h1>
     </div>
     <!/div>
     <h1 style="color:white" id="gc"> Game controls</h1>
@@ -823,6 +828,8 @@
       <span class="slider round"></span>
     </label>
     <h2 style="color: white" id="themedisp">Theme: Dark</h2>
+    <button id="playbtn6" class="game-key" onclick="toggleautopilot();">→</button>
+    <h2 style="color: white" id="themedisp">Autopilot: Off</h2>
     </div>
 
     <script>
@@ -850,6 +857,14 @@
       function clrbtn1(id,clr){
         let ab = document.getElementById(id);
         ab.style.borderColor = clr;
+      }
+      function toggleautopilot(){
+        if (autopilot){
+          window.location = "https://skparab1.github.io/snake";
+        } else {
+          window.location = "https://skparab1.github.io/snake?autopilot=true";
+        }
+        }
       }
       function toggletheme(){
         if (theme == "black" || theme == "rgb(0,0,0)"){
