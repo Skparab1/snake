@@ -179,6 +179,9 @@
     </div>
 
     <script>
+      // this is just to force resiez
+      //window.reload();
+      // act nvm
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
@@ -196,7 +199,7 @@
       var snakecolor1ARR = [0,100,0]; //snakecolor1
       var snakecolor2ARR = [0,0,255]; //snakecolor2
       var snakeheadcolorARR = [200,100,0];; //apple color
-
+      var eyesize = 2 // squarelength/this pixels
       const applecolor = 'rgb(150,0,0)'; //apple color
       const seglength = 75; //snake segment length in pixels
       const addlength = 75; //increase snake length by these many pixels when it eats an apple
@@ -399,7 +402,30 @@
           let i = 0;
           while (i <= pointsArr.length-1){
             if (i > (pointsArr.length-15)){
+              // this is the head then
+              // lemme get some eyes
               drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakeheadcolor);
+              ctx.beginPath();
+              ctx.fillStyle = 'rgb(0,0,0)';
+              let ratio = 1/2;
+              if (xd > 0 || (xd == 0 && yd == 0)){
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+              if (xd < 0){
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+              if (yd < 0){
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+              if (yd > 0){
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+
+              ctx.fill(); 
             } else {
               if (i % seglength*2 < seglength){
                 drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor1);
@@ -810,7 +836,6 @@
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
       <h1 id="display">Press any key to start</h1><br>
-      <!h1 id="ap notif">Autopilot: Off</h1>
     </div>
     <!/div>
     <h1 style="color:white" id="gc"> Game controls</h1>
@@ -829,7 +854,7 @@
     </label>
     <h2 style="color: white" id="themedisp">Theme: Dark</h2>
     <button id="playbtn6" class="game-key" onclick="toggleautopilot();">→</button>
-    <h2 style="color: white" id="themedisp">Autopilot: Off</h2>
+    <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
     </div>
 
     <script>
@@ -860,10 +885,9 @@
       }
       function toggleautopilot(){
         if (autopilot){
-          window.location = "https://skparab1.github.io/snake";
+          window.location.href = window.location.href.replace('?autopilot=true','');
         } else {
-          window.location = "https://skparab1.github.io/snake?autopilot=true";
-        }
+          window.location.href = window.location.href+'?autopilot=true';
         }
       }
       function toggletheme(){
