@@ -185,7 +185,7 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
-      const speedfactor = 188; //about 200-these many pixels per second (but not exactly)
+      const speedfactor = 190; //directly porportional to these many pixels per second (but not exactly)
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       // emphasis background colors
@@ -202,12 +202,12 @@
       var eyesize = 2 // squarelength/this pixels
       const applecolor = 'rgb(150,0,0)'; //apple color
       const seglength = 75; //snake segment length in pixels
-      const addlength = 75; //increase snake length by these many pixels when it eats an apple
+      const addlength = 30; //increase snake length by these many pixels when it eats an apple
       const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
       const rendertime = 10 // render every 10 snake circles
       const endcurtainspeed = 0.25 // seconds wait in between frames of each pixel expansion (for game over animation)
       var autopilot = false; // this is for fun but it turns on with the localstorage reader
-
+      var lost = false;
       var theme = "black";
 
 
@@ -388,6 +388,7 @@
       var yd = 0;
       var waiter = '';
       var waiter2 = '';
+      var waiter3 = '';
       var startwaiter = false;
       var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
       var scalefactor = window.innerWidth/2048;
@@ -548,6 +549,14 @@
                 yd = speed;
               }
               waiter2 = '';
+              if (waiter3 == 'up'){
+                xd = 0;
+                yd = -speed;
+              } else if (waiter3 == 'down'){
+                xd = 0;
+                yd = speed;
+              }
+              waiter3 = '';
             }
            ct3 += (height)/(boardSize+2);
           }
@@ -571,6 +580,14 @@
                 yd = 0;
               }
               waiter2 = '';
+              if (waiter3 == 'right'){
+                xd = speed;
+                yd = 0;
+              } else if (waiter3 == 'left'){
+                xd = -speed;
+                yd = 0;
+              }
+              waiter3 = '';
             }
            ct3 += (height)/(boardSize+2);
           }
@@ -799,6 +816,7 @@
                 endgame += 10;
                 await sleep(endcurtainspeed);
               }
+              lost = true;
             })();
           },1500);
         })();
@@ -824,6 +842,13 @@
         let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
         console.log('pressed'+actkey);
 
+        if (lost && actkey != 'L'){
+          location.reload();
+        }
+        if (actkey == "L"){
+          window.location.href = 'https:skparab1.github.io/snake/leaderboard';
+        }
+
         if (waiter == ''){
           if (actkey == 'ArrowLeft' || actkey == 'A'){
             waiter = 'left';
@@ -838,20 +863,33 @@
             waiter = 'down';
           }
         } else {
-          if (actkey == 'ArrowLeft' || actkey == 'A'){
-            waiter2 = 'left';
+          if (waiter2 == ''){
+            if (actkey == 'ArrowLeft' || actkey == 'A'){
+              waiter2 = 'left';
+            }
+            if (actkey == 'ArrowRight' || actkey == 'D'){
+              waiter2 = 'right';
+            }
+            if (actkey == 'ArrowUp' || actkey == 'W'){
+              waiter2 = 'up';
+            }
+            if (actkey == 'ArrowDown' || actkey == 'S'){
+              waiter2 = 'down';
+            }
+          } else {
+            if (actkey == 'ArrowLeft' || actkey == 'A'){
+              waiter3 = 'left';
+            }
+            if (actkey == 'ArrowRight' || actkey == 'D'){
+              waiter3 = 'right';
+            }
+            if (actkey == 'ArrowUp' || actkey == 'W'){
+              waiter3 = 'up';
+            }
+            if (actkey == 'ArrowDown' || actkey == 'S'){
+              waiter3 = 'down';
+            }
           }
-          if (actkey == 'ArrowRight' || actkey == 'D'){
-            waiter2 = 'right';
-          }
-          if (actkey == 'ArrowUp' || actkey == 'W'){
-            waiter2 = 'up';
-          }
-          if (actkey == 'ArrowDown' || actkey == 'S'){
-            waiter2 = 'down';
-          }
-
-
         }
 
         // i think i get how to do it
