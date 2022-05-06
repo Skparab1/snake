@@ -191,7 +191,7 @@
       // emphasis background colors
       const pixelbackground1EMP = 'rgb(0,120,0)';
       const pixelbackground2EMP = 'rgb(0,160,0)';
-      const bordercolor = 'rgb(0,100,0)'; //bordercolor
+      var bordercolor = 'rgb(0,100,0)'; //bordercolor
       const snakecolor1 = 'rgb(0,0,100)'; //snakecolor1
       const snakecolor2 = 'rgb(0,0,255)'; //snakecolor2
       const snakeheadcolor = 'rgb(200,100,0)'; //apple color
@@ -206,14 +206,24 @@
       const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
       const rendertime = 10 // render every 10 snake circles
       const endcurtainspeed = 0.25 // seconds wait in between frames of each pixel expansion (for game over animation)
-      var autopilot; // this is for fun but it turns on with the url parameter query
+      var autopilot = false; // this is for fun but it turns on with the localstorage reader
 
       var theme = "black";
 
-      if (window.location.href.includes('?autopilot=true')){
+
+      if (localStorage.getItem('autopilot') == "true"){
         autopilot = true;
-      } else {
+        bordercolor = "rgb(100,0,0)";
+      }
+
+      if (localStorage.getItem('autopilot') == null){
         autopilot = false;
+        localStorage.setItem('autopilot',"false");
+      }
+
+      if (window.location.href.includes('?autopilot=true')){ // this is an override in case anyone still uses it
+        autopilot = true;
+        bordercolor = "rgb(100,0,0)";
       }
 
       // dont do anythign below this
@@ -397,6 +407,15 @@
         while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3])){ // took out waiters  || waiter != '' || waiter2 != ''
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           speed = speed * 1.0001;
+
+
+          if (autopilot && counter >= 1){
+              let btn = document.getElementById('playbtn7');
+              btn.innerHTML = "Disable autopilot";
+              let apnotif = document.getElementById('ap notif');
+              apnotif.innerHTML = "Autopilot: On";
+            }
+
           //await sleep(2);
           drawboard();
           let i = 0;
@@ -476,7 +495,28 @@
             var z1 = document.getElementById('score');
             z1.textContent = 'Score: '+score;
             let z2 = document.getElementById('display');
-            z2.textContent = 'Good Job!';
+            let randnotif = Math.floor(Math.random()*6);
+            if (randnotif == 0){
+              randnotif = "Good job!";
+            } else if (randnotif == 1){
+              randnotif = "Great job!";
+            } else if (randnotif == 2){
+              randnotif = "Awesome!";
+            } else if (randnotif == 3){
+              randnotif = "Nice!";
+            } else if (randnotif == 4){
+              randnotif = "Cringe!";
+            } else if (randnotif == 5){
+              randnotif = "🐍";
+            }
+            
+            z2.textContent = randnotif;
+
+            if (autopilot){
+              let btn = document.getElementById('playbtn7');
+              btn.innerHTML = "Disable autopilot";
+            }
+
 
             //update length
             let z = 0;
@@ -538,7 +578,7 @@
 
           // overlap experiment below
           let overlapgetter = 0;
-          while (overlapgetter < pointsArr.length){
+          while (overlapgetter < pointsArr.length && !autopilot){
             if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/2 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
               //overlapped
               if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/2 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/2)){
@@ -775,7 +815,7 @@
           xd = speed;
           startwaiter = true;
           let z = document.getElementById('display');
-          z.textContent = '';
+          z.textContent = '🐍';
         }
 
         const ctx = canvas.getContext('2d');
@@ -811,8 +851,7 @@
             waiter2 = 'down';
           }
 
-          let g = document.getElementById('ap notif');
-          g.textcontent = 'Autopilot: On';
+
         }
 
         // i think i get how to do it
@@ -853,7 +892,7 @@
       <span class="slider round"></span>
     </label>
     <h2 style="color: white" id="themedisp">Theme: Dark</h2>
-    <button id="playbtn6" class="game-key" onclick="toggleautopilot();">→</button>
+    <button id="playbtn7" class="game-key" style="width: 15%" onclick="toggleautopilot();">Enable autopilot</button>
     <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
     </div>
 
@@ -885,9 +924,11 @@
       }
       function toggleautopilot(){
         if (autopilot){
-          window.location.href = window.location.href.replace('?autopilot=true','');
+          localStorage.setItem('autopilot',"false");
+          location.reload();
         } else {
-          window.location.href = window.location.href+'?autopilot=true';
+          localStorage.setItem('autopilot',"true");
+          location.reload();
         }
       }
       function toggletheme(){
