@@ -426,7 +426,7 @@
         let counter = 0;
         while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3])){ // took out waiters  || waiter != '' || waiter2 != ''
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          speed = speed * 1.0001;
+          speed = speed * 1.00001;
 
 
           if (autopilot && counter >= 1){
