@@ -159,6 +159,10 @@
         margin-bottom: 0.5;
       }
 
+      h2{
+        color: white;
+      }
+
     </style>
   </head>
   <body>
@@ -171,6 +175,21 @@
     <h1 id="header3">Snake game</h1>
 
     <!div class="center" style="width: 100%">
+    <div style="float: right; position: absolute; left: 25px; top: 100px">
+      <h1>Play settings</h1>
+      <br><br>
+      <label><h2>Name:</h2></label><input id="name"></input><br>
+      <br><br>
+      <h2>Save score on leaderboard for each game</h2>
+      <label class="switch">
+        <input type="checkbox" onclick="namesavetoggle();">
+        <span class="slider round"></span>
+      </label>
+      <br><br><br>
+      <h2>All time high: </h2>
+      <h2>Your best score </h2>
+      <h1>Your current score </h1>
+    </div>
     <div style="float: left">
     <canvas class="myCanvas">
       <p>Rip ur browser doesnt support canvas :(( u shud switch to a better browser...</p>
@@ -390,7 +409,7 @@
       var waiter2 = '';
       var waiter3 = '';
       var startwaiter = false;
-      var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+      var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2), Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
       var scalefactor = window.innerWidth/2048;
       var initxpos = xpos;
       var initypos = ypos;
@@ -487,7 +506,7 @@
             lastapple = applepos;
 
             //relocate apple
-            applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5, Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+            applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2), Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
             //ignore overlap for some time
             eatwaiter = 7;
 
