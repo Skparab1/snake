@@ -188,7 +188,7 @@
       <br><br><br>
       <h2>All time high: </h2>
       <h2>Your best score </h2>
-      <h1>Your current score </h1>
+      <h1 id="leftscore">Your current score: 0</h1>
     </div>
     <div style="float: left">
     <canvas class="myCanvas">
@@ -514,6 +514,8 @@
             score += 1;
             var z1 = document.getElementById('score');
             z1.textContent = 'Score: '+score;
+            z1 = document.getElementById('leftscore');
+            z1.textContent = 'Your current score: '+score;
             let z2 = document.getElementById('display');
             let randnotif = Math.floor(Math.random()*6);
             if (randnotif == 0){
