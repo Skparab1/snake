@@ -229,7 +229,6 @@
       var lost = false;
       var theme = "black";
 
-
       if (localStorage.getItem('autopilot') == "true"){
         autopilot = true;
         bordercolor = "rgb(100,0,0)";
@@ -247,6 +246,31 @@
 
       // dont do anythign below this
       const turningPrecision = true;
+      
+      function sendit(sendtitle, sendbody){
+        (async () => {
+          const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
+          octokit.request('GET /repos/:owner/:repo', {
+            owner: "skparab1",
+            repo: "snake"
+          }).then(response => console.log(response.data))
+          async function start() {
+            try {
+              return await octokit.request('POST /repos/skparab1/snake/issues', {
+                  owner: 'skparab1',
+                  repo: 'snake',
+                  title: sendtitle,
+                  body: sendbody,
+                  tags: 'serverdata'
+                })
+            } catch(error) {
+              // whatever ig it just doesnt get sent
+            }
+          };
+          
+          start();
+        })();
+      }
 
       function drawline(x,y,x1,y1,clr){
         ctx.beginPath();
@@ -416,6 +440,8 @@
       var breaker = false;
       var eatwaiter = 0;
       var lastapple = [0,0];
+      var elapsedtime = 0;
+      var start = Date.now();
 
       console.log(applepos);
       speed = speed;//*(scalefactor);
@@ -430,12 +456,17 @@
 
 
           if (autopilot && counter >= 1){
-              let btn = document.getElementById('playbtn7');
-              btn.innerHTML = "Disable autopilot";
-              let apnotif = document.getElementById('ap notif');
-              apnotif.innerHTML = "Autopilot: On";
-            }
+            let btn = document.getElementById('playbtn7');
+            btn.innerHTML = "Disable autopilot";
+            let apnotif = document.getElementById('ap notif');
+            apnotif.innerHTML = "Autopilot: On";
+          }
 
+          if (counter >= 1){
+            document.getElementById('time').innerHTML = 'Time: '+Math.floor((Date.now() - start)/1000);
+            elapsedtime = (Date.now() - start)/1000;
+          }
+    
           //await sleep(2);
           drawboard();
           let i = 0;
@@ -447,9 +478,21 @@
               ctx.beginPath();
               ctx.fillStyle = 'rgb(0,0,0)';
               let ratio = 1/2;
+              let eyerad = (height)/(boardSize*2.2)/eyesize;
+              let xfrac = (pointsArr[i]-bounderies[0])/(bounderies[2]-bounderies[0]);
+              let yfrac = (pointsArr[i+1]-bounderies[1])/(bounderies[3]-bounderies[1]);
               if (xd > 0 || (xd == 0 && yd == 0)){
+                ctx.fillStyle = 'rgb(0,0,0)';
                 ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
                 ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.fill(); 
+                ctx.beginPath();
+                ctx.fillStyle = 'rgb(255,255,255)';
+                console.log(xfrac,eyesize);
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio-eyerad+xfrac*(eyerad*2), pointsArr[i+1]-(height)/(boardSize*2.2)*ratio-eyerad+yfrac*(eyerad*2), ((height)/(boardSize*2.2)/eyesize)/2, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio-eyerad+xfrac*(eyerad*2), pointsArr[i+1]+(height)/(boardSize*2.2)*ratio-eyerad+yfrac*(eyerad*2), ((height)/(boardSize*2.2)/eyesize)/2, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.beginPath();
               }
               if (xd < 0){
                 ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
@@ -487,7 +530,7 @@
             // }
 
             i += 2;
-          }
+            }
 
           drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
           xpos += xd;
@@ -717,6 +760,7 @@
         //set up buttons for endgame
 
         let displaydiv = document.getElementById('endgame-display');
+        let displaydiv2 = document.getElementById('endgame-display2');
         let displaydiv1 = document.getElementById('endgame-display1');
         let play_again = document.getElementById('play_again');
         let leaderboard = document.getElementById('leaderboard');
@@ -724,7 +768,10 @@
         displaydiv.style.top = bounderies[1]+(1/5*(bounderies[3]-bounderies[1]))+"px";
         displaydiv.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
         displaydiv1.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
-        displaydiv1.style.top = bounderies[1]+(4/5)*(bounderies[3]-bounderies[1])+"px";
+        displaydiv1.style.top = bounderies[1]+(4.35/5)*(bounderies[3]-bounderies[1])+"px";
+        displaydiv2.style.left = bounderies[0]+"px";
+        displaydiv2.style.width = (bounderies[2]-bounderies[0])+"px";
+        displaydiv2.style.top = bounderies[1]+(2/5)*(bounderies[3]-bounderies[1])+"px";
         displaydiv1.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
         play_again.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
         play_again.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
@@ -734,6 +781,12 @@
         leaderboard.style.font = 64*scalefactor+"px";
         //displaydiv.style.paddingBottom = (3/5)*(bounderies[3]-bounderies[1])+"px";
         //displaydiv.style.margin-bottom = 50*scalefactor+"px";
+        displaydiv2.style.fontSize = 32*scalefactor+"px";
+        let thisthing = displaydiv2.children;
+        thisthing = document.getElementById("endgamenotif2");
+        thisthing.innerHTML = "Score: "+score;
+        thisthing = document.getElementById("endgamenotif3");
+        thisthing.innerHTML = "Time alive: "+elapsedtime+" seconds";
 
         // game over animation
         ctx.beginPath;
@@ -801,6 +854,7 @@
 
               displaydiv.style.display = "inline-block";
               displaydiv1.style.display = "inline-block";
+              displaydiv2.style.display = "inline-block";
               
               leaderboard.style.color = "rgb(0,"+100+",0)";
               play_again.style.color = "rgb(0,"+100+",0)";
@@ -830,7 +884,7 @@
                 ctx.fillRect(bounderies[0],bounderies[1],bounderies[2]-bounderies[0],bounderies[3]-bounderies[1]);
                 //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
                 ctx.fillStyle = 'rgb(0,0,0)';
-                ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
+                //ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
                 ctx.fillStyle = bordercolor;
                 ctx.fillRect(bounderies[0], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])/2-endgame, (height)/(boardSize+2)*2);
                 ctx.fillRect(bounderies[2], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),-((bounderies[2]-bounderies[0])/2-endgame), (height)/(boardSize+2)*2);
@@ -926,6 +980,11 @@
     <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
       <button class="endgame-key" id="play_again" onclick="window.location.reload();" >Play again</button>
     </div>
+    <div id="endgame-display2" style="position: absolute; left: 500px; top: 100px; display: none">
+      <h2 style="color: rgb(0,100,0); text-align: center" id="endgamenotif">GAME OVER</h1>
+      <h3 style="color: rgb(0,100,0); text-align: center" id="endgamenotif2">Score: </h1>
+      <h3 style="color: rgb(0,100,0); text-align: center" id="endgamenotif3">Time alive: </h1>
+    </div>
     <div id="endgame-display1" style="position: absolute; left: 500px; top: 100px; display: none">
       <button class="endgame-key" id="leaderboard" onclick="window.location.href='https:skparab1.github.io/snake/leaderboard'">Leaderboard</button>
     </div>
@@ -933,6 +992,7 @@
     <div class="empty" id="all">
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
+      <h1 id="time">Time: 0</h1>
       <h1 id="display">Press any key to start</h1><br>
     </div>
     <!/div>
