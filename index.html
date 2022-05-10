@@ -197,9 +197,7 @@
     </canvas>
     </div>
 
-    <script type="module">
-      //import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
-      
+    <script>
       // this is just to force resiez
       //window.reload();
       // act nvm
@@ -440,7 +438,7 @@
           }
 
           if (counter >= 1 && startwaiter){
-            document.getElementById('time').innerHTML = 'Time: '+(Date.now() - start)/1000;
+            document.getElementById('time').innerHTML = 'Time: '+(Date.now() - start)/1000 +" sec";
             elapsedtime = (Date.now() - start)/1000;
           }
     
@@ -729,12 +727,6 @@
             breaker = false;
           }
         }
-        // send the score right away so that even refreshes wont break it
-        let nm = document.getElementById("name");
-        let sendtitle = '&nextentry&'+nm.value;
-        let senddata = '&nextentry&'+score+'&time&'+elapsedtime;
-        //sendit(sendtitle,senddata);
-
         //console.log('did whole thing');
         let z3 = document.getElementById('display');
         z3.textContent = 'Game over! reload to play again';
@@ -747,13 +739,12 @@
         let displaydiv1 = document.getElementById('endgame-display1');
         let play_again = document.getElementById('play_again');
         let leaderboard = document.getElementById('leaderboard');
-        let leaderboard2 = document.getElementById('leaderboardsend');
+        let leaderboard1 = document.getElementById('leaderboard2');
         displaydiv.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
         displaydiv.style.top = bounderies[1]+(1/5*(bounderies[3]-bounderies[1]))+"px";
         displaydiv.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
         displaydiv1.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
         displaydiv1.style.top = bounderies[1]+(4.35/5)*(bounderies[3]-bounderies[1])+"px";
-        //displaydiv1.innerHTML += '<button class="endgame-key" onclick="function sender(){sendit();};">Send score</button>';
         displaydiv2.style.left = bounderies[0]+"px";
         displaydiv2.style.width = (bounderies[2]-bounderies[0])+"px";
         displaydiv2.style.top = bounderies[1]+(2/5)*(bounderies[3]-bounderies[1])+"px";
@@ -762,13 +753,13 @@
         play_again.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
         play_again.style.font = 64*scalefactor+"px";
         leaderboard.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
-        leaderboard.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard.style.height = (1/10)*(bounderies[3]-bounderies[1])+"px";
         leaderboard.style.font = 64*scalefactor+"px";
-        leaderboard2.style.top = bounderies[1]+(2/5)*(bounderies[3]-bounderies[1])+"px";
-        leaderboard2.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
-        leaderboard2.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
-        leaderboard2.style.font = 64*scalefactor+"px";
-        //leaderboard2.onclick = function(){left();};
+        leaderboard1.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
+        leaderboard1.style.height = (1/10)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard1.style.top = bounderies[1]+(4.7/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard1.style.font = 64*scalefactor+"px";
+        leaderboard1.onclick = function(){sendit('hello','world');};
         //displaydiv.style.paddingBottom = (3/5)*(bounderies[3]-bounderies[1])+"px";
         //displaydiv.style.margin-bottom = 50*scalefactor+"px";
         displaydiv2.style.fontSize = 32*scalefactor+"px";
@@ -898,7 +889,6 @@
           xd = speed;
           startwaiter = true;
           let z = document.getElementById('display');
-          start = Date.now();
           z.textContent = '🐍';
         }
 
@@ -968,14 +958,6 @@
       })();
 
     </script>
-
-    <script>
-      function maketheme(id,clr){
-        let ab = document.getElementById(id);
-        ab.style.color = clr;
-      }
-    </script>
-
     <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
       <button class="endgame-key" id="play_again" onclick="window.location.reload();" >Play again</button>
     </div>
@@ -984,25 +966,23 @@
       <h3 style="color: rgb(0,100,0); text-align: center" id="endgamenotif2">Score: </h1>
       <h3 style="color: rgb(0,100,0); text-align: center" id="endgamenotif3">Time alive: </h1>
     </div>
-    <div id="endgame-display1" class="empty" style="position: absolute; left: 500px; top: 100px; display: none">
+    <div id="endgame-display1" style="position: absolute; left: 500px; top: 100px; display: none">
       <button class="endgame-key" id="leaderboard" onclick="window.location.href='https:skparab1.github.io/snake/leaderboard'">Leaderboard</button>
+      <button class="endgame-key" id="leaderboard2">Send score</button>
     </div>
-    <!button class="endgame-key" id="leaderboard0" onclick="sendit('this','that');">sendLeaderboard</button>
+
     <div class="empty" id="all">
     </div style="float: left">
       <h1 id="score">Score: 0</h1>
       <h1 id="time">Time: 0</h1>
-      <h1 id="display">Press any key to start</h1>
+      <h1 id="display">Press any key to start</h1><br>
     </div>
     <!/div>
     <h1 style="color:white" id="gc"> Game controls</h1>
-
     <button id="playbtn1" class="blank-key"></button>
     <button id="playbtn2" class="game-key" onclick="up();">↑</button>
     <button id="playbtn3" class="blank-key"></button>
     <br>
-    <button id="leaderboardsend" onclick="left();">Leaderboard</button>
-    <button id="playbtn8" class="game-key" onclick="left();">←</button>
     <button id="playbtn4" class="game-key" onclick="left();">←</button>
     <button id="playbtn5" class="game-key" onclick="down();">↓</button>
     <button id="playbtn6" class="game-key" onclick="right();">→</button>
@@ -1018,32 +998,6 @@
     </div>
 
     <script>
-      import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
-
-      function sendit(sendtitle, sendbody){
-        (async () => {
-          const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
-          octokit.request('GET /repos/:owner/:repo', {
-            owner: "skparab1",
-            repo: "snake"
-          }).then(response => console.log(response.data))
-          async function start() {
-            try {
-              return await octokit.request('POST /repos/skparab1/snake/issues', {
-                  owner: 'skparab1',
-                  repo: 'snake',
-                  title: sendtitle,
-                  body: sendbody,
-                  tags: 'serverdata'
-                })
-            } catch(error) {
-              // whatever ig it just doesnt get sent
-            }
-          };
-          
-          start();
-        })();
-      }
 
       function left(){
         waiter = 'left';
@@ -1056,6 +1010,10 @@
       }
       function right(){
         waiter = 'right';
+      }
+      function maketheme(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.color = clr;
       }
       function clrbtn(id,clr){
         let ab = document.getElementById(id);
@@ -1138,5 +1096,30 @@
         }
       }
     </script>
+
+    <script type="module">
+      import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
+      function sendit(sendtitle, sendbody){
+        (async () => {
+          const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
+          async function start() {
+            try {
+              return await octokit.request('POST /repos/skparab1/snake/issues', {
+                  owner: 'skparab1',
+                  repo: 'snake',
+                  title: sendtitle,
+                  body: sendbody,
+                  tags: 'serverdata'
+                })
+            } catch(error) {
+              // whatever ig it just doesnt get sent
+            }
+          };
+          
+          start();
+        })();
+      }
+      </script>
+
   </body>
 </html>
