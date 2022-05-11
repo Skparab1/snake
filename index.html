@@ -159,6 +159,23 @@
         margin-bottom: 0.5;
       }
 
+      .opener{
+        background-color: black;
+        border-color: black;
+        border-radius: 0px;
+        border-width: 0px;
+        position:absolute; 
+        top:0px; 
+        left:0px; 
+        height:1000px; 
+        width:4000px;
+      }
+
+      .opener:hover{
+        background-color: black;
+        border-color: black;
+      }
+
       h2{
         color: white;
       }
@@ -197,7 +214,28 @@
     </canvas>
     </div>
 
-    <script>
+    <script type="module">
+      import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
+      function sendit(sendtitle, sendbody){
+        (async () => {
+          const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
+          async function start() {
+            try {
+              return await octokit.request('POST /repos/skparab1/snake/issues', {
+                  owner: 'skparab1',
+                  repo: 'snake',
+                  title: sendtitle,
+                  body: sendbody,
+                  tags: 'serverdata'
+                })
+            } catch(error) {
+              // whatever ig it just doesnt get sent
+            }
+          };
+          
+          start();
+        })();
+      }
       // this is just to force resiez
       //window.reload();
       // act nvm
@@ -441,6 +479,20 @@
             document.getElementById('time').innerHTML = 'Time: '+(Date.now() - start)/1000 +" sec";
             elapsedtime = (Date.now() - start)/1000;
           }
+
+          if (counter >= 1){
+            let rightdisplay = document.getElementById("all");
+            rightdisplay.style.display = "block";
+
+          }
+
+          // let door = document.getElementById("door");
+          // let height = door.style.height;
+          // while (height >= 10){
+          //   door.style.height = height;
+          //   height = height-10;
+          //   await sleep(2);
+          // }
     
           //await sleep(2);
           drawboard();
@@ -958,6 +1010,8 @@
       })();
 
     </script>
+    <!button id="door" class="opener"></button>
+
     <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
       <button class="endgame-key" id="play_again" onclick="window.location.reload();" >Play again</button>
     </div>
@@ -971,13 +1025,11 @@
       <button class="endgame-key" id="leaderboard2">Send score</button>
     </div>
 
-    <div class="empty" id="all">
-    </div style="float: left">
-      <h1 id="score">Score: 0</h1>
-      <h1 id="time">Time: 0</h1>
-      <h1 id="display">Press any key to start</h1><br>
-    </div>
-    <!/div>
+    <div class="empty" id="all" style="display: none;">
+    <h1 id="score">Score: 0</h1>
+    <h1 id="time">Time: 0</h1>
+    <h1 id="display">Press any key to start</h1><br>
+    <br>
     <h1 style="color:white" id="gc"> Game controls</h1>
     <button id="playbtn1" class="blank-key"></button>
     <button id="playbtn2" class="game-key" onclick="up();">↑</button>
@@ -1096,30 +1148,5 @@
         }
       }
     </script>
-
-    <script type="module">
-      import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
-      function sendit(sendtitle, sendbody){
-        (async () => {
-          const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
-          async function start() {
-            try {
-              return await octokit.request('POST /repos/skparab1/snake/issues', {
-                  owner: 'skparab1',
-                  repo: 'snake',
-                  title: sendtitle,
-                  body: sendbody,
-                  tags: 'serverdata'
-                })
-            } catch(error) {
-              // whatever ig it just doesnt get sent
-            }
-          };
-          
-          start();
-        })();
-      }
-      </script>
-
   </body>
 </html>
