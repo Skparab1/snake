@@ -214,7 +214,7 @@
     </canvas>
     </div>
 
-    <script type="module">
+    <script type="module" defer>
       import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
       function sendit(sendtitle, sendbody){
         (async () => {
@@ -236,6 +236,10 @@
           start();
         })();
       }
+    </script>
+
+    <script>
+      
       // this is just to force resiez
       //window.reload();
       // act nvm
@@ -441,7 +445,7 @@
       let startingpos = [xpos,ypos];
       var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
       var xd = 0;
-      var yd = 0;
+      var yd = 0
       var waiter = '';
       var waiter2 = '';
       var waiter3 = '';
@@ -454,6 +458,8 @@
       var eatwaiter = 0;
       var lastapple = [0,0];
       var elapsedtime = 0;
+      var door = 0.01;
+      var byte = 2*((height)/(boardSize*2.2));
       var start = Date.now();
 
       console.log(applepos);
@@ -483,8 +489,23 @@
           if (counter >= 1){
             let rightdisplay = document.getElementById("all");
             rightdisplay.style.display = "block";
-
           }
+
+          while (!startwaiter && door <= 100){
+            ctx.beginPath();
+            drawboard();
+            drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
+            cir(pointsArr[0],pointsArr[1],(height)/(boardSize*2.2), snakeheadcolor,0,2);
+            //ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillStyle = 'rgba(0,0,0,'+(100-door)/100+')';
+            ctx.fillRect(bounderies[0]-byte,bounderies[1]-byte,bounderies[2]-bounderies[0]+2*byte,bounderies[3]-bounderies[1]+3*byte);
+            // ctx.fillRect(0,0,window.innerWidth,door);
+            // ctx.fillRect(0,window.innerHeight,window.innerWidth,-door);
+            await sleep(2);
+            ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+            door = door+(110-(door))/20;
+          }
+
 
           // let door = document.getElementById("door");
           // let height = door.style.height;
@@ -1010,6 +1031,7 @@
       })();
 
     </script>
+
     <!button id="door" class="opener"></button>
 
     <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
