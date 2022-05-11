@@ -214,7 +214,7 @@
     </canvas>
     </div>
 
-    <script script="sender.js" ></script>
+    <script type="module" src="sender.js"></script>
 
     <script>
       
@@ -772,7 +772,7 @@
             }
 
           }
-          console.log('-- ', breaker);
+          //console.log('-- ', breaker);
           if (breaker){
             break;
             breaker = false;
@@ -810,7 +810,7 @@
         leaderboard1.style.height = (1/10)*(bounderies[3]-bounderies[1])+"px";
         leaderboard1.style.top = bounderies[1]+(4.7/5)*(bounderies[3]-bounderies[1])+"px";
         leaderboard1.style.font = 64*scalefactor+"px";
-        leaderboard1.onclick = function(){sendit('hello','world');};
+        leaderboard1.addEventListener('click', sendit('hello','world'));
         //displaydiv.style.paddingBottom = (3/5)*(bounderies[3]-bounderies[1])+"px";
         //displaydiv.style.margin-bottom = 50*scalefactor+"px";
         displaydiv2.style.fontSize = 32*scalefactor+"px";
