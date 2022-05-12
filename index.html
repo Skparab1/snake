@@ -215,7 +215,7 @@
     </div>
 
     <script type="module" src="sender.js">import { Octokit } from "https://cdn.skypack.dev/@octokit/core";</script>
-
+    
     <script>
       
       // this is just to force resiez
@@ -469,20 +469,20 @@
             rightdisplay.style.display = "block";
           }
 
-          while (!startwaiter && door <= 100){
-            ctx.beginPath();
-            drawboard();
-            drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
-            cir(pointsArr[0],pointsArr[1],(height)/(boardSize*2.2), snakeheadcolor,0,2);
-            //ctx.fillStyle = "rgb(0,0,0)";
-            ctx.fillStyle = 'rgba(0,0,0,'+(100-door)/100+')';
-            ctx.fillRect(bounderies[0]-byte,bounderies[1]-byte,bounderies[2]-bounderies[0]+2*byte,bounderies[3]-bounderies[1]+3*byte);
-            // ctx.fillRect(0,0,window.innerWidth,door);
-            // ctx.fillRect(0,window.innerHeight,window.innerWidth,-door);
-            await sleep(2);
-            ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-            door = door+(110-(door))/20;
-          }
+          // while (!startwaiter && door <= 100){
+          //   ctx.beginPath();
+          //   drawboard();
+          //   drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
+          //   cir(pointsArr[0],pointsArr[1],(height)/(boardSize*2.2), snakeheadcolor,0,2);
+          //   //ctx.fillStyle = "rgb(0,0,0)";
+          //   ctx.fillStyle = 'rgba(0,0,0,'+(100-door)/100+')';
+          //   ctx.fillRect(bounderies[0]-byte,bounderies[1]-byte,bounderies[2]-bounderies[0]+2*byte,bounderies[3]-bounderies[1]+3*byte);
+          //   // ctx.fillRect(0,0,window.innerWidth,door);
+          //   // ctx.fillRect(0,window.innerHeight,window.innerWidth,-door);
+          //   await sleep(2);
+          //   ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+          //   door = door+(110-(door))/20;
+          // }
 
 
           // let door = document.getElementById("door");
@@ -808,7 +808,7 @@
         leaderboard.style.font = 64*scalefactor+"px";
         leaderboard1.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
         leaderboard1.style.height = (1/10)*(bounderies[3]-bounderies[1])+"px";
-        leaderboard1.style.top = bounderies[1]+(4.7/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard1.style.top = bounderies[1]+(5/5)*(bounderies[3]-bounderies[1])+"px";
         leaderboard1.style.font = 64*scalefactor+"px";
         //leaderboard1.addEventListener('click', sendit('hello','world'));
         //displaydiv.style.paddingBottom = (3/5)*(bounderies[3]-bounderies[1])+"px";
@@ -819,6 +819,8 @@
         thisthing.innerHTML = "Score: "+score;
         thisthing = document.getElementById("endgamenotif3");
         thisthing.innerHTML = "Time alive: "+elapsedtime+" seconds";
+        name = document.getElementById('name');
+        name = name.value;
 
         // game over animation
         ctx.beginPath;
@@ -860,28 +862,37 @@
           }, 1200);
 
           setTimeout(function(){
-            // this might be cool if we do it right
-            // ok so basically draw the board but do it nicely
+
+            let sendname = '&='+name;
+            let senddata = '&='+score+'&='+elapsedtime;
 
             (async () => {
+              const { Octokit } = await import('https://cdn.skypack.dev/@octokit/core');
+              console.log('sent?');
               const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
-              async function start() {
-                try {
-                  return await octokit.request('POST /repos/skparab1/snake/issues', {
-                      owner: 'skparab1',
-                      repo: 'snake',
-                      title: sendtitle,
-                      body: sendbody,
-                      tags: 'serverdata'
-                    })
-                } catch(error) {
-                  // whatever ig it just doesnt get sent
-                }
-              };
-              
+              console.log('ye');
+              // dont acutally do it rn
+              if (false){
+                async function start() {
+                  // try {
+                    console.log('into');
+                    return await octokit.request('POST /repos/skparab2/snake/issues', {
+                        owner: 'skparab2',
+                        repo: 'snake',
+                        title: sendname,
+                        body: senddata,
+                      })
+                      console.log('done');
+                  // } catch(error) {
+                  //   // whatever ig it just doesnt get sent
+                  // }
+                };
+              }
               start();
             })();
             
+            // this might be cool if we do it right
+            // ok so basically draw the board but do it nicely
             (async () => {
 
               ctx.beginPath;
@@ -968,7 +979,7 @@
         let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
         console.log('pressed'+actkey);
 
-        if (lost && actkey != 'L'){
+        if (lost && actkey == 'P'){
           location.reload();
         }
         if (actkey == "L"){
