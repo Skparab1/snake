@@ -213,8 +213,11 @@
     <button id="playbtn7" class="game-key" style="width: 50%" onclick="toggleautopilot();">Enable autopilot</button>
     <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
     <br>
-    <h2 style="color: white" id="name display">Name: </h2>
-
+    <h2 style="color: white" id="namedisplay">Name: </h2>
+    <div style="text-align: center">
+      <button id="starter1" class="game-key" onclick="openintro();" style="width: 33%">Change Name</button>
+      <button id="starter2" class="game-key" onclick="openintro();" style="width: 33%">How to play</button>
+    </div>
 
     </div>
     <div style="float: left">
@@ -326,6 +329,32 @@
         bounderies = [window.innerWidth/4+(height)/(boardSize+2)*1.5-leniance,(height)/(boardSize+2)*1.5-leniance,(window.innerWidth/4+height*((boardSize-1)/boardSize))-(height)/(boardSize+2)/2.5+leniance,height*(boardSize-1)/boardSize-(height)/(boardSize+2)/2+leniance];
       }
 
+      function openintro(){
+        closedintro = false;
+        console.log('opened it');
+        let intro = document.getElementById('introducer');
+        let intro1 = document.getElementById('introducer-cover');
+
+        intro.style.display = "block";
+        intro1.style.display = "block";
+
+        // let starter = document.querySelector('.starter');
+        // starter.addEventListener('click', closeintro());
+
+        intropc = 0;
+        (async () => {
+          while (intropc <= 50){
+            console.log('in');
+            intro1.style.opacity = intropc+'%';
+            intro.style.opacity = intropc*2+'%';
+            await sleep(2);
+            intropc += 1;
+          }
+        })();
+        intro.style.display = "block";
+        //intro1.style.display = "block";
+      }
+
       function animateboard(){
         ctx.beginPath();
         (async () => {
@@ -412,6 +441,7 @@
 
       function closeintro(){
         console.log('closed it');
+        closedintro = true;
         (async () => {
           let intro = document.getElementById('introducer');
           let namer = document.getElementById('name');
@@ -428,6 +458,8 @@
             await sleep(2);
             intropc1 -= 1;
           }
+          intro1.style.display = "none";
+          intro.style.display = "none";
         })();
       }
 
@@ -470,8 +502,15 @@
       var door = 0.01;
       var byte = 2*((height)/(boardSize*2.2));
       var start = Date.now();
-      var firsttime = true;
       var intropc = 0;
+      var closedintro = false;
+      var firsttime;
+
+      let reader = localStorage.getItem('firsttime');
+      if (reader == null){
+        localStorage.setItem('firsttime','false');
+        firsttime = true;
+      }
 
       console.log(applepos);
       speed = speed;//*(scalefactor);
@@ -514,9 +553,15 @@
             intro1.style.top = '0px';
             intro1.style.height = window.innerHeight +'px';
 
+            if (!firsttime && counter == 1){
+              intro.style.display = "none";
+              intro1.style.display = "none";
+            }
+
             let namehandler = document.getElementById('name');
-            let namedisp = document.getElementById('name display');
-            namedisp.textcontent = namehandler.value;
+            let namedisp = document.getElementById('namedisplay');
+            //console.log('VALLL '+namehandler.value+'    next'+namedisp.textcontent);
+            namedisp.innerHTML = "Name: "+localStorage.getItem("name");
 
             // let starter = document.querySelector('.starter');
             // starter.addEventListener('click', closeintro());
@@ -576,7 +621,7 @@
                 ctx.fill(); 
                 ctx.beginPath();
                 ctx.fillStyle = 'rgb(255,255,255)';
-                console.log(xfrac,eyesize);
+                //console.log(xfrac,eyesize);
                 ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio-eyerad+xfrac*(eyerad*2), pointsArr[i+1]-(height)/(boardSize*2.2)*ratio-eyerad+yfrac*(eyerad*2), ((height)/(boardSize*2.2)/eyesize)/2, 0, 2 * Math.PI);
                 ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio-eyerad+xfrac*(eyerad*2), pointsArr[i+1]+(height)/(boardSize*2.2)*ratio-eyerad+yfrac*(eyerad*2), ((height)/(boardSize*2.2)/eyesize)/2, 0, 2 * Math.PI);
                 ctx.fill();
@@ -866,10 +911,10 @@
         play_again.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
         play_again.style.font = 64*scalefactor+"px";
         leaderboard.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
-        leaderboard.style.height = (1/10)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
         leaderboard.style.font = 64*scalefactor+"px";
         leaderboard1.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
-        leaderboard1.style.height = (1/10)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard1.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
         leaderboard1.style.top = bounderies[1]+(5/5)*(bounderies[3]-bounderies[1])+"px";
         leaderboard1.style.font = 64*scalefactor+"px";
         //leaderboard1.addEventListener('click', sendit('hello','world'));
@@ -1028,11 +1073,11 @@
           return;
         }
 
-        if (!startwaiter){
-          xd = speed;
-          startwaiter = true;
-          let z = document.getElementById('display');
-          z.textContent = '🐍';
+        if (!startwaiter && (!firsttime || (firsttime && closedintro))){
+            xd = speed;
+            startwaiter = true;
+            let z = document.getElementById('display');
+            z.textContent = '🐍';
         }
 
         const ctx = canvas.getContext('2d');
@@ -1114,7 +1159,7 @@
     </div>
     <div id="endgame-display1" style="position: absolute; left: 500px; top: 100px; display: none">
       <button class="endgame-key" id="leaderboard" onclick="window.location.href='https:skparab1.github.io/snake/leaderboard'">Leaderboard</button>
-      <button class="endgame-key" id="leaderboard2">Send score</button>
+      <button class="endgame-key" id="leaderboard2" style="display: none">Send score</button>
     </div>
 
     <div class="empty" id="all" style="display: none;">
