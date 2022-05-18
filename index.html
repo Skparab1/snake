@@ -15,6 +15,17 @@
         color:rgb(255, 255, 255);
       }
 
+      div.wrapper {
+            width: 300px;
+            height:300px;
+            border:1px solid black;
+      }
+
+      input[type="text"] {
+            display: block;
+            margin : 0 auto;
+      }
+
       ul {
         list-style-type: none;
         margin: 0;
@@ -192,20 +203,19 @@
     <h1 id="header3">Snake game</h1>
 
     <!div class="center" style="width: 100%">
-    <div style="float: right; position: absolute; left: 25px; top: 100px">
-      <h1>Play settings</h1>
-      <br><br>
-      <label><h2>Name:</h2></label><input id="name"></input><br>
-      <br><br>
-      <h2>Save score on leaderboard for each game</h2>
+    <div id="leftpanel" style="float: right; position: absolute; text-align: center; left: 25px; top: 100px;">
+      <h1 style="color: white" id="settings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1><br><br>
       <label class="switch">
-        <input type="checkbox" onclick="namesavetoggle();">
-        <span class="slider round"></span>
-      </label>
-      <br><br><br>
-      <h2>All time high: </h2>
-      <h2>Your best score </h2>
-      <h1 id="leftscore">Your current score: 0</h1>
+      <input type="checkbox" onclick="toggletheme();">
+      <span class="slider round"></span>
+    </label>
+    <h2 style="color: white" id="themedisp">Theme: Dark</h2><br><br>
+    <button id="playbtn7" class="game-key" style="width: 50%" onclick="toggleautopilot();">Enable autopilot</button>
+    <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
+    <br>
+    <h2 style="color: white" id="name display">Name: </h2>
+
+
     </div>
     <div style="float: left">
     <canvas class="myCanvas">
@@ -400,6 +410,27 @@
         ctx.fill(); 
       }
 
+      function closeintro(){
+        console.log('closed it');
+        (async () => {
+          let intro = document.getElementById('introducer');
+          let namer = document.getElementById('name');
+          namer = namer.value;
+          localStorage.setItem("name", namer);
+          let intro1 = document.getElementById('introducer-cover');
+          // intro1.style.display = "none";
+          // intro.style.display = "none";
+          let intropc1 = 50;
+          while (intropc1 >= 0){
+            //console.log('was '+intropc1);
+            intro1.style.opacity = intropc1+'%';
+            intro.style.opacity = intropc1+'%';
+            await sleep(2);
+            intropc1 -= 1;
+          }
+        })();
+      }
+
       const canvas = document.querySelector('.myCanvas');
       const ctx = canvas.getContext('2d');
       const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
@@ -439,6 +470,8 @@
       var door = 0.01;
       var byte = 2*((height)/(boardSize*2.2));
       var start = Date.now();
+      var firsttime = true;
+      var intropc = 0;
 
       console.log(applepos);
       speed = speed;//*(scalefactor);
@@ -457,6 +490,7 @@
             btn.innerHTML = "Disable autopilot";
             let apnotif = document.getElementById('ap notif');
             apnotif.innerHTML = "Autopilot: On";
+
           }
 
           if (counter >= 1 && startwaiter){
@@ -467,6 +501,34 @@
           if (counter >= 1){
             let rightdisplay = document.getElementById("all");
             rightdisplay.style.display = "block";
+            
+            let intro = document.getElementById('introducer');
+            intro.style.left = window.innerWidth/4 +'px';
+            intro.style.width = window.innerWidth/2 +'px';
+            intro.style.top = window.innerHeight/7 +'px';
+            intro.style.height = 5*window.innerHeight/7 +'px';
+
+            let intro1 = document.getElementById('introducer-cover');
+            intro1.style.left = '0px';
+            intro1.style.width = window.innerWidth +'px';
+            intro1.style.top = '0px';
+            intro1.style.height = window.innerHeight +'px';
+
+            let namehandler = document.getElementById('name');
+            let namedisp = document.getElementById('name display');
+            namedisp.textcontent = namehandler.value;
+
+            // let starter = document.querySelector('.starter');
+            // starter.addEventListener('click', closeintro());
+
+            (async () => {
+              if (firsttime && intropc <= 50){
+                intro1.style.opacity = intropc+'%';
+                intro.style.opacity = intropc*2+'%';
+                await sleep(2);
+                intropc += 1;
+              }
+            })();
           }
 
           // while (!startwaiter && door <= 100){
@@ -583,8 +645,8 @@
             score += 1;
             var z1 = document.getElementById('score');
             z1.textContent = 'Score: '+score;
-            z1 = document.getElementById('leftscore');
-            z1.textContent = 'Your current score: '+score;
+            //z1 = document.getElementById('leftscore');
+            //z1.textContent = 'Your current score: '+score;
             let z2 = document.getElementById('display');
             let randnotif = Math.floor(Math.random()*6);
             if (randnotif == 0){
@@ -1057,7 +1119,8 @@
 
     <div class="empty" id="all" style="display: none;">
     <h1 id="score">Score: 0</h1>
-    <h1 id="time">Time: 0</h1>
+    <h1 id="best">Best: 0</h1>
+    <h1 id="time">Time: 0 sec</h1>
     <h1 id="display">Press any key to start</h1><br>
     <br>
     <h1 style="color:white" id="gc"> Game controls</h1>
@@ -1069,14 +1132,25 @@
     <button id="playbtn5" class="game-key" onclick="down();">↓</button>
     <button id="playbtn6" class="game-key" onclick="right();">→</button>
     <br>
-    <h1 style="color: white" id="settings">Settings</h1>
-    <label class="switch">
-      <input type="checkbox" onclick="toggletheme();">
-      <span class="slider round"></span>
-    </label>
-    <h2 style="color: white" id="themedisp">Theme: Dark</h2>
-    <button id="playbtn7" class="game-key" style="width: 15%" onclick="toggleautopilot();">Enable autopilot</button>
-    <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
+    </div>
+
+    <div id="introducer-cover" style="position: absolute; background-color: #AAAAAA;">
+      <h1></h1>
+    </div>
+
+    <div id="introducer" style="position: absolute; background-color: #AAAAAA; opacity: 0%">
+      <h1 style="color: black; text-align: center">Welcome to Snake Game!</h1>
+      <h1 style="color: black; text-align: center">How to play:</h1>
+      <h2 style="color: black; text-align: center">1. Use Arrow keys or wasd to navigate the snake around</h2>
+      <h2 style="color: black; text-align: center">2. Eat all the apples and grow your snake</h2>
+      <h2 style="color: black; text-align: center">3. Don't crash into yourself or the wall</h2>
+      <div style="text-align: center">
+        <label style="color: black; text-align: center"><h2>Enter your name: </h2><input id="name"></input></label>
+        <br>
+        <br>
+        <button id="starter" onclick="closeintro();" class="game-key" style="width: 25%">Ok</button>
+      </div>
+
     </div>
 
     <script>
@@ -1124,6 +1198,8 @@
               theme = 'rgb('+a+','+a+','+a+')';
               let setclr = 'rgb('+(255-a)+','+(255-a)+','+(255-a)+')';
               maketheme('score',setclr);
+              maketheme('best',setclr);
+              maketheme('time',setclr);
               maketheme('display',setclr);
               maketheme('ap notif',setclr);
               maketheme('header',setclr);
@@ -1154,6 +1230,8 @@
               theme = 'rgb('+a+','+a+','+a+')';
               let setclr = 'rgb('+(255-a)+','+(255-a)+','+(255-a)+')';
               maketheme('score',setclr);
+              maketheme('best',setclr);
+              maketheme('time',setclr);
               maketheme('display',setclr);
               maketheme('ap notif',setclr);
               maketheme('header',setclr);
