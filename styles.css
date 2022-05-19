@@ -1,0 +1,185 @@
+body {background-color: rgb(0, 0, 0);}
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+h1{
+  color:rgb(255, 255, 255);
+}
+
+div.wrapper {
+      width: 300px;
+      height:300px;
+      border:1px solid black;
+}
+
+input[type="text"] {
+      display: block;
+      margin : 0 auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #555555;
+}
+li {
+  display: inline;
+  float: left;
+}
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #f78a41;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFFFFF;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: lightgray;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: gray;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px gray;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+
+.game-key{
+  background-color: black;
+  border: 2px solid white; 
+  color: white; 
+  height: 50px; 
+  padding: 10px 5px; 
+  text-align: center; 
+  width: 5%; 
+  display: inline-block; 
+  font-size: 14px; 
+  transition: all 0.2s ease-in-out; 
+  cursor: pointer; 
+  margin-bottom:0.5;
+}
+
+.game-key:hover{
+  background-color: white;
+  border: 2px solid black; 
+  color: black; 
+  transition: all 0.1s ease-in-out; 
+  cursor: pointer; 
+  margin-bottom: 0.5;
+}
+
+.blank-key{
+  background-color: black;
+  border: 2px solid black; 
+  height: 50px; 
+  text-align: center; 
+  width: 5%; 
+  display: inline-block; 
+}
+
+.endgame-key{
+  background-color: rgb(0,100,0);
+  border: 2px solid rgb(0,100,0); 
+  color: rgb(0,200,0); 
+  height: 50px; 
+  text-align: center; 
+  width: 100%; 
+  display: inline-block; 
+  font-size: 64px; 
+  transition: all 0.2s ease-in-out; 
+  cursor: pointer; 
+  margin-bottom: 50px;
+}
+
+.endgame-key:hover{
+  background-color: rgb(0,125,0);
+  border-radius: 25px;
+  text-emphasis-color: rgb(0,100,0);
+  transition: all 0.1s ease-in-out; 
+  cursor: pointer; 
+  margin-bottom: 0.5;
+}
+
+.opener{
+  background-color: black;
+  border-color: black;
+  border-radius: 0px;
+  border-width: 0px;
+  position:absolute; 
+  top:0px; 
+  left:0px; 
+  height:1000px; 
+  width:4000px;
+}
+
+.opener:hover{
+  background-color: black;
+  border-color: black;
+}
+
+h2{
+  color: white;
+}
