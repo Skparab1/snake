@@ -1,0 +1,74 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Issue data pusher
+
+# Controls when the workflow will run
+  # Triggers the workflow when issue is opened
+on:
+  issues:
+    types: [opened]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    steps:
+        
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: remove changes
+        run: git reset -- data.json
+      - name: remove data changes
+        run: git reset --hard
+      
+      - name: pull
+        run: git pull
+        continue-on-error: true
+        
+      - if: startsWith(github.event.issue.title, '&=') == true
+        name: Update name in data.json
+        run: echo "`jq '.data[0].name |= . + "${{ github.event.issue.title }}"' data.json`" > data.json
+      - if: startsWith(github.event.issue.title, '&=') == true
+        name: Update scores in data.json
+        run: echo "`jq '.data[1].scores |= . + "${{ github.event.issue.body }}"' data.json`" > data.json
+    
+      - if: startsWith(github.event.issue.title, '&=') == true
+        name: Commit
+        uses: EndBug/add-and-commit@v9
+        id: commit
+        with:
+          message: 'updating database'
+          add: "data.json --force"
+          pathspec_error_handling: ignore
+          push: true
+        continue-on-error: true
+        
+      - if: startsWith(github.event.issue.title, '&REPLY') == true
+        name: Commit replies
+        uses: EndBug/add-and-commit@v9
+        id: commit-replies
+        with:
+          message: 'updating database'
+          add: "replies.json --force"
+          pathspec_error_handling: ignore
+          push: true
+        continue-on-error: true
+
+      - if: startsWith(github.event.issue.title, '&=') == true
+        name: Close Issue
+        uses: peter-evans/close-issue@v2
+        with:
+          comment: |
+            Issue data processed. Closing issue...
+    
+      - name: remove changes
+        run: git reset -- data.json
+      - name: remove data changes
+        run: git reset --hard
