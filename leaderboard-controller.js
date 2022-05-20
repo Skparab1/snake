@@ -23,6 +23,8 @@
   var names = datanames.split('&=');
   var scores = datascores.split('&=');
 
+  console.log(names,scores);
+
   // names = ['Shubham','skparab1','poisonfy'];
   // scores = ['&=8&t36.997','&=7&t18.458','&=2&t38.261'];
   let points = [];
