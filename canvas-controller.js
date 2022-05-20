@@ -887,7 +887,7 @@
           location.reload();
         }
         if (lost && actkey == "L" && closedintro){
-          window.location.href = 'https:skparab1.github.io/snake/leaderboard';
+          window.location.href = 'https://skparab1.github.io/snake/leaderboard.html';
         }
 
         if (waiter == ''){
