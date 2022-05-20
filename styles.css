@@ -183,3 +183,78 @@ input:checked + .slider:before {
 h2{
   color: white;
 }
+
+.fullwidth{
+  width: 100%;
+  background-color: #AAAAAA;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+.mid-container{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid gray;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.center-container{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid gray;
+  border-left: 2px solid black;
+}
+
+.left-container{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid gray;
+  border-right: 2px solid black;
+}
+
+.right-container{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid grey;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.mid-container-header{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid white;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.center-container-header{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid white;
+  border-left: 2px solid black;
+}
+
+.left-container-header{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid white;
+  border-right: 2px solid black;
+}
+
+.right-container-header{
+  width: 18.4%;
+  float: left;
+  text-align: center;
+  border: 2px solid white;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}

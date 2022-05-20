@@ -4,7 +4,194 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake game</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+          body {background-color: rgb(0, 0, 0);}
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      h1{
+        color:rgb(255, 255, 255);
+      }
+
+      div.wrapper {
+            width: 300px;
+            height:300px;
+            border:1px solid black;
+      }
+
+      input[type="text"] {
+            display: block;
+            margin : 0 auto;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #555555;
+      }
+      li {
+        display: inline;
+        float: left;
+      }
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover {
+        background-color: #f78a41;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #FFFFFF;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: lightgray;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background-color: gray;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px gray;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+
+      .center {
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+      }
+
+      .game-key{
+        background-color: black;
+        border: 2px solid white; 
+        color: white; 
+        height: 50px; 
+        padding: 10px 5px; 
+        text-align: center; 
+        width: 5%; 
+        display: inline-block; 
+        font-size: 14px; 
+        transition: all 0.2s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom:0.5;
+      }
+
+      .game-key:hover{
+        background-color: white;
+        border: 2px solid black; 
+        color: black; 
+        transition: all 0.1s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom: 0.5;
+      }
+      
+      .blank-key{
+        background-color: black;
+        border: 2px solid black; 
+        height: 50px; 
+        text-align: center; 
+        width: 5%; 
+        display: inline-block; 
+      }
+
+      .endgame-key{
+        background-color: rgb(0,100,0);
+        border: 2px solid rgb(0,100,0); 
+        color: rgb(0,200,0); 
+        height: 50px; 
+        text-align: center; 
+        width: 100%; 
+        display: inline-block; 
+        font-size: 64px; 
+        transition: all 0.2s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom: 50px;
+      }
+
+      .endgame-key:hover{
+        background-color: rgb(0,125,0);
+        border-radius: 25px;
+        text-emphasis-color: rgb(0,100,0);
+        transition: all 0.1s ease-in-out; 
+        cursor: pointer; 
+        margin-bottom: 0.5;
+      }
+
+      .opener{
+        background-color: black;
+        border-color: black;
+        border-radius: 0px;
+        border-width: 0px;
+        position:absolute; 
+        top:0px; 
+        left:0px; 
+        height:1000px; 
+        width:4000px;
+      }
+
+      .opener:hover{
+        background-color: black;
+        border-color: black;
+      }
+
+      h2{
+        color: white;
+      }
+
+    </style>
   </head>
   <body>
     <ul>
@@ -28,8 +215,8 @@
     <br>
     <h2 style="color: white" id="namedisplay">Name: </h2>
     <div style="text-align: center">
-      <button id="starter1" class="game-key" onclick="openintro();" style="width: 49%">Change Name</button>
-      <button id="starter2" class="game-key" onclick="openintro();" style="width: 49%">How to play</button>
+      <button id="starter1" class="game-key" onclick="openintro();" style="width: 33%">Change Name</button>
+      <button id="starter2" class="game-key" onclick="openintro();" style="width: 33%">How to play</button>
     </div>
 
     </div>
@@ -42,7 +229,923 @@
 
     <script type="module" src="sender.js">import { Octokit } from "https://cdn.skypack.dev/@octokit/core";</script>
     
-    <script src="canvas-controller.js"></script>
+    <script>
+      
+      // this is just to force resiez
+      //window.reload();
+      // act nvm
+
+      // alr anindit here are the toggle constants
+      const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
+      const speedfactor = 190; //directly porportional to these many pixels per second (but not exactly)
+      const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
+      const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
+      // emphasis background colors
+      const pixelbackground1EMP = 'rgb(0,120,0)';
+      const pixelbackground2EMP = 'rgb(0,160,0)';
+      var bordercolor = 'rgb(0,100,0)'; //bordercolor
+      const snakecolor1 = 'rgb(0,0,100)'; //snakecolor1
+      const snakecolor2 = 'rgb(0,0,255)'; //snakecolor2
+      const snakeheadcolor = 'rgb(200,100,0)'; //apple color
+      // arrays for the same things above for logistical things
+      var snakecolor1ARR = [0,100,0]; //snakecolor1
+      var snakecolor2ARR = [0,0,255]; //snakecolor2
+      var snakeheadcolorARR = [200,100,0];; //apple color
+      var eyesize = 2 // squarelength/this pixels
+      const applecolor = 'rgb(150,0,0)'; //apple color
+      const seglength = 75; //snake segment length in pixels
+      const addlength = 30; //increase snake length by these many pixels when it eats an apple
+      const borderleniance = 0.5 // the game will ignore a wall hit as long as it is less than 0.5 boxes away from the border
+      const rendertime = 10 // render every 10 snake circles
+      const endcurtainspeed = 0.25 // seconds wait in between frames of each pixel expansion (for game over animation)
+      var autopilot = false; // this is for fun but it turns on with the localstorage reader
+      var lost = false;
+      var theme = "black";
+
+      if (localStorage.getItem('autopilot') == "true"){
+        autopilot = true;
+        bordercolor = "rgb(100,0,0)";
+      }
+
+      if (localStorage.getItem('autopilot') == null){
+        autopilot = false;
+        localStorage.setItem('autopilot',"false");
+      }
+
+      if (window.location.href.includes('?autopilot=true')){ // this is an override in case anyone still uses it
+        autopilot = true;
+        bordercolor = "rgb(100,0,0)";
+      }
+
+      // dont do anythign below this
+      const turningPrecision = true;
+
+      function drawline(x,y,x1,y1,clr){
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = clr;
+        ctx.moveTo(x,y);
+        ctx.lineTo(x1,y1)
+        ctx.stroke();
+      }
+
+      function drawboard(){
+        ctx.beginPath();
+        let x = 0;
+        let actx = window.innerWidth/4;
+        let clrnow = pixelbackground1;
+        while (x < boardSize+2){
+          let y = 0;
+          let acty = 0;
+          while (y < boardSize+4){
+            if (clrnow == pixelbackground1){
+              clrnow = pixelbackground2;
+            } else {
+              clrnow = pixelbackground1;
+            }
+            ctx.fillStyle = clrnow;
+            if (x == 0 || x == boardSize+1 || y == 0 || y == boardSize+1){
+              let reserve = clrnow;
+              ctx.fillStyle = bordercolor;
+              ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2));
+              clrnow = reserve;
+            } else {
+              ctx.fillRect(actx, acty, height/(boardSize+2), height/(boardSize+2));
+            }
+            acty += (height)/(boardSize+2);
+            y += 1;
+            //console.log('drew smth');
+            }
+          
+          if (clrnow == pixelbackground1){
+            clrnow = pixelbackground2;
+          } else {
+            clrnow = pixelbackground1;
+          }
+          actx += (height)/(boardSize+2);
+          x += 1;
+        }
+        let leniance = ((height)/(boardSize+2))*borderleniance;
+        bounderies = [window.innerWidth/4+(height)/(boardSize+2)*1.5-leniance,(height)/(boardSize+2)*1.5-leniance,(window.innerWidth/4+height*((boardSize-1)/boardSize))-(height)/(boardSize+2)/2.5+leniance,height*(boardSize-1)/boardSize-(height)/(boardSize+2)/2+leniance];
+      }
+
+      function openintro(){
+        closedintro = false;
+        console.log('opened it');
+        let intro = document.getElementById('introducer');
+        let intro1 = document.getElementById('introducer-cover');
+
+        intro.style.display = "block";
+        intro1.style.display = "block";
+
+        // let starter = document.querySelector('.starter');
+        // starter.addEventListener('click', closeintro());
+
+        intropc = 0;
+        (async () => {
+          while (intropc <= 50){
+            console.log('in');
+            intro1.style.opacity = intropc+'%';
+            intro.style.opacity = intropc*2+'%';
+            await sleep(2);
+            intropc += 1;
+          }
+        })();
+        intro.style.display = "block";
+        //intro1.style.display = "block";
+      }
+
+      function animateboard(){
+        ctx.beginPath();
+        (async () => {
+          let anim = 0;
+          while (anim < 101){
+            let x = 0;
+            let actx = window.innerWidth/4;
+            let clrnow = pixelbackground1EMP;
+
+            while (x < boardSize+2){
+              let y = 0;
+              let acty = 0;
+              while (y < boardSize+4){
+                
+                if (clrnow == pixelbackground1EMP){
+                  clrnow = pixelbackground2EMP;
+                } else {
+                  clrnow = pixelbackground1EMP;
+                }
+
+                //console.log(anim,'wut');
+                ctx.fillStyle = clrnow;
+                if (x == 0 || x == boardSize+1 || y == 0 || y == boardSize+1){
+                  if (clrnow == pixelbackground1EMP){
+                    clrnow = pixelbackground2EMP;
+                  } else {
+                    clrnow = pixelbackground1EMP;
+                  }
+                  let reserve = clrnow;
+                  ctx.fillStyle = bordercolor;
+                  ctx.fillRect(actx, acty, (height/(boardSize+2))*anim/100, (height/(boardSize+2))*anim/100);
+                  clrnow = reserve;
+                  //console.log(anim,'in first');
+                } else {
+                  //clrnow = 'rgb(0,0,0)';
+                  ctx.fillStyle = clrnow;
+                  ctx.fillRect(actx, acty, (height/(boardSize+2)), (height/(boardSize+2))*anim/100);
+                  //console.log(anim,'in');
+                }
+                acty += (height)/(boardSize+2);
+                y += 1;
+                //console.log('drew smth');
+                }
+              
+              if (clrnow == pixelbackground1EMP){
+                clrnow = pixelbackground2EMP;
+              } else {
+                clrnow = pixelbackground1EMP;
+              }
+              actx += (height)/(boardSize+2);
+              x += 1;
+            }
+            //console.log(anim,'in but out');
+            await sleep(2);
+            anim += 2;
+          }
+        })();
+      }
+
+      function drawcircle(x,y,rad,circlr){
+        ctx.beginPath();
+        ctx.fillStyle = circlr;
+        ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
+        ctx.fill(); 
+      }
+
+      function cir(x,y,rad,circlr,start,end){
+        ctx.beginPath();
+        ctx.fillStyle = circlr;
+        ctx.arc(x, y, rad, start * Math.PI, end * Math.PI); //-((height)/(boardSize+2)/2)
+        ctx.fill(); 
+      }
+
+      function drawapple(x,y,rad){
+        ctx.beginPath();
+        ctx.fillStyle = applecolor;
+        ctx.arc(x, y, rad, 0, 2 * Math.PI); //-((height)/(boardSize+2)/2)
+        ctx.fill(); 
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(0,255,0)';
+        ctx.arc(x, y-rad/2, rad/4, 0, 2 * Math.PI);
+        ctx.fill(); 
+      }
+
+      function closeintro(){
+        console.log('closed it');
+        closedintro = true;
+        (async () => {
+          let intro = document.getElementById('introducer');
+          let namer = document.getElementById('name');
+          namer = namer.value;
+          localStorage.setItem("name", namer);
+          let intro1 = document.getElementById('introducer-cover');
+          // intro1.style.display = "none";
+          // intro.style.display = "none";
+          let intropc1 = 50;
+          while (intropc1 >= 0){
+            //console.log('was '+intropc1);
+            intro1.style.opacity = intropc1+'%';
+            intro.style.opacity = intropc1+'%';
+            await sleep(2);
+            intropc1 -= 1;
+          }
+          intro1.style.display = "none";
+          intro.style.display = "none";
+        })();
+      }
+
+      const canvas = document.querySelector('.myCanvas');
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width = window.innerWidth/2+window.innerWidth/4; 
+      const height = canvas.height = window.innerHeight-100;
+      var bounderies = [0,0,0,0];
+      var score = 0;
+      canvas.style.left = "100px";
+      canvas.style.top = "100px";
+
+      //canvas outline
+      //ctx.strokeStyle = 'rgb(125,125,125)';
+      ctx.fillStyle = theme;
+      ctx.fillRect(0, 0, width, height);
+      //console.log('printeddd');
+
+      drawboard();
+
+      var speed = ((height)/(boardSize+2))/(200-speedfactor); // 1/4 square/frame?
+      let xpos = window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2)*2;
+      let ypos = ((height)/(boardSize+2)*1.5)+(height)/(boardSize+2)*(boardSize/2);
+      let startingpos = [xpos,ypos];
+      var pointsArr = [xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,xpos,ypos,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      var xd = 0;
+      var yd = 0
+      var waiter = '';
+      var waiter2 = '';
+      var waiter3 = '';
+      var startwaiter = false;
+      var applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2), Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+      var scalefactor = window.innerWidth/2048;
+      var initxpos = xpos;
+      var initypos = ypos;
+      var breaker = false;
+      var eatwaiter = 0;
+      var lastapple = [0,0];
+      var elapsedtime = 0;
+      var door = 0.01;
+      var byte = 2*((height)/(boardSize*2.2));
+      var start = Date.now();
+      var intropc = 0;
+      var closedintro = false;
+      var firsttime;
+
+      let reader = localStorage.getItem('firsttime');
+      if (reader == null){
+        localStorage.setItem('firsttime','false');
+        firsttime = true;
+      }
+
+      console.log(applepos);
+      speed = speed;//*(scalefactor);
+
+      const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+      (async () => {
+        let counter = 0;
+        while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3])){ // took out waiters  || waiter != '' || waiter2 != ''
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          speed = speed * 1.00001;
+
+
+          if (autopilot && counter >= 1){
+            let btn = document.getElementById('playbtn7');
+            btn.innerHTML = "Disable autopilot";
+            let apnotif = document.getElementById('ap notif');
+            apnotif.innerHTML = "Autopilot: On";
+
+          }
+
+          if (counter >= 1 && startwaiter){
+            document.getElementById('time').innerHTML = 'Time: '+(Date.now() - start)/1000 +" sec";
+            elapsedtime = (Date.now() - start)/1000;
+          }
+
+          if (counter >= 1){
+            let rightdisplay = document.getElementById("all");
+            rightdisplay.style.display = "block";
+            
+            let intro = document.getElementById('introducer');
+            intro.style.left = window.innerWidth/4 +'px';
+            intro.style.width = window.innerWidth/2 +'px';
+            intro.style.top = window.innerHeight/7 +'px';
+            intro.style.height = 5*window.innerHeight/7 +'px';
+
+            let intro1 = document.getElementById('introducer-cover');
+            intro1.style.left = '0px';
+            intro1.style.width = window.innerWidth +'px';
+            intro1.style.top = '0px';
+            intro1.style.height = window.innerHeight +'px';
+
+            if (!firsttime && counter == 1){
+              intro.style.display = "none";
+              intro1.style.display = "none";
+            }
+
+            let namehandler = document.getElementById('name');
+            let namedisp = document.getElementById('namedisplay');
+            //console.log('VALLL '+namehandler.value+'    next'+namedisp.textcontent);
+            namedisp.innerHTML = "Name: "+localStorage.getItem("name");
+
+            // let starter = document.querySelector('.starter');
+            // starter.addEventListener('click', closeintro());
+
+            (async () => {
+              if (firsttime && intropc <= 50){
+                intro1.style.opacity = intropc+'%';
+                intro.style.opacity = intropc*2+'%';
+                await sleep(2);
+                intropc += 1;
+              }
+            })();
+          }
+
+          // while (!startwaiter && door <= 100){
+          //   ctx.beginPath();
+          //   drawboard();
+          //   drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
+          //   cir(pointsArr[0],pointsArr[1],(height)/(boardSize*2.2), snakeheadcolor,0,2);
+          //   //ctx.fillStyle = "rgb(0,0,0)";
+          //   ctx.fillStyle = 'rgba(0,0,0,'+(100-door)/100+')';
+          //   ctx.fillRect(bounderies[0]-byte,bounderies[1]-byte,bounderies[2]-bounderies[0]+2*byte,bounderies[3]-bounderies[1]+3*byte);
+          //   // ctx.fillRect(0,0,window.innerWidth,door);
+          //   // ctx.fillRect(0,window.innerHeight,window.innerWidth,-door);
+          //   await sleep(2);
+          //   ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+          //   door = door+(110-(door))/20;
+          // }
+
+
+          // let door = document.getElementById("door");
+          // let height = door.style.height;
+          // while (height >= 10){
+          //   door.style.height = height;
+          //   height = height-10;
+          //   await sleep(2);
+          // }
+    
+          //await sleep(2);
+          drawboard();
+          let i = 0;
+          while (i <= pointsArr.length-1){
+            if (i > (pointsArr.length-15)){
+              // this is the head then
+              // lemme get some eyes
+              drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakeheadcolor);
+              ctx.beginPath();
+              ctx.fillStyle = 'rgb(0,0,0)';
+              let ratio = 1/2;
+              let eyerad = (height)/(boardSize*2.2)/eyesize;
+              let xfrac = (pointsArr[i]-bounderies[0])/(bounderies[2]-bounderies[0]);
+              let yfrac = (pointsArr[i+1]-bounderies[1])/(bounderies[3]-bounderies[1]);
+              if (xd > 0 || (xd == 0 && yd == 0)){
+                ctx.fillStyle = 'rgb(0,0,0)';
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.fill(); 
+                ctx.beginPath();
+                ctx.fillStyle = 'rgb(255,255,255)';
+                //console.log(xfrac,eyesize);
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio-eyerad+xfrac*(eyerad*2), pointsArr[i+1]-(height)/(boardSize*2.2)*ratio-eyerad+yfrac*(eyerad*2), ((height)/(boardSize*2.2)/eyesize)/2, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio-eyerad+xfrac*(eyerad*2), pointsArr[i+1]+(height)/(boardSize*2.2)*ratio-eyerad+yfrac*(eyerad*2), ((height)/(boardSize*2.2)/eyesize)/2, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.beginPath();
+              }
+              if (xd < 0){
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+              if (yd < 0){
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]-(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+              if (yd > 0){
+                ctx.arc(pointsArr[i]+(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+                ctx.arc(pointsArr[i]-(height)/(boardSize*2.2)*ratio,pointsArr[i+1]+(height)/(boardSize*2.2)*ratio, (height)/(boardSize*2.2)/eyesize, 0, 2 * Math.PI);
+              }
+
+              ctx.fill(); 
+            } else {
+              if (i % seglength*2 < seglength){
+                drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor1);
+              } else {
+                drawcircle(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor2);
+              }
+            }
+
+            //old overlapper
+            // let j = 0;
+            // if (j <= pointsArr.length-1 && false){
+            //   if (pointsArr[i] == pointsArr[j] && pointsArr[i+1] == pointsArr[j+1] && i != j && pointsArr[j] != 0 && pointsArr[j+1] != 0 && pointsArr[j] != xpos && pointsArr[j] != ypos){
+            //     // let z4 = document.getElementById('display');
+            //     // z4.textContent = 'YOU HIT YOURSELF!';
+            //     console.log('hit urself');
+            //     //console.log(i,j);
+            //     //console.log(pointsArr[i],pointsArr[j]);
+            //   }
+            //   j += 1;
+            // }
+
+            i += 2;
+            }
+
+          drawapple(applepos[0],applepos[1],(height)/(boardSize*2.2));
+          xpos += xd;
+          ypos += yd;
+          counter += 1;
+          await sleep(2);
+          //console.log('drew at '+xpos+' '+ypos);
+          pointsArr.push(xpos);
+          pointsArr.push(ypos);
+          pointsArr.shift();
+          pointsArr.shift();
+
+          if (Math.abs(xpos-applepos[0]) < 2 && Math.abs(ypos-applepos[1]) < 2){
+            //basically you got it
+            // set lastapple
+            lastapple = applepos;
+
+            //relocate apple
+            applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2), Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+            //ignore overlap for some time
+            eatwaiter = 7;
+
+            //update score
+            score += 1;
+            var z1 = document.getElementById('score');
+            z1.textContent = 'Score: '+score;
+            //z1 = document.getElementById('leftscore');
+            //z1.textContent = 'Your current score: '+score;
+            let z2 = document.getElementById('display');
+            let randnotif = Math.floor(Math.random()*6);
+            if (randnotif == 0){
+              randnotif = "Good job!";
+            } else if (randnotif == 1){
+              randnotif = "Great job!";
+            } else if (randnotif == 2){
+              randnotif = "Awesome!";
+            } else if (randnotif == 3){
+              randnotif = "Nice!";
+            } else if (randnotif == 4){
+              randnotif = "Cringe!";
+            } else if (randnotif == 5){
+              randnotif = "🐍";
+            }
+            
+            z2.textContent = randnotif;
+
+            if (autopilot){
+              let btn = document.getElementById('playbtn7');
+              btn.innerHTML = "Disable autopilot";
+            }
+
+
+            //update length
+            let z = 0;
+            while (z < addlength){
+              pointsArr.push(0);
+              pointsArr.push(0);
+              z += 1;
+            }
+          }
+
+          eatwaiter -= 1;
+
+          let ct3 = window.innerWidth/4+(height)/(boardSize+2)*1.5;
+          while (ct3 < xpos + (height)/(boardSize+2) && xd != 0){
+            if (Math.abs(ct3-xpos) < 2){
+              if (waiter == 'up'){
+                xd = 0;
+                yd = -speed;
+              } else if (waiter == 'down'){
+                xd = 0;
+                yd = speed;
+              }
+              waiter = '';
+              if (waiter2 == 'up'){
+                xd = 0;
+                yd = -speed;
+              } else if (waiter2 == 'down'){
+                xd = 0;
+                yd = speed;
+              }
+              waiter2 = '';
+              if (waiter3 == 'up'){
+                xd = 0;
+                yd = -speed;
+              } else if (waiter3 == 'down'){
+                xd = 0;
+                yd = speed;
+              }
+              waiter3 = '';
+            }
+           ct3 += (height)/(boardSize+2);
+          }
+
+          ct3 = ((height)/(boardSize+2)*1.5);
+          while (ct3 < ypos + (height)/(boardSize+2) && yd != 0){
+            if (Math.abs(ct3-ypos) < 2){
+              if (waiter == 'right'){
+                xd = speed;
+                yd = 0;
+              } else if (waiter == 'left'){
+                xd = -speed;
+                yd = 0;
+              }
+              waiter = '';
+              if (waiter2 == 'right'){
+                xd = speed;
+                yd = 0;
+              } else if (waiter2 == 'left'){
+                xd = -speed;
+                yd = 0;
+              }
+              waiter2 = '';
+              if (waiter3 == 'right'){
+                xd = speed;
+                yd = 0;
+              } else if (waiter3 == 'left'){
+                xd = -speed;
+                yd = 0;
+              }
+              waiter3 = '';
+            }
+           ct3 += (height)/(boardSize+2);
+          }
+          //   ct1 += (height)/(boardSize+2);
+
+          // overlap experiment below
+          let overlapgetter = 0;
+          while (overlapgetter < pointsArr.length && !autopilot){
+            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/2 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
+              //overlapped
+              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/2 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/2)){
+                // checked to make sure wasnt last apple pos
+                console.log(pointsArr.length-2,overlapgetter);
+                console.log('overlapped');
+                //alert('you lost');
+                breaker = true;
+                break;
+              }
+            }
+            overlapgetter += 2;
+          }
+
+          if (breaker){
+            break;
+          }
+
+          // autopilot stuff below
+          if (autopilot){
+            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 2*scalefactor){ // x coord is same and itsa not vertically moving
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+              console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
+            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 2*scalefactor){ // y coord is same
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+              console.log(pointsArr[pointsArr.length-1], applepos[1]);
+            }
+          }
+
+          if (autopilot){
+            if (Math.abs(pointsArr[pointsArr.length-2]-applepos[0]) < 7*scalefactor){ // x coord is same and itsa not vertically moving
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+              console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
+            } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 7*scalefactor){ // y coord is same
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+              console.log(pointsArr[pointsArr.length-1], applepos[1]);
+            }
+
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 25*scalefactor && yd == 0){ // close to left boundery
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+              console.log('got triggered1');
+            }
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 25*scalefactor && xd == 0){
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+              console.log('got triggered');
+            }
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 25*scalefactor && yd == 0){
+              if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
+                waiter = 'up';
+              } else {
+                waiter = 'down';
+              }
+            }
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[3]) <= 25*scalefactor && xd == 0){
+              if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
+                waiter = 'left';
+              } else {
+                waiter = 'right';
+              }
+            }
+
+          }
+          //console.log('-- ', breaker);
+          if (breaker){
+            break;
+            breaker = false;
+          }
+        }
+        //console.log('did whole thing');
+        let z3 = document.getElementById('display');
+        z3.textContent = 'Game over! reload to play again';
+        //alert('You lost');
+
+        //set up buttons for endgame
+
+        let displaydiv = document.getElementById('endgame-display');
+        let displaydiv2 = document.getElementById('endgame-display2');
+        let displaydiv1 = document.getElementById('endgame-display1');
+        let play_again = document.getElementById('play_again');
+        let leaderboard = document.getElementById('leaderboard');
+        let leaderboard1 = document.getElementById('leaderboard2');
+        displaydiv.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
+        displaydiv.style.top = bounderies[1]+(1/5*(bounderies[3]-bounderies[1]))+"px";
+        displaydiv.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
+        displaydiv1.style.left = bounderies[0]+(1/10)*(bounderies[2]-bounderies[0])+"px";
+        displaydiv1.style.top = bounderies[1]+(4.35/5)*(bounderies[3]-bounderies[1])+"px";
+        displaydiv2.style.left = bounderies[0]+"px";
+        displaydiv2.style.width = (bounderies[2]-bounderies[0])+"px";
+        displaydiv2.style.top = bounderies[1]+(2/5)*(bounderies[3]-bounderies[1])+"px";
+        displaydiv1.style.height = bounderies[0]+(1/5*(bounderies[2]-bounderies[0]))+"px";
+        play_again.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
+        play_again.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
+        play_again.style.font = 64*scalefactor+"px";
+        leaderboard.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
+        leaderboard.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard.style.font = 64*scalefactor+"px";
+        leaderboard1.style.width = (8/10)*(bounderies[2]-bounderies[0])+"px";
+        leaderboard1.style.height = (1/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard1.style.top = bounderies[1]+(5/5)*(bounderies[3]-bounderies[1])+"px";
+        leaderboard1.style.font = 64*scalefactor+"px";
+        //leaderboard1.addEventListener('click', sendit('hello','world'));
+        //displaydiv.style.paddingBottom = (3/5)*(bounderies[3]-bounderies[1])+"px";
+        //displaydiv.style.margin-bottom = 50*scalefactor+"px";
+        displaydiv2.style.fontSize = 32*scalefactor+"px";
+        let thisthing = displaydiv2.children;
+        thisthing = document.getElementById("endgamenotif2");
+        thisthing.innerHTML = "Score: "+score;
+        thisthing = document.getElementById("endgamenotif3");
+        thisthing.innerHTML = "Time alive: "+elapsedtime+" seconds";
+        name = document.getElementById('name');
+        name = name.value;
+
+        // game over animation
+        ctx.beginPath;
+
+        (async () => {
+
+          setTimeout(function(){
+
+            (async () => {
+              let z = 0;
+              while (z < 50){
+                //drawboard();
+                let i = 0;
+                while (i <= pointsArr.length-1){
+                  if (i <= (pointsArr.length-15)){
+                    if (i % seglength*2 < seglength){
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor1,0,2);
+                    } else {
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2), snakecolor2,0,2);
+                    }
+                  } else {
+                    // this is the head
+                    let se = 0;
+                    while (se < 2){
+                      cir(pointsArr[i],pointsArr[i+1],(height)/(boardSize*2.2)+z*scalefactor, snakeheadcolor,se,se+0.1);
+                      se += 0.2;
+                    }
+                  }
+                  i += 2;
+                }
+                await sleep(2);
+                z += (55-z)/20;
+              }
+            })();
+          },0);
+
+          setTimeout(function(){
+            animateboard();
+          }, 1200);
+
+          setTimeout(function(){
+
+            let sendname = '&='+name;
+            let senddata = '&='+score+'&='+elapsedtime;
+
+            (async () => {
+              const { Octokit } = await import('https://cdn.skypack.dev/@octokit/core');
+              console.log('sent?');
+              const octokit = new Octokit({ auth: "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" }); // you shouldnt hardcode this but its private so its ok
+              console.log('ye');
+              // dont acutally do it rn
+              if (false){
+                async function start() {
+                  // try {
+                    console.log('into');
+                    return await octokit.request('POST /repos/skparab2/snake/issues', {
+                        owner: 'skparab2',
+                        repo: 'snake',
+                        title: sendname,
+                        body: senddata,
+                      })
+                      console.log('done');
+                  // } catch(error) {
+                  //   // whatever ig it just doesnt get sent
+                  // }
+                };
+              }
+              start();
+            })();
+            
+            // this might be cool if we do it right
+            // ok so basically draw the board but do it nicely
+            (async () => {
+
+              ctx.beginPath;
+              ctx.fillStyle = bordercolor;
+
+              let endgame = 0;
+              let bordereraser = 0;
+              while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
+                ctx.fillStyle = theme;
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1], -bordereraser, bounderies[3]-bounderies[1]);
+                ctx.fillRect(bounderies[0], bounderies[1], bounderies[2]-bounderies[0], -bordereraser);
+                ctx.fillRect(bounderies[2]+(height)/(boardSize+2), bounderies[1], bordereraser, bounderies[3]-bounderies[1]);
+                //ctx.fillRect(bounderies[2], bounderies[3], bounderies[2]-bounderies[0], bordereraser);
+                ctx.fillStyle = bordercolor;
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]-(height)/(boardSize+2), bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), endgame+(height)/(boardSize+2))
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+bounderies[3], bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -endgame)
+                endgame += 4;
+                bordereraser += 1;
+                await sleep(endcurtainspeed);
+              }
+
+              displaydiv.style.display = "inline-block";
+              displaydiv1.style.display = "inline-block";
+              displaydiv2.style.display = "inline-block";
+              
+              leaderboard.style.color = "rgb(0,"+100+",0)";
+              play_again.style.color = "rgb(0,"+100+",0)";
+              play_again.style.bordercolor = "rgb(0,"+100+",0)";
+
+              endgame = 0;
+              while (endgame <= bounderies[3]-(height)/(boardSize+2)){
+                ctx.fillStyle = pixelbackground2;
+                ctx.fillRect(bounderies[0],bounderies[1],bounderies[2]-bounderies[0],bounderies[3]-bounderies[1]);
+                
+                play_again.style.color = "rgb(0,"+(100*endgame/(bounderies[3]-(height)/(boardSize+2))+100)+",0)";
+                leaderboard.style.color = "rgb(0,"+(100*endgame/(bounderies[3]-(height)/(boardSize+2))+100)+",0)";
+
+                ctx.fillStyle = bordercolor;
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), bounderies[3]-endgame)
+                ctx.fillRect(bounderies[0]-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2, bounderies[3]-bounderies[1]+2*(height)/(boardSize+2), -(bounderies[3]-endgame))
+                endgame += 10;
+                await sleep(endcurtainspeed);
+              }
+            
+              endgame = 0;
+              ctx.strokeStyle = 'rgb(0,0,0)';
+              ctx.font = 64*scalefactor+"px Arial";
+              ctx.lineWidth = '10px';
+              while (endgame <= bounderies[3]/2+(height)/(boardSize+2)/2){
+                ctx.fillStyle = pixelbackground2;
+                ctx.fillRect(bounderies[0],bounderies[1],bounderies[2]-bounderies[0],bounderies[3]-bounderies[1]);
+                //ctx.strokeRect(bounderies[0],bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])+(height)/(boardSize+2),2*(height)/(boardSize+2));
+                ctx.fillStyle = 'rgb(0,0,0)';
+                //ctx.fillText("GAME OVER!", bounderies[0]+(bounderies[2]-bounderies[0])/4-(height)/(boardSize+2), bounderies[1]+(bounderies[3]-bounderies[1])/2+(height)/(boardSize+2)*7/8); 
+                ctx.fillStyle = bordercolor;
+                ctx.fillRect(bounderies[0], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),(bounderies[2]-bounderies[0])/2-endgame, (height)/(boardSize+2)*2);
+                ctx.fillRect(bounderies[2], bounderies[1]+(bounderies[3]-bounderies[1])/2-(height)/(boardSize+2),-((bounderies[2]-bounderies[0])/2-endgame), (height)/(boardSize+2)*2);
+                endgame += 10;
+                await sleep(endcurtainspeed);
+              }
+              lost = true;
+            })();
+          },1500);
+        })();
+      })();
+
+      (async () => {
+      window.addEventListener("keydown", function(event) {
+
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (!startwaiter && (!firsttime || (firsttime && closedintro))){
+            xd = speed;
+            startwaiter = true;
+            let z = document.getElementById('display');
+            z.textContent = '🐍';
+        }
+
+        const ctx = canvas.getContext('2d');
+        
+        let actkey = event.code.replace('Key','')
+        let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+        console.log('pressed'+actkey);
+
+        if (lost && actkey == 'P'){
+          location.reload();
+        }
+        if (actkey == "L"){
+          window.location.href = 'https:skparab1.github.io/snake/leaderboard';
+        }
+
+        if (waiter == ''){
+          if (actkey == 'ArrowLeft' || actkey == 'A'){
+            waiter = 'left';
+          }
+          if (actkey == 'ArrowRight' || actkey == 'D'){
+            waiter = 'right';
+          }
+          if (actkey == 'ArrowUp' || actkey == 'W'){
+            waiter = 'up';
+          }
+          if (actkey == 'ArrowDown' || actkey == 'S'){
+            waiter = 'down';
+          }
+        } else {
+          if (waiter2 == ''){
+            if (actkey == 'ArrowLeft' || actkey == 'A'){
+              waiter2 = 'left';
+            }
+            if (actkey == 'ArrowRight' || actkey == 'D'){
+              waiter2 = 'right';
+            }
+            if (actkey == 'ArrowUp' || actkey == 'W'){
+              waiter2 = 'up';
+            }
+            if (actkey == 'ArrowDown' || actkey == 'S'){
+              waiter2 = 'down';
+            }
+          } else {
+            if (actkey == 'ArrowLeft' || actkey == 'A'){
+              waiter3 = 'left';
+            }
+            if (actkey == 'ArrowRight' || actkey == 'D'){
+              waiter3 = 'right';
+            }
+            if (actkey == 'ArrowUp' || actkey == 'W'){
+              waiter3 = 'up';
+            }
+            if (actkey == 'ArrowDown' || actkey == 'S'){
+              waiter3 = 'down';
+            }
+          }
+        }
+
+        // i think i get how to do it
+        // just have a waiter variable thats set by this 
+        // and then chnage directsion when it gets to the ting and clear the waiter
+
+        //actkey is just the thing
+
+        }, true);
+      })();
+
+    </script>
 
     <!button id="door" class="opener"></button>
 
@@ -95,6 +1198,108 @@
 
     </div>
 
-    <script src="html-controller.js"></script>
+    <script>
+
+      function left(){
+        waiter = 'left';
+      }
+      function up(){
+        waiter = 'up';
+      }
+      function down(){
+        waiter = 'down';
+      }
+      function right(){
+        waiter = 'right';
+      }
+      function maketheme(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.color = clr;
+      }
+      function clrbtn(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.backgroundColor = clr;
+        ab.style.borderColor = clr;
+      }
+      function clrbtn1(id,clr){
+        let ab = document.getElementById(id);
+        ab.style.borderColor = clr;
+      }
+      function toggleautopilot(){
+        if (autopilot){
+          localStorage.setItem('autopilot',"false");
+          location.reload();
+        } else {
+          localStorage.setItem('autopilot',"true");
+          location.reload();
+        }
+      }
+      function toggletheme(){
+        if (theme == "black" || theme == "rgb(0,0,0)"){
+          (async () => {
+            let a = 0;
+            while (a <= 255){
+              document.body.style.backgroundColor = 'rgb('+a+','+a+','+a+')';
+              theme = 'rgb('+a+','+a+','+a+')';
+              let setclr = 'rgb('+(255-a)+','+(255-a)+','+(255-a)+')';
+              maketheme('score',setclr);
+              maketheme('best',setclr);
+              maketheme('time',setclr);
+              maketheme('display',setclr);
+              maketheme('ap notif',setclr);
+              maketheme('header',setclr);
+              maketheme('header1',setclr);
+              maketheme('header2',setclr);
+              maketheme('header3',setclr);
+              maketheme('gc',setclr);
+              maketheme('themedisp',setclr);
+              maketheme('settings',setclr);
+              clrbtn('playbtn1',theme);
+              clrbtn('playbtn2',setclr);
+              clrbtn('playbtn3',theme);
+              clrbtn('playbtn4',setclr);
+              clrbtn('playbtn5',setclr);
+              clrbtn('playbtn6',setclr);
+              
+              a += 3;
+              await sleep(2);
+            }
+          })();
+          let aa = document.getElementById('themedisp');
+          aa.innerHTML = "Theme: Light"
+        } else {
+          (async () => {
+            let a = 255;
+            while (a >= 0){
+              document.body.style.backgroundColor = 'rgb('+a+','+a+','+a+')';
+              theme = 'rgb('+a+','+a+','+a+')';
+              let setclr = 'rgb('+(255-a)+','+(255-a)+','+(255-a)+')';
+              maketheme('score',setclr);
+              maketheme('best',setclr);
+              maketheme('time',setclr);
+              maketheme('display',setclr);
+              maketheme('ap notif',setclr);
+              maketheme('header',setclr);
+              maketheme('header1',setclr);
+              maketheme('header2',setclr);
+              maketheme('header3',setclr);
+              maketheme('gc',setclr);
+              maketheme('themedisp',setclr);
+              maketheme('settings',setclr);
+              clrbtn('playbtn1',theme);
+              clrbtn1('playbtn2',setclr);
+              clrbtn('playbtn3',theme);
+              clrbtn1('playbtn4',setclr);
+              clrbtn1('playbtn5',setclr);
+              clrbtn1('playbtn6',setclr);
+              a -= 3;
+              await sleep(2);
+            }
+          })();
+          let aa = document.getElementById('themedisp');
+          aa.innerHTML = "Theme: Dark"
+        }
+      }
+    </script>
   </body>
 </html>
