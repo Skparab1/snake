@@ -189,10 +189,9 @@ h2{
   background-color: #AAAAAA;
   margin-left: 4%;
   margin-right: 4%;
+  position: relative;
 }
 
-html { overflow-y: scroll; }
-body { position: absolute; }
 
 .mid-container{
   width: 18.4%;
