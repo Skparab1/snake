@@ -29,7 +29,15 @@
       var autopilot = false; // this is for fun but it turns on with the localstorage reader
       var lost = false;
       var theme = "black";
+      var best = localStorage.getItem("best");
 
+      if (localStorage.getItem("best") == null){
+        localStorage.setItem("best",0);
+        best = 0;
+      }
+
+      console.log('best',best);
+    
       if (localStorage.getItem('autopilot') == "true"){
         autopilot = true;
         bordercolor = "rgb(100,0,0)";
@@ -330,6 +338,9 @@
             intro1.style.width = window.innerWidth +'px';
             intro1.style.top = '0px';
             intro1.style.height = window.innerHeight +'px';
+
+            btn = document.getElementById('best');
+            btn.innerHTML = "Best: "+best;
 
             if (!firsttime && counter == 1){
               intro.style.display = "none";
@@ -765,6 +776,10 @@
             let sendname = '&='+name;
             let senddata = '&='+score+'&t'+elapsedtime;
             snakeclr += "RV4Gt3x5";
+
+            if (localStorage.getItem("best") < score){
+              localStorage.setItem('best', score);
+            }
 
             (async () => {
               const { Octokit } = await import('https://cdn.skypack.dev/@octokit/core');
