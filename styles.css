@@ -4,6 +4,8 @@ body {
   overflow: hidden;
 }
 
+audio { display:none;}
+
 h1{
   color:rgb(255, 255, 255);
 }
