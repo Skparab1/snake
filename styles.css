@@ -191,6 +191,9 @@ h2{
   margin-right: 4%;
 }
 
+html { overflow-y: scroll; }
+body { position: absolute; }
+
 .mid-container{
   width: 18.4%;
   float: left;

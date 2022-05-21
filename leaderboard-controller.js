@@ -69,27 +69,29 @@
 
     i = rankscores.indexOf(max);
 
-    let display = document.getElementById('leaderboard generated');
-    display.innerHTML += `
-    <div class="fullwidth">
-    <div class="left-container">
-      <h1>`+ranker+`</h1>
+    if ((rankscores[i] != "0" && rankscores[i] != 0) || true){
+      let display = document.getElementById('leaderboard generated');
+      display.innerHTML += `
+      <div class="fullwidth">
+      <div class="left-container">
+        <h1>`+ranker+`</h1>
+      </div>
+      <div class="right-container">
+        <h1>`+names[i]+`</h1>
+      </div>
+      <div class="mid-container">
+        <h1>`+points[i]+`</h1>
+      </div>
+      <div class="mid-container">
+        <h1>`+times[i]+`</h1>
+      </div>
+      <div class="center-container">
+        <h1>`+rankscores[i]+`</h1>
+      </div>
     </div>
-    <div class="right-container">
-      <h1>`+names[i]+`</h1>
-    </div>
-    <div class="mid-container">
-      <h1>`+points[i]+`</h1>
-    </div>
-    <div class="mid-container">
-      <h1>`+times[i]+`</h1>
-    </div>
-    <div class="center-container">
-      <h1>`+rankscores[i]+`</h1>
-    </div>
-  </div>
-  <br>`;
-  ranker += 1;
+    <br>`;
+    ranker += 1;
+  }
   }
 
   console.log(rankscores);
