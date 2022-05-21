@@ -642,7 +642,7 @@
               console.log(pointsArr[pointsArr.length-1], applepos[1]);
             }
 
-            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 25*scalefactor && yd == 0){ // close to left boundery
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 40*scalefactor && yd == 0){ // close to left boundery
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
                 waiter = 'up';
               } else {
@@ -650,7 +650,7 @@
               }
               console.log('got triggered1');
             }
-            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 25*scalefactor && xd == 0){
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 40*scalefactor && xd == 0){
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
@@ -658,14 +658,14 @@
               }
               console.log('got triggered');
             }
-            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 25*scalefactor && yd == 0){
+            if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 40*scalefactor && yd == 0){
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
                 waiter = 'up';
               } else {
                 waiter = 'down';
               }
             }
-            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[3]) <= 25*scalefactor && xd == 0){
+            if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[3]) <= 40*scalefactor && xd == 0){
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
