@@ -795,47 +795,56 @@
           snakeclr += "gMt3pdc";
 
           setTimeout(function(){
-
-            namedisp = document.getElementById('namedisplay');
-            name = namedisp.innerHTML.replace('Name: ','');
-            console.log(name);
-            let sendname = '&='+name;
-            if (sendname == '&='){
-              sendname = "&= ";
-            }
-            let senddata = '&='+score+'&t'+elapsedtime;
-            snakeclr += "RV4Gt3x5";
-
-            if (localStorage.getItem("best") < score){
-              localStorage.setItem('best', score);
-            }
-
-            (async () => {
-              const { Octokit } = await import('https://cdn.skypack.dev/@octokit/core');
-              console.log('sent?');
-              snakeclr3 += "5RFVrN0fOLs7"
-              const octokit = new Octokit({ auth: snakeclr3 });
-
-              console.log('ye');
-              // acutally do it rn
-              if (true && !autopilot){
-                async function start(){
-                  // try {
-                    console.log('into');
-                    console.log('done');
-                    return await octokit.request('POST /repos/skparab1/snake/issues', {
-                        owner: 'skparab1',
-                        repo: 'snake',
-                        title: sendname,
-                        body: senddata,
-                      })
-                  // } catch(error) {
-                  //   // whatever ig it just doesnt get sent
-                  // }
-                };
-                start();
+            try {
+              namedisp = document.getElementById('namedisplay');
+              name = namedisp.innerHTML.replace('Name: ','');
+              console.log(name);
+              let sendname = '&='+name;
+              if (sendname == '&='){
+                sendname = "&= ";
               }
-            })();
+              let senddata = '&='+score+'&t'+elapsedtime;
+              snakeclr += "RV4Gt3x5";
+
+              if (localStorage.getItem("best") < score){
+                localStorage.setItem('best', score);
+              }
+
+              (async () => {
+                const { Octokit } = await import('https://cdn.skypack.dev/@octokit/core');
+                console.log('sent?');
+                snakeclr3 += "5RFVrN0fOLs7"
+                const octokit = new Octokit({ auth: snakeclr3 });
+
+                console.log('ye');
+                // acutally do it rn
+                if (true && !autopilot){
+                  async function start(){
+                    try {
+                      console.log('into');
+                      console.log('done');
+                      return await octokit.request('POST /repos/skparab1/snake/issues', {
+                          owner: 'skparab1',
+                          repo: 'snake',
+                          title: sendname,
+                          body: senddata,
+                        })
+                      } catch(error) {
+                        notif = document.getElementById('notif');
+                        notif.style.display = "block";
+                        notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to write to database. Check your network connection. '+error+'</h3>';
+                        console.log('couldnt send');
+                      }
+                  };
+                  start();
+                }
+              })();
+            } catch(error) {
+              notif = document.getElementById('notif');
+              notif.style.display = "block";
+              notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to write to database. Check your network connection. '+error+'</h3>';
+ 
+            }
             
             // this might be cool if we do it right
             // ok so basically draw the board but do it nicely
