@@ -394,10 +394,20 @@
             //console.log('VALLL '+namehandler.value+'    next'+namedisp.textcontent);
             namedisp.innerHTML = "Name: "+namehandler.value;
             name = namehandler.value;
+            let bw = "fu"+"ck";
+            if (namehandler.value.toLowerCase() == bw){
+              namedisp.innerHTML = "Name: f word";
+              name = "Name: f word";
+            }
+
             console.log('name>'+namehandler.value+'<');
             if (namehandler.value == ''){
               namedisp.innerHTML = "Name: "+localStorage.getItem('name');
               name = localStorage.getItem('name');
+              if (name.toLowerCase() == bw){
+                namedisp.innerHTML = "Name: f word";
+                name = "Name: f word";
+              }
             }
 
             // let starter = document.querySelector('.starter');
