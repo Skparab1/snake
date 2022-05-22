@@ -40,7 +40,7 @@
   var rankscores = [];
   i = 0;
   while (i < names.length){
-    rankscores.push(parseFloat(points[i])+parseFloat(times[i])/10);
+    rankscores.push(parseFloat(points[i])+parseFloat(times[i])/1000);
     i += 1;
   }
 
