@@ -3,6 +3,30 @@
       //window.reload();
       // act nvm
 
+      setTimeout(() => {
+        var audioElement = new Audio('audio.mp3');
+        audioElement.addEventListener("canplaythrough", event => {
+          /* the audio is now playable; play it if permissions allow */
+          audioElement.play();
+          var playable;
+          if (audioElement.duration > 0 && !audioElement.paused){
+            console.log('playing');
+            playable = true;
+          } else {
+            playable = false;
+            console.log('not playing');
+            //alert('Unable to play audio');
+            if (!playable){
+              let notif = document.getElementById('notif');
+              notif.style.display = "block";
+              notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to play Audio. Check audio permissions and try again</h3>';
+            }
+          }
+        });
+        audioElement.controls = true;
+        audioElement.loop = true;
+      }, "1000");
+
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
       const speedfactor = 190; //directly porportional to these many pixels per second (but not exactly)
@@ -471,7 +495,7 @@
           pointsArr.shift();
           pointsArr.shift();
 
-          if (Math.abs(xpos-applepos[0]) < 2 && Math.abs(ypos-applepos[1]) < 2){
+          if (Math.abs(xpos-applepos[0]) < (height)/(boardSize+2)/3 && Math.abs(ypos-applepos[1]) < (height)/(boardSize+2)/3){
             //basically you got it
             // set lastapple
             lastapple = applepos;
@@ -588,9 +612,9 @@
           // overlap experiment below
           let overlapgetter = 0;
           while (overlapgetter < pointsArr.length && !autopilot){
-            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/2 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
+            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/4 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
               //overlapped
-              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/2 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/2)){
+              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/4 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/2)){
                 // checked to make sure wasnt last apple pos
                 console.log(pointsArr.length-2,overlapgetter);
                 console.log('overlapped');
