@@ -29,7 +29,7 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
-      const speedfactor = 190; //directly porportional to these many pixels per second (but not exactly)
+      const speedfactor = 191; //directly porportional to these many pixels per second (but not exactly)
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       // emphasis background colors
@@ -54,6 +54,8 @@
       var lost = false;
       var theme = "black";
       var best = localStorage.getItem("best");
+      var lastfps = Date.now();
+      var avgfps = 0;
 
       if (localStorage.getItem("best") == null){
         localStorage.setItem("best",0);
@@ -283,6 +285,7 @@
       drawboard();
 
       var speed = ((height)/(boardSize+2))/(200-speedfactor); // 1/4 square/frame?
+      var basespeed = speed;
       let xpos = window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2)*2;
       let ypos = ((height)/(boardSize+2)*1.5)+(height)/(boardSize+2)*(boardSize/2);
       let startingpos = [xpos,ypos];
@@ -332,6 +335,21 @@
         while ((xpos >= bounderies[0] && xpos <= bounderies[2] && ypos >= bounderies[1] && ypos <= bounderies[3])){ // took out waiters  || waiter != '' || waiter2 != ''
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           speed = speed * 1.00001;
+
+          // check fps
+          let renderellapse = (Date.now() - lastfps);
+          avgfps = (avgfps+renderellapse)/2;
+          lastfps = Date.now();
+
+          // actually fps is not actual fps but delay between frames
+
+          //console.log('acutal fps '+1/avgfps);
+
+          // so basically adjust speed based on deviation from 6.5
+          let deviation = avgfps/6.5;
+          console.log(deviation);
+          // adjustment
+          speed = basespeed*deviation;
 
 
           if (autopilot && counter >= 1){
