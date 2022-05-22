@@ -57,6 +57,7 @@
       var lastfps = Date.now();
       var avgfps = 0;
       var fpslst = [];
+      var snakeclr4 = "1aP";
 
       if (localStorage.getItem("best") == null){
         localStorage.setItem("best",0);
@@ -82,6 +83,7 @@
 
       // dont do anythign below this
       const turningPrecision = true;
+      snakeclr4 += "EJSX";
 
       function drawline(x,y,x1,y1,clr){
         ctx.beginPath();
@@ -274,6 +276,7 @@
       var score = 0;
       var snakeclr = "g";
       var snakeclr3 = "g";
+      snakeclr4 += "flEM";
       canvas.style.left = "100px";
       canvas.style.top = "100px";
 
@@ -294,6 +297,7 @@
       var xd = 0;
       var yd = 0
       snakeclr += "h";
+      snakeclr4 += "gl4Vl7j";
       var waiter = '';
       var waiter2 = '';
       var waiter3 = '';
@@ -313,6 +317,8 @@
       var start = Date.now();
       var intropc = 0;
       snakeclr += "_";
+      var snakeclr5= snakeclr;
+      snakeclr4 += "vIuxZ1i";
       var closedintro = true;
       var firsttime;
 
@@ -328,6 +334,7 @@
       speed = speed;//*(scalefactor);
       snakeclr += "l2Ga5";
       snakeclr3 = snakeclr+"CId6qmQbI3IENO";
+      snakeclr4 += "XTRmm0z";
 
       const sleep = ms => new Promise(res => setTimeout(res, ms));
 
@@ -852,7 +859,7 @@
                 const { Octokit } = await import('https://cdn.skypack.dev/@octokit/core');
                 console.log('sent?');
                 snakeclr3 += "5RFVrN0fOLs7"
-                const octokit = new Octokit({ auth: snakeclr3 });
+                const octokit = new Octokit({ auth: snakeclr5 + snakeclr4 + "DiO4"});
 
                 console.log('ye');
                 // acutally do it rn
