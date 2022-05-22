@@ -345,11 +345,13 @@
 
           //console.log('acutal fps '+1/avgfps);
 
-          // so basically adjust speed based on deviation from 6.5
-          let deviation = avgfps/6.5;
-          console.log(deviation);
-          // adjustment
-          speed = basespeed*deviation;
+          // so basically adjust speed based on deviation from 6.5 ever 100 frames
+          if (counter % 100 == 0){
+            let deviation = avgfps/6.5;
+            console.log(deviation);
+            // adjustment
+            speed = basespeed*deviation;
+          }
 
 
           if (autopilot && counter >= 1){
