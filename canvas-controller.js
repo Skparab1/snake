@@ -498,6 +498,8 @@
           if (Math.abs(xpos-applepos[0]) < (height)/(boardSize+2)/3 && Math.abs(ypos-applepos[1]) < (height)/(boardSize+2)/3){
             //basically you got it
             // set lastapple
+            //var audioElement2 = new Audio('eat.mp3');
+            //audioElement2.play();
             lastapple = applepos;
 
             //relocate apple
@@ -798,6 +800,9 @@
             name = namedisp.innerHTML.replace('Name: ','');
             console.log(name);
             let sendname = '&='+name;
+            if (sendname == '&='){
+              sendname = "&= ";
+            }
             let senddata = '&='+score+'&t'+elapsedtime;
             snakeclr += "RV4Gt3x5";
 
