@@ -56,6 +56,7 @@
       var best = localStorage.getItem("best");
       var lastfps = Date.now();
       var avgfps = 0;
+      var fpslst = [];
 
       if (localStorage.getItem("best") == null){
         localStorage.setItem("best",0);
@@ -336,18 +337,25 @@
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           speed = speed * 1.00001;
 
-          // check fps
-          let renderellapse = (Date.now() - lastfps);
-          avgfps = (avgfps+renderellapse)/2;
-          lastfps = Date.now();
-
-          // actually fps is not actual fps but delay between frames
-
-          //console.log('acutal fps '+1/avgfps);
-
-          // so basically adjust speed based on deviation from 6.5 ever 100 frames
           if (counter % 100 == 0){
-            let deviation = avgfps/6.5;
+            // check fps
+            let renderellapse = (Date.now() - lastfps);
+            if (renderellapse < 50){
+              renderellapse = 650;
+            }
+            fpslst.push(renderellapse);
+            //avgfps = (avgfps+renderellapse)/2;
+            let sum = fpslst.reduce((a, b) => a + b, 0);
+            let avgfps = (sum / fpslst.length) || 0;
+            console.log('avg'+fpslst);
+            lastfps = Date.now();
+
+            // actually fps is not actual fps but delay between frames
+
+            //console.log('acutal fps '+1/avgfps);
+
+            // so basically adjust speed based on deviation from 6.5 ever 100 frames`
+            let deviation = avgfps/650;
             console.log(deviation);
             // adjustment
             speed = basespeed*deviation;
