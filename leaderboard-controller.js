@@ -68,6 +68,8 @@
     // add the div
 
     i = rankscores.indexOf(max);
+    names = names.replaceAll('','-');
+    names = names.replaceAll(' ','-');
 
     if ((rankscores[i] != 0 && points[i] != 0)){
       let display = document.getElementById('leaderboard generated');
