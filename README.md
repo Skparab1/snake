@@ -18,7 +18,16 @@
 
 ![ezgif com-gif-maker(32)](https://user-images.githubusercontent.com/71990977/169730179-08b9f20f-6f48-45e9-b2a8-860a8f5e7ed5.gif)
 
+- Dark and light modes
+
+![ezgif com-gif-maker(33)](https://user-images.githubusercontent.com/71990977/169731168-da64d333-b414-4a40-9242-a5b0c0b92121.gif)
+
 - Insanely good music by @advaitaG
+
+## Small features
+- Best score tracker
+- Timer
+- On screen arrow key controls
 
 ## Contributers
 - Developers: Shubham Parab and Anindit Pati
