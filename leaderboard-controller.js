@@ -69,7 +69,7 @@
 
     i = rankscores.indexOf(max);
 
-    if ((rankscores[i] != "0" && rankscores[i] != 0) || true){
+    if ((rankscores[i] != 0 && points[i] != 0)){
       let display = document.getElementById('leaderboard generated');
       display.innerHTML += `
       <div class="fullwidth">
@@ -96,6 +96,9 @@
 
   console.log(rankscores);
   console.log(ranks);
+
+  let lb = document.getElementById('loader');
+  lb.style.display = "none";
 
   // i = 0;
   // while (i < names.length){
