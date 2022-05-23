@@ -28,6 +28,7 @@
 - Best score tracker
 - Timer
 - On screen arrow key controls
+- Error notif when unable to play audio, and ways to fix it
 
 ## Contributers
 - Developers: Shubham Parab and Anindit Pati
