@@ -29,7 +29,7 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
-      const speedfactor = 192; //directly porportional to these many pixels per second (but not exactly)
+      const speedfactor = 191; //directly porportional to these many pixels per second (but not exactly)
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       // emphasis background colors
@@ -393,8 +393,8 @@
           if (counter % 100 == 0 || true){
             // check fps
             let renderellapse = (Date.now() - lastfps);
-            if (renderellapse < 50){
-              renderellapse = 650;
+            if (renderellapse < 0.5){
+              renderellapse = 6.5;
             }
             fpslst.push(renderellapse);
             //avgfps = (avgfps+renderellapse)/2;
@@ -408,8 +408,11 @@
             //console.log('acutal fps '+1/avgfps);
 
             // so basically adjust speed based on deviation from 6.5 ever 100 frames`
-            let deviation = 700/avgfps;
-            console.log(deviation);
+            let deviation = avgfps/6.5;
+            console.log(avgfps);
+            console.log('delay in between frames is'+deviation);
+            //bascially deviation is higher if delay is higher
+            
             // adjustment
             speed = basespeed*deviation;
           }
