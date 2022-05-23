@@ -366,6 +366,7 @@
       snakeclr4 += "vIuxZ1i";
       var closedintro = true;
       var firsttime;
+      var starting = true;
 
       let reader = localStorage.getItem('firsttime');
       if (reader == null){
@@ -423,7 +424,9 @@
           }
 
           if (counter >= 1 && startwaiter){
-            start = Date.now()
+            if starting:
+                  start = Date.now();
+                  starting = false;
             document.getElementById('time').innerHTML = 'Time: '+(Date.now() - start)/1000 +" sec";
             elapsedtime = (Date.now() - start)/1000;
           }
