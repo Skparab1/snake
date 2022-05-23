@@ -399,7 +399,7 @@
             //avgfps = (avgfps+renderellapse)/2;
             let sum = fpslst.reduce((a, b) => a + b, 0);
             let avgfps = (sum / fpslst.length) || 0;
-            console.log('avg'+fpslst);
+            //console.log('avg'+fpslst);
             lastfps = Date.now();
 
             // actually fps is not actual fps but delay between frames
@@ -950,6 +950,14 @@
               ctx.beginPath;
               ctx.fillStyle = bordercolor;
 
+              let closer = document.getElementById('introducer');
+              let closer1 = document.getElementById('introducer-cover');
+              let closer2 = document.getElementById('credits');
+
+              closer.style.display = "none";
+              closer1.style.display = "none";
+              closer2.style.display = "none";
+
               let endgame = 0;
               let bordereraser = 0;
               while (endgame <= bounderies[3] - (bounderies[3]-bounderies[1])/2){
@@ -1005,6 +1013,8 @@
                 endgame += 10;
                 await sleep(endcurtainspeed);
               }
+              leaderboard.style.display = "block";
+              play_again.style.display = "block";
               snakeclr += "";
               lost = true;
             })();
@@ -1019,13 +1029,14 @@
           return;
         }
 
+
         if (!startwaiter && (closedintro)){
             xd = speed;
             startwaiter = true;
             let z = document.getElementById('display');
             z.textContent = '🐍';
             fpslst = [];
-            lastfps = date.now;
+            lastfps = Date.now();
         }
 
         const ctx = canvas.getContext('2d');
