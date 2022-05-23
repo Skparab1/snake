@@ -1,5 +1,5 @@
 # Snake
- A lightweight, graphics-based game of snake by Skparab1, AninditP, and AdvaitaG (musician), playable at https://skparab1.github.io/snake
+ A lightweight, graphics-based game of snake by Skparab1, AninditP, Apawate, and AdvaitaG (musician), playable at https://skparab1.github.io/snake
  
 ## Top features
 - Color high quality graphics display and animations
@@ -31,7 +31,7 @@
 - Error notif when unable to play audio, and ways to fix it
 
 ## Contributers
-- Developers: Shubham Parab and Anindit Pati
+- Developers: Shubham Parab, Anindit Pati, Agastya Pawate
 - Designers: Anindit Pati and Shubham Parab
 - Music: Advaita Guruprasad
 
