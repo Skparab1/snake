@@ -160,6 +160,31 @@
         //intro1.style.display = "block";
       }
 
+      function opencredits(){
+        closedintro = false;
+        let intro = document.getElementById('credits');
+        let intro1 = document.getElementById('introducer-cover');
+
+        intro.style.display = "block";
+        intro1.style.display = "block";
+
+        // let starter = document.querySelector('.starter');
+        // starter.addEventListener('click', closeintro());
+
+        intropc = 0;
+        (async () => {
+          while (intropc <= 50){
+            console.log('in');
+            intro1.style.opacity = intropc+'%';
+            intro.style.opacity = intropc*2+'%';
+            await sleep(2);
+            intropc += 1;
+          }
+        })();
+        intro.style.display = "block";
+        //intro1.style.display = "block";
+      }
+
       function animateboard(){
         ctx.beginPath();
         (async () => {
@@ -252,6 +277,26 @@
           let namer = document.getElementById('name');
           namer = namer.value;
           localStorage.setItem("name", namer);
+          let intro1 = document.getElementById('introducer-cover');
+          // intro1.style.display = "none";
+          // intro.style.display = "none";
+          let intropc1 = 50;
+          while (intropc1 >= 0){
+            //console.log('was '+intropc1);
+            intro1.style.opacity = intropc1+'%';
+            intro.style.opacity = intropc1+'%';
+            await sleep(2);
+            intropc1 -= 1;
+          }
+          intro1.style.display = "none";
+          intro.style.display = "none";
+        })();
+      }
+
+      function closecredits(){
+        closedintro = true;
+        (async () => {
+          let intro = document.getElementById('credits');
           let intro1 = document.getElementById('introducer-cover');
           // intro1.style.display = "none";
           // intro.style.display = "none";
@@ -391,6 +436,12 @@
             intro.style.width = window.innerWidth/2 +'px';
             intro.style.top = window.innerHeight/7 +'px';
             intro.style.height = 5*window.innerHeight/7 +'px';
+
+            intro = document.getElementById('credits');
+            intro.style.left = window.innerWidth/4 +'px';
+            intro.style.width = window.innerWidth/2 +'px';
+            intro.style.top = window.innerHeight/4 +'px';
+            intro.style.height = window.innerHeight/2 +'px';
 
             let intro1 = document.getElementById('introducer-cover');
             intro1.style.left = '0px';
@@ -659,9 +710,9 @@
           // overlap experiment below
           let overlapgetter = 0;
           while (overlapgetter < pointsArr.length && !autopilot){
-            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/4 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/2 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
+            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/4 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/4 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
               //overlapped
-              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/4 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/2)){
+              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/4 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/4)){
                 // checked to make sure wasnt last apple pos
                 console.log(pointsArr.length-2,overlapgetter);
                 console.log('overlapped');
@@ -973,6 +1024,8 @@
             startwaiter = true;
             let z = document.getElementById('display');
             z.textContent = '🐍';
+            fpslst = [];
+            lastfps = date.now;
         }
 
         const ctx = canvas.getContext('2d');
