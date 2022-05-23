@@ -408,7 +408,7 @@
             //console.log('acutal fps '+1/avgfps);
 
             // so basically adjust speed based on deviation from 6.5 ever 100 frames`
-            let deviation = 650/avgfps;
+            let deviation = 700/avgfps;
             console.log(deviation);
             // adjustment
             speed = basespeed*deviation;
