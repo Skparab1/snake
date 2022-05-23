@@ -424,9 +424,10 @@
           }
 
           if (counter >= 1 && startwaiter){
-            if starting:
+            if (starting){
                   start = Date.now();
                   starting = false;
+            }
             document.getElementById('time').innerHTML = 'Time: '+(Date.now() - start)/1000 +" sec";
             elapsedtime = (Date.now() - start)/1000;
           }
