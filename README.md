@@ -1,4 +1,4 @@
-![](https://github.com/phuang1024/pianoray/actions/workflows/main.yml/badge.svg)
+![](https://github.com/skparab1/snake/actions/workflows/main.yml/badge.svg)
 ![](https://img.shields.io/github/issues/skparab1/snake)
 ![](https://img.shields.io/github/issues-pr/skparab1/snake)
 ![](https://img.shields.io/github/license/skparab1/snake)
