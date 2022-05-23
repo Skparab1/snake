@@ -19,7 +19,7 @@
             if (!playable){
               let notif = document.getElementById('notif');
               notif.style.display = "block";
-              notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to play Audio. Check audio permissions and try again</h3>';
+              notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to play Audio. Check audio permissions and try again. See how to allow audio <a href="https://github.com/Skparab1/snake/blob/main/fix-audio.md">here<a></h3>';
             }
           }
         });
