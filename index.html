@@ -22,18 +22,22 @@
 
     <!div class="center" style="width: 100%">
     <div id="leftpanel" style="float: right; position: absolute; text-align: center; left: 25px; top: 100px;">
-      <h1 style="color: white" id="settings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1><br><br>
+      <h1 style="color: white" id="settings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1><br>
       <label class="switch">
       <input type="checkbox" onclick="toggletheme();">
       <span class="slider round"></span>
     </label>
-    <h2 style="color: white" id="themedisp">Theme: Dark</h2><br><br>
+    <h2 style="color: white" id="themedisp">Theme: Dark</h2><br>
     <button id="playbtn7" class="game-key" style="width: 50%" onclick="toggleautopilot();">Enable autopilot</button>
     <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
     <br>
     <h2 style="color: white" id="namedisplay">Name: </h2>
     <div style="text-align: center">
       <button id="starter1" class="game-key" onclick="openintro();" style="width: 60%">Main menu</button>
+    </div>
+    <br>
+    <div style="text-align: center">
+      <button id="starter1" class="game-key" onclick="opencredits();" style="width: 60%">Contributers</button>
     </div>
 
     </div>
@@ -102,6 +106,16 @@
         <button id="starter" onclick="closeintro();" class="game-key" style="width: 25%">Ok</button>
       </div>
 
+    </div>
+
+    <div id="credits" style="position: absolute; background-color: #AAAAAA; opacity: 0%">
+      <h1 style="color: black; text-align: center">Contributers</h1>
+      <h2 style="color: black; text-align: center">Developers: Shubham Parab, Anindit Pati</h2>
+      <h2 style="color: black; text-align: center">Design: Anindit Pati, Shubham Parab</h2>
+      <h2 style="color: black; text-align: center">Music: Advaita Guruprasad</h2>
+      <div style="text-align: center">
+        <button id="starter" onclick="closecredits();" class="game-key" style="width: 25%">Close</button>
+      </div>
     </div>
 
     <script src="html-controller.js"></script>

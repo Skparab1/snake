@@ -389,7 +389,7 @@
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           speed = speed * 1.00001;
 
-          if (counter % 100 == 0){
+          if (counter % 100 == 0 || true){
             // check fps
             let renderellapse = (Date.now() - lastfps);
             if (renderellapse < 50){
