@@ -179,6 +179,8 @@
 
   const sleep = ms => new Promise(res => setTimeout(res, ms));
   (async () => {
+    let loader = document.getElementById('loader');
+    loader.style.display="none"
     let clr = -765;
     let dir = 'left';
     while (true){
