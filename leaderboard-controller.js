@@ -73,11 +73,11 @@
       let display = document.getElementById('leaderboard generated');
       let bgclr;
       if (ranker == 1){
-        bgclr = "rgb(255,215,0)";
+        bgclr = "rgb(100,100,0)";
       } else if (ranker == 2){
-        bgclr = "rgb(169,169,169)";
+        bgclr = "rgb(50,50,50)";
       } else if (ranker == 3){
-        bgclr = "rbg(185,114,45)";
+        bgclr = "rbg(50,25,0)";
       } else {
         bgclr = "black";
       }
