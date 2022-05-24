@@ -1,16 +1,25 @@
 (async () => {
   const data1 = await fetch("./data.json").then(r => r.json());
+  const data2 = await fetch("./data2.json").then(r => r.json());
 
   var datanames = data1.data[0];
   var datascores = data1.data[1];
+  var datanames2 = data2.data[0];
+  var datascores2 = data2.data[1];
   
   datanames = JSON.stringify(datanames);
   datascores = JSON.stringify(datascores);
+  datanames2 = JSON.stringify(datanames2);
+  datascores2 = JSON.stringify(datascores2);
   
   datanames = datanames.replace('{"name":"','');
   datanames = datanames.replace('"}','');
   datascores = datascores.replace('{"scores":"','');
   datascores = datascores.replace('"}','');
+  datanames2 = datanames2.replace('{"name":"','');
+  datanames2 = datanames2.replace('"}','');
+  datascores2 = datascores2.replace('{"scores":"','');
+  datascores2 = datascores2.replace('"}','');
 
 
   while (datanames.includes('+')){
@@ -19,6 +28,15 @@
   while (datascores.includes('+')){
     datascores = datascores.replace('+',' ');
   }
+  while (datanames2.includes('+')){
+    datanames2 = datanames2.replace('+',' ');
+  }
+  while (datascores2.includes('+')){
+    datascores2 = datascores2.replace('+',' ');
+  }
+
+  datanames = datanames + datanames2;
+  datascores = datascores + datascores2;
 
   var names = datanames.split('&=');
   var scores = datascores.split('&=');
@@ -75,9 +93,9 @@
       if (ranker == 1){
         bgclr = "rgb(100,100,0)";
       } else if (ranker == 2){
-        bgclr = "rgb(150,150,150)";
+        bgclr = "rgb(170,170,170)";
       } else if (ranker == 3 ){
-        bgclr = "rgb(75,75,75)";
+        bgclr = "rgb(85,85,85)";
       } else {
         bgclr = "black";
       }
