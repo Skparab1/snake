@@ -1,32 +1,32 @@
 (async () => {
-  const data1 = await fetch("./data.json").then(r => r.json());
+  // const data1 = await fetch("./data.json").then(r => r.json());
 
-  var datanames = data1.data[0];
-  var datascores = data1.data[1];
+  // var datanames = data1.data[0];
+  // var datascores = data1.data[1];
   
-  datanames = JSON.stringify(datanames);
-  datascores = JSON.stringify(datascores);
+  // datanames = JSON.stringify(datanames);
+  // datascores = JSON.stringify(datascores);
   
-  datanames = datanames.replace('{"name":"','');
-  datanames = datanames.replace('"}','');
-  datascores = datascores.replace('{"scores":"','');
-  datascores = datascores.replace('"}','');
+  // datanames = datanames.replace('{"name":"','');
+  // datanames = datanames.replace('"}','');
+  // datascores = datascores.replace('{"scores":"','');
+  // datascores = datascores.replace('"}','');
 
 
-  while (datanames.includes('+')){
-    datanames = datanames.replace('+',' ');
-  }
-  while (datascores.includes('+')){
-    datascores = datascores.replace('+',' ');
-  }
+  // while (datanames.includes('+')){
+  //   datanames = datanames.replace('+',' ');
+  // }
+  // while (datascores.includes('+')){
+  //   datascores = datascores.replace('+',' ');
+  // }
 
-  var names = datanames.split('&=');
-  var scores = datascores.split('&=');
+  // var names = datanames.split('&=');
+  // var scores = datascores.split('&=');
 
   //console.log(names,scores);
 
-  // names = ['Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy'];
-  // scores = ['&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261'];
+  names = ['Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy'];
+  scores = ['&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261'];
   let points = [];
   let times = [];
   let i = 0;
@@ -74,9 +74,9 @@
       let bgclr;
       if (ranker == 1){
         bgclr = "rgb(255,215,0)";
-      } else if (ranker == 1){
+      } else if (ranker == 2){
         bgclr = "rgb(169,169,169)";
-      } else if (ranker == 1){
+      } else if (ranker == 3){
         bgclr = "rbg(185,114,45)";
       } else {
         bgclr = "black";
@@ -128,9 +128,6 @@
 
   //console.log(rankscores);
   //console.log(ranks);
-
-  let lb = document.getElementById('loader');
-  lb.style.display = "none";
 
   // i = 0;
   // while (i < names.length){
