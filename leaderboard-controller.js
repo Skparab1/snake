@@ -23,7 +23,7 @@
   var names = datanames.split('&=');
   var scores = datascores.split('&=');
 
-  console.log(names,scores);
+  //console.log(names,scores);
 
   // names = ['Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy'];
   // scores = ['&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261'];
@@ -53,15 +53,15 @@
   }
 
   let ranker = 1;
-  console.log(subjlist);
+  //console.log(subjlist);
   while (subjlist.length > 0){
     let max = (subjlist.reduce(function(a, b) {
       return Math.max(a, b);
-  }, -Infinity));
+    }, -Infinity));
 
-    console.log('max '+max);
-    console.log('index '+rankscores.indexOf(max));
-    console.log('lst '+subjlist);
+    //console.log('max '+max);
+    //console.log('index '+rankscores.indexOf(max));
+    //console.log('lst '+subjlist);
     ranks.push(rankscores.indexOf(max));
     subjlist.splice(subjlist.indexOf(max),1);
 
@@ -71,6 +71,16 @@
 
     if ((rankscores[i] != 0 && points[i] != 0)){
       let display = document.getElementById('leaderboard generated');
+      let bgclr;
+      if (ranker == 1){
+        bgcolor = "rgb(255,215,0)";
+      } else if (ranker == 1){
+        bgcolor = "rgb(169,169,169)";
+      } else if (ranker == 1){
+        bgcolor = "rbg(185,114,45)";
+      } else {
+        bgcolor = "black";
+      }
       if (names[i] == ' ' || names[i] == ''){
         display.innerHTML += `
         <div class="fullwidth">
@@ -93,7 +103,7 @@
       <br>`;
     } else {
       display.innerHTML += `
-        <div class="fullwidth">
+        <div style="background-color: `+bgclr+`" class="fullwidth">
         <div class="left-container">
           <h1>`+ranker+`</h1>
         </div>
@@ -116,8 +126,8 @@
   }
   }
 
-  console.log(rankscores);
-  console.log(ranks);
+  //console.log(rankscores);
+  //console.log(ranks);
 
   let lb = document.getElementById('loader');
   lb.style.display = "none";
