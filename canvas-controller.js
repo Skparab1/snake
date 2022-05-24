@@ -29,7 +29,7 @@
 
       // alr anindit here are the toggle constants
       const boardSize = 20; //so 20 means 20x20 and 40 would be 40x40 and you can change it to anything you want
-      const speedfactor = 188; //directly porportional to these many pixels per second (but not exactly)
+      const speedfactor = 185; //directly porportional to these many pixels per second (but not exactly)
       const pixelbackground1 = 'rgb(0,150,0)'; // this is like the pixel background pattern
       const pixelbackground2 = 'rgb(0,190,0)'; // its in rgb but you can make it hex or hsv if u want
       // emphasis background colors
