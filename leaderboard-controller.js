@@ -73,30 +73,30 @@
       let display = document.getElementById('leaderboard generated');
       let bgclr;
       if (ranker == 1){
-        bgcolor = "rgb(255,215,0)";
+        bgclr = "rgb(255,215,0)";
       } else if (ranker == 1){
-        bgcolor = "rgb(169,169,169)";
+        bgclr = "rgb(169,169,169)";
       } else if (ranker == 1){
-        bgcolor = "rbg(185,114,45)";
+        bgclr = "rbg(185,114,45)";
       } else {
-        bgcolor = "black";
+        bgclr = "black";
       }
       if (names[i] == ' ' || names[i] == ''){
         display.innerHTML += `
-        <div class="fullwidth">
-        <div class="left-container">
+        <div style="background-color: `+bgclr+`" class="fullwidth">
+        <div style="background-color: `+bgclr+`" class="left-container">
           <h1>`+ranker+`</h1>
         </div>
-        <div class="right-container">
+        <div style="background-color: `+bgclr+`" class="right-container">
           <h1>-</h1>
         </div>
-        <div class="mid-container">
+        <div style="background-color: `+bgclr+`" class="mid-container">
           <h1>`+points[i]+`</h1>
         </div>
-        <div class="mid-container">
+        <div style="background-color: `+bgclr+`" class="mid-container">
           <h1>`+times[i]+`</h1>
         </div>
-        <div class="center-container">
+        <div style="background-color: `+bgclr+`" class="center-container">
           <h1>`+rankscores[i]+`</h1>
         </div>
       </div>
