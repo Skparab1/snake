@@ -91,7 +91,7 @@
           <h1 style="color: black">`+ranker+`</h1>
         </div>
         <div id="d2" style="background-color: `+bgclr+`;" class="right-container">
-          <h1 style="color: black">-</h1>
+          <h1 style="color: black">`+names[i]+`</h1>
         </div>
         <div id="d3" style="background-color: `+bgclr+`" class="mid-container">
           <h1 style="color: black">`+points[i]+`</h1>
