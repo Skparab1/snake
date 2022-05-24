@@ -423,7 +423,11 @@
             btn.innerHTML = "Disable autopilot";
             let apnotif = document.getElementById('ap notif');
             apnotif.innerHTML = "Autopilot: On";
-
+          }
+              
+          if (counter >= 1100){
+            let notif1 = document.getElementById('notif');
+            notif1.style.display = "none";
           }
 
           if (counter >= 1 && startwaiter){
