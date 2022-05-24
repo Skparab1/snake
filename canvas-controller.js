@@ -414,7 +414,7 @@
             //bascially deviation is higher if delay is higher
             
             // adjustment
-            speed = basespeed*((deviation-1)*0.25+1);
+            speed = basespeed*((deviation-1)*0.17+1);
           }
 
 
