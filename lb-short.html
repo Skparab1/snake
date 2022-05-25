@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake game - Leaderboard</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <ul>
+      <li><a href="https://skparab1.github.io"><h7 id="header">Home</h7></a></li>
+      <li><a href="https://skparab1.github.io/wordle/random"><h7 id="header1">Wordle</h7></a></li>
+      <li><a href="https://skparab1.github.io/snake"><h7 id="header2">Snake</h7></a></li>
+    </ul> 
+
+    <h1 id="header3" style="text-align: center">Snake game - Leaderboard</h1>
+
+    <div id="leaderboard generated">
+      <div class="fullwidth">
+        <div class="left-container-header">
+          <h1>Rank</h1>
+        </div>
+        <div class="right-container-header">
+          <h1>Name</h1>
+        </div>
+        <div class="mid-container-header">
+          <h1>Score</h1>
+        </div>
+        <div class="mid-container-header">
+          <h1>Time</h1>
+        </div>
+        <div class="center-container-header">
+          <h1>Rank score</h1>
+        </div>
+      </div>
+    </div>
+
+    <script src="leaderboard-controller.js"></script>
+
+    <br>
+    <div id="loader" class="center" style="border: none">
+      <h2 id="loadnotif">Loading and sorting leaderboard data...      This might take a few seconds, we have over 750 entries to sort</h2>
+      <img src="loading.gif"><img>
+    </div>
+  </body>
+</html>
