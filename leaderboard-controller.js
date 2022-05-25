@@ -43,10 +43,8 @@
   var names = datanames.split('&=');
   var scores = datascores.split('&=');
 
-  setTimeout(() => {
-    let ln = document.getElementById('loadnotif');
-    ln.textContent = "Loading and sorting leaderboard data...      This might take a few seconds, we have "+names.length+" entries to sort";
-  }, "200");
+  let ln = document.getElementById('loadnotif');
+  ln.textContent = "Loading and sorting leaderboard data...      This might take a few seconds, we have "+names.length+" entries to sort";
 
   console.log(names,scores);
 
