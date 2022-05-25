@@ -46,7 +46,7 @@
   setTimeout(() => {
     let ln = document.getElementById('loadnotif');
     ln.textContent = "Loading and sorting leaderboard data...      This might take a few seconds, we have "+names.length+" entries to sort";
-  }, "500");
+  }, "1000");
 
   console.log(names,scores);
 
