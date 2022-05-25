@@ -726,9 +726,9 @@
           // overlap experiment below
           let overlapgetter = 0;
           while (overlapgetter < pointsArr.length && !autopilot){
-            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/4 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/4 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
+            if (Math.abs(pointsArr[pointsArr.length-2]-pointsArr[overlapgetter]) < (height)/(boardSize+2)/10 && Math.abs(pointsArr[pointsArr.length-1]-pointsArr[overlapgetter+1]) < (height)/(boardSize+2)/10 && pointsArr[overlapgetter] != initxpos && pointsArr[overlapgetter] != 0 && pointsArr[overlapgetter+1] != initypos && pointsArr[overlapgetter+1] != 0 && Math.abs(pointsArr.length-2 -overlapgetter) > 75){ // no need for eatwaiter anymore but  && eatwaiter < 0
               //overlapped
-              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/4 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/4)){
+              if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/10 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/10)){
                 // checked to make sure wasnt last apple pos
                 console.log(pointsArr.length-2,overlapgetter);
                 console.log('overlapped');
