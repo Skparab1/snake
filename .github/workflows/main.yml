@@ -34,10 +34,10 @@ jobs:
         
       - if: startsWith(github.event.issue.title, '&=') == true
         name: Update name in data.json
-        run: echo "`jq '.data[0].name |= . + "${{ github.event.issue.title }}"' data.json`" > data.json
+        run: echo "`jq '.data[0].name |= . + "${{ github.event.issue.title }}"' data2.json`" > data2.json
       - if: startsWith(github.event.issue.title, '&=') == true
         name: Update scores in data.json
-        run: echo "`jq '.data[1].scores |= . + "${{ github.event.issue.body }}"' data.json`" > data.json
+        run: echo "`jq '.data[1].scores |= . + "${{ github.event.issue.body }}"' data2.json`" > data2.json
     
       - if: startsWith(github.event.issue.title, '&=') == true
         name: Commit
@@ -45,21 +45,11 @@ jobs:
         id: commit
         with:
           message: 'updating database'
-          add: "data.json --force"
+          add: "data2.json --force"
           pathspec_error_handling: ignore
           push: true
         continue-on-error: true
         
-      - if: startsWith(github.event.issue.title, '&REPLY') == true
-        name: Commit replies
-        uses: EndBug/add-and-commit@v9
-        id: commit-replies
-        with:
-          message: 'updating database'
-          add: "replies.json --force"
-          pathspec_error_handling: ignore
-          push: true
-        continue-on-error: true
 
       - if: startsWith(github.event.issue.title, '&=') == true
         name: Close Issue
