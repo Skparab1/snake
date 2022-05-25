@@ -114,7 +114,7 @@
           <h1 style="color: black">`+ranker+`</h1>
         </div>
         <div id="d2" style="background-color: `+bgclr+`;" class="right-container">
-          <h1 style="color: black">`+names[i].substring(0, 23)+`</h1>
+          <h1 style="color: black; style="font-size: 10px;">`+names[i].substring(0, 23)+`</h1>
         </div>
         <div id="d3" style="background-color: `+bgclr+`" class="mid-container">
           <h1 style="color: black">`+points[i]+`</h1>
@@ -134,7 +134,7 @@
           <h1>`+ranker+`</h1>
         </div>
         <div style="background-color: `+bgclr+`" class="right-container">
-          <h1>`+names[i].substring(0, 23)+`</h1>
+          <h1 style="font-size: 10px;">`+names[i].substring(0, 23)+`</h1>
         </div>
         <div style="background-color: `+bgclr+`" class="mid-container">
           <h1>`+points[i]+`</h1>
@@ -154,7 +154,7 @@
           <h1>`+ranker+`</h1>
         </div>
         <div style="background-color: `+bgclr+`" class="right-container">
-          <h1>`+names[i].substring(0, 23)+`</h1>
+          <h1 style="font-size: 10px;">`+names[i].substring(0, 23)+`</h1>
         </div>
         <div style="background-color: `+bgclr+`" class="mid-container">
           <h1>`+points[i]+`</h1>
