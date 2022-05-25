@@ -407,14 +407,18 @@
 
             //console.log('acutal fps '+1/avgfps);
 
-            // so basically adjust speed based on deviation from 6.5 ever 100 frames`
+            // so basically adjust speed based on deviation from 6.5 ever 100 frames
+            //avgfps = time between frames
+            // so basically fps = 6.5 milisec between frames
+            // 
+            1000/6.5
             let deviation = avgfps/6.5;
             console.log(avgfps);
             console.log('delay in between frames is'+deviation);
             //bascially deviation is higher if delay is higher
             
             // adjustment
-            speed = basespeed*((deviation-1)*0.17+1);
+            speed = basespeed*((deviation-1)*0.35+1);
           }
 
 
