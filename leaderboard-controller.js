@@ -35,8 +35,8 @@
     datascores2 = datascores2.replace('+',' ');
   }
 
-  datanames = datanames + datanames2;
-  datascores = datascores + datascores2;
+//   datanames = datanames + datanames2;
+//   datascores = datascores + datascores2;
 
   var names = datanames.split('&=');
   var scores = datascores.split('&=');
