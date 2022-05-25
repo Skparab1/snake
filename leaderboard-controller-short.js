@@ -77,7 +77,7 @@
 
   let ranker = 1;
   //console.log(subjlist);
-  while (subjlist.length > 0 && ranker <= 20){
+  while (subjlist.length > 0 && ranker <= 100){
     let max = (subjlist.reduce(function(a, b) {
       return Math.max(a, b);
     }, -Infinity));
