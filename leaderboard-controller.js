@@ -38,10 +38,11 @@
   datanames = datanames + datanames2;
   datascores = datascores + datascores2;
 
+  datanames = datanames.replaceAll("Developers: Shubham Parab, Anindit Pati, and Agastya Pawate Design: Anindit Pati and Shubham Parab Music: Advaita Guruprasad",'Contributers(thats too long)');
+
   var names = datanames.split('&=');
   var scores = datascores.split('&=');
 
-  names = names.replaceAll("Developers: Shubham Parab, Anindit Pati, and Agastya Pawate Design: Anindit Pati and Shubham Parab Music: Advaita Guruprasad",'Contributers(thats too long)');
 
   console.log(names,scores);
 
