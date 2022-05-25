@@ -48,8 +48,8 @@
 
   console.log(names,scores);
 
-  // names = ['Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy'];
-  // scores = ['&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261'];
+  //names = ['Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy','Shubham','skparab1','poisonfy'];
+  //scores = ['&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261','&=8&t36.997','&=7&t18.458','&=2&t38.261'];
   let points = [];
   let times = [];
   let i = 0;
@@ -108,27 +108,30 @@
       //255*3 = 765
 
       if (ranker == 1){
-        display.innerHTML += `
-        <div style="background-color: `+bgclr+`" class="fullwidth">
-        <div id="d1" style="background: linear-gradient(to right, rgb(255,0,0), rgb(0,0,255));" class="left-container">
-          <h1 style="color: black">`+ranker+`</h1>
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div style="background-color: `+bgclr+`" class="fullwidth">
+          <div id="d1" style="background: linear-gradient(to right, rgb(255,0,0), rgb(0,0,255));" class="left-container">
+            <h1 style="color: black">`+ranker+`</h1>
+          </div>
+          <div id="d2" style="background-color: `+bgclr+`;" class="right-container">
+            <h1 style="color: black">`+names[i].substring(0, 23)+`</h1>
+          </div>
+          <div id="d3" style="background-color: `+bgclr+`" class="mid-container">
+            <h1 style="color: black">`+points[i]+`</h1>
+          </div>
+          <div id="d4" style="background-color: `+bgclr+`" class="mid-container">
+            <h1 style="color: black">`+times[i]+`</h1>
+          </div>
+          <div id="d5" style="background-color: `+bgclr+`" class="center-container">
+            <h1 style="color: black">`+rankscores[i]+`</h1>
+          </div>
         </div>
-        <div id="d2" style="background-color: `+bgclr+`;" class="right-container">
-          <h1 style="color: black">`+names[i].substring(0, 23)+`</h1>
-        </div>
-        <div id="d3" style="background-color: `+bgclr+`" class="mid-container">
-          <h1 style="color: black">`+points[i]+`</h1>
-        </div>
-        <div id="d4" style="background-color: `+bgclr+`" class="mid-container">
-          <h1 style="color: black">`+times[i]+`</h1>
-        </div>
-        <div id="d5" style="background-color: `+bgclr+`" class="center-container">
-          <h1 style="color: black">`+rankscores[i]+`</h1>
-        </div>
-      </div>
-      <br>`;
+        <br>`;
+        display.appendChild(div);
       } else if (names[i] == ' ' || names[i] == ''){
-        display.innerHTML += `
+        const div = document.createElement('div');
+        div.innerHTML = `
         <div style="background-color: `+bgclr+`" class="fullwidth">
         <div style="background-color: `+bgclr+`" class="left-container">
           <h1>`+ranker+`</h1>
@@ -145,28 +148,32 @@
         <div style="background-color: `+bgclr+`" class="center-container">
           <h1>`+rankscores[i]+`</h1>
         </div>
-      </div>
-      <br>`;
+        </div>
+        <br>`;
+        display.appendChild(div);
+
     } else {
-      display.innerHTML += `
-        <div style="background-color: `+bgclr+`" class="fullwidth">
-        <div style="background-color: `+bgclr+`" class="left-container">
-          <h1>`+ranker+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="right-container">
-          <h1>`+names[i].substring(0, 23)+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="mid-container">
-          <h1>`+points[i]+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="mid-container">
-          <h1>`+times[i]+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="center-container">
-          <h1>`+rankscores[i]+`</h1>
-        </div>
+      const div = document.createElement('div');
+      div.innerHTML = `<div style="background-color: `+bgclr+`" class="fullwidth">
+      <div style="background-color: `+bgclr+`" class="left-container">
+        <h1>`+ranker+`</h1>
       </div>
-      <br>`;
+      <div style="background-color: `+bgclr+`" class="right-container">
+        <h1>`+names[i].substring(0, 23)+`</h1>
+      </div>
+      <div style="background-color: `+bgclr+`" class="mid-container">
+        <h1>`+points[i]+`</h1>
+      </div>
+      <div style="background-color: `+bgclr+`" class="mid-container">
+        <h1>`+times[i]+`</h1>
+      </div>
+      <div style="background-color: `+bgclr+`" class="center-container">
+        <h1>`+rankscores[i]+`</h1>
+      </div>
+    </div>
+    <br>`;
+      display.appendChild(div);
+        
     }
     ranker += 1;
   }
