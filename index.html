@@ -1,3 +1,123 @@
-<script>
-    window.location.href = "https://skparab1.github.io/snakeg";
-</script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake game</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <!-- <audio controls autoplay>
+    <source autoplay="true" src="audio.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+  </audio>  -->
+  <body>
+    <div id="notif" style="width: 100%; height: 50px; padding: 0px; float: left; background: rgba(255, 0, 0, 0.689); display: none"></div>
+    <ul>
+      <li><a href="https://skparab1.github.io"><h7 id="header">Home</h7></a></li>
+      <li><a href="https://skparab1.github.io/wordle/random"><h7 id="header1">Wordle</h7></a></li>
+      <li><a href="https://skparab1.github.io/snake"><h7 id="header2">Snake</h7></a></li>
+    </ul> 
+
+    <h1 id="header3">Snake game</h1>
+
+    <!div class="center" style="width: 100%">
+    <div id="leftpanel" style="float: right; position: absolute; text-align: center; left: 25px; top: 100px;">
+      <h1 style="color: white" id="settings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1><br>
+      <label class="switch">
+      <input type="checkbox" onclick="toggletheme();">
+      <span class="slider round"></span>
+    </label>
+    <h2 style="color: white" id="themedisp">Theme: Dark</h2><br>
+    <button id="playbtn7" class="game-key" style="width: 50%" onclick="toggleautopilot();">Enable autopilot</button>
+    <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
+    <br>
+    <h2 style="color: white" id="namedisplay">Name: </h2>
+    <div style="text-align: center">
+      <button id="starter1" class="game-key" onclick="openintro();" style="width: 60%">Main menu</button>
+    </div>
+    <br>
+    <div style="text-align: center">
+      <button id="starter1" class="game-key" onclick="opencredits();" style="width: 60%">Contributers</button>
+    </div>
+
+    </div>
+    <div style="float: left">
+    <canvas class="myCanvas">
+      <p>Rip ur browser doesnt support canvas :(( u shud switch to a better browser...</p>
+      <canvas id="the-canvas" width="320" height="240" style="position:relative; right:300px;"></canvas>
+    </canvas>
+    </div>
+
+    <script type="module" src="sender.js">import { Octokit } from "https://cdn.skypack.dev/@octokit/core";</script>
+    
+    <script src="canvas-controller.js"></script>
+
+    <!button id="door" class="opener"></button>
+
+    <div id="endgame-display" style="position: absolute; left: 500px; top: 100px; display: none">
+      <button class="endgame-key" id="play_again" onclick="window.location.reload();" >Play again</button>
+    </div>
+    <div id="endgame-display2" style="position: absolute; left: 500px; top: 100px; display: none">
+      <h2 style="color: rgb(0,100,0); text-align: center" id="endgamenotif">GAME OVER</h1>
+      <h3 style="color: rgb(0,100,0); text-align: center" id="endgamenotif2">Score: </h1>
+      <h3 style="color: rgb(0,100,0); text-align: center" id="endgamenotif3">Time alive: </h1>
+    </div>
+    <div id="endgame-display1" style="position: absolute; left: 500px; top: 100px; display: none">
+      <a href="https://skparab1.github.io/snake/leaderboard.html">
+      <button class="endgame-key" id="leaderboard">Leaderboard</button>
+      </a>
+      <button class="endgame-key" id="leaderboard2" style="display: none">Send score</button>
+    </div>
+
+    <div class="empty" id="all" style="display: none;">
+    <h1 id="score">Score: 0</h1>
+    <h1 id="best">Best: 0</h1>
+    <h1 id="time">Time: 0 sec</h1>
+    <a href="https://skparab1.github.io/snake/leaderboard.html">
+    <button id="leaderboarder" class="game-key" style="width: 10%">Leaderboard</button>
+    </a>
+    <h1 id="display">Press any key to start</h1><br>
+    <br>
+    <h1 style="color:white" id="gc"> Game controls</h1>
+    <button id="playbtn1" class="blank-key"></button>
+    <button id="playbtn2" class="game-key" onclick="up();">↑</button>
+    <button id="playbtn3" class="blank-key"></button>
+    <br>
+    <button id="playbtn4" class="game-key" onclick="left();">←</button>
+    <button id="playbtn5" class="game-key" onclick="down();">↓</button>
+    <button id="playbtn6" class="game-key" onclick="right();">→</button>
+    <br>
+    </div>
+
+    <div id="introducer-cover" style="position: absolute; background-color: #AAAAAA;">
+      <h1></h1>
+    </div>
+
+    <div id="introducer" style="position: absolute; background-color: #AAAAAA; opacity: 0%">
+      <h1 style="color: black; text-align: center">Welcome to Snake Game!</h1>
+      <h1 style="color: black; text-align: center">How to play:</h1>
+      <h2 style="color: black; text-align: center">1. Use Arrow keys or wasd to navigate the snake around</h2>
+      <h2 style="color: black; text-align: center">2. Eat all the apples and grow your snake</h2>
+      <h2 style="color: black; text-align: center">3. Don't crash into yourself or the wall</h2>
+      <div style="text-align: center">
+        <label style="color: black; text-align: center"><h2>Enter your name: </h2><input id="name"></input></label>
+        <br>
+        <br>
+        <button id="starter" onclick="closeintro();" class="game-key" style="width: 25%">Ok</button>
+      </div>
+
+    </div>
+
+    <div id="credits" style="position: absolute; background-color: #AAAAAA; opacity: 0%">
+      <h1 style="color: black; text-align: center">Contributers</h1>
+      <h2 style="color: black; text-align: center">Developers: Shubham Parab, Anindit Pati, and Agastya Pawate</h2>
+      <h2 style="color: black; text-align: center">Design: Anindit Pati and Shubham Parab</h2>
+      <h2 style="color: black; text-align: center">Music: Advaita Guruprasad</h2>
+      <div style="text-align: center">
+        <button id="starter" onclick="closecredits();" class="game-key" style="width: 25%">Close</button>
+      </div>
+    </div>
+
+    <script src="html-controller.js"></script>
+  </body>
+</html>
