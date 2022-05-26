@@ -1,5 +1,5 @@
 # Snake
- A lightweight, graphics-based game of snake by Skparab1, AninditP, Apawate, and AdvaitaG (musician), playable at https://skparab1.github.io/snake
+A serverless, graphics-based game of snake with a leaderboard by Skparab1, AninditP, and AdvaitaG (musician), playable at https://skparab1.github.io/snake
  
 ## Top features
 - Color high quality graphics display and animations
