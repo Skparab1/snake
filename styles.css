@@ -195,7 +195,7 @@ h2{
 
 
 .mid-container{
-  width: 18.4%;
+  width: 17.5%;
   float: left;
   text-align: center;
   border: 2px solid gray;
@@ -204,7 +204,7 @@ h2{
 }
 
 .center-container{
-  width: 18.4%;
+  width: 18.5%;
   float: left;
   text-align: center;
   border: 2px solid gray;
@@ -212,7 +212,7 @@ h2{
 }
 
 .left-container{
-  width: 18.4%;
+  width: 8%;
   float: left;
   text-align: center;
   border: 2px solid gray;
@@ -220,7 +220,7 @@ h2{
 }
 
 .right-container{
-  width: 18.4%;
+  width: 30%;
   float: left;
   text-align: center;
   border: 2px solid grey;
@@ -229,7 +229,7 @@ h2{
 }
 
 .mid-container-header{
-  width: 18.4%;
+  width: 17.5%;
   float: left;
   text-align: center;
   border: 2px solid white;
@@ -238,7 +238,7 @@ h2{
 }
 
 .center-container-header{
-  width: 18.4%;
+  width: 18.5%;
   float: left;
   text-align: center;
   border: 2px solid white;
@@ -246,7 +246,7 @@ h2{
 }
 
 .left-container-header{
-  width: 18.4%;
+  width: 8%;
   float: left;
   text-align: center;
   border: 2px solid white;
@@ -254,7 +254,7 @@ h2{
 }
 
 .right-container-header{
-  width: 18.4%;
+  width: 30%;
   float: left;
   text-align: center;
   border: 2px solid white;
