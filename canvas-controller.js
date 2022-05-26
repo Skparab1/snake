@@ -1054,6 +1054,7 @@
             z.textContent = '🐍';
             fpslst = [];
             lastfps = Date.now();
+            fpslst = [];
         }
 
         const ctx = canvas.getContext('2d');
