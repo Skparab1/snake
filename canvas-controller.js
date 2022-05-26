@@ -10,11 +10,11 @@
           audioElement.play();
           var playable;
           if (audioElement.duration > 0 && !audioElement.paused){
-            console.log('playing');
+            //console.log('playing');
             playable = true;
           } else {
             playable = false;
-            console.log('not playing');
+            //console.log('not playing');
             //alert('Unable to play audio');
             if (!playable){
               let notif = document.getElementById('notif');
@@ -64,7 +64,7 @@
         best = 0;
       }
 
-      console.log('best',best);
+      //console.log('best',best);
     
       if (localStorage.getItem('autopilot') == "true"){
         autopilot = true;
@@ -136,7 +136,7 @@
 
       function openintro(){
         closedintro = false;
-        console.log('opened it');
+        //console.log('opened it');
         let intro = document.getElementById('introducer');
         let intro1 = document.getElementById('introducer-cover');
 
@@ -149,7 +149,7 @@
         intropc = 0;
         (async () => {
           while (intropc <= 50){
-            console.log('in');
+            //console.log('in');
             intro1.style.opacity = intropc+'%';
             intro.style.opacity = intropc*2+'%';
             await sleep(2);
@@ -270,7 +270,7 @@
       }
 
       function closeintro(){
-        console.log('closed it');
+        //console.log('closed it');
         closedintro = true;
         (async () => {
           let intro = document.getElementById('introducer');
@@ -375,7 +375,7 @@
         closedintro = false;
       }
 
-      console.log(applepos);
+      //console.log(applepos);
       snakeclr += "F6E6F";
       speed = speed;//*(scalefactor);
       snakeclr += "l2Ga5";
@@ -414,8 +414,8 @@
             let lps = 1000/avgfps;
 
             let deviation = 153/lps; // more loops per sec, lesser 
-            console.log('delay in between frames is'+avgfps);
-            console.log('deviation from 153 lps is '+deviation);
+            //console.log('delay in between frames is'+avgfps);
+            //console.log('deviation from 153 lps is '+deviation);
             //bascially deviation is higher if delay is higher
             
             // adjustment
@@ -485,7 +485,7 @@
               name = "Name: f word";
             }
 
-            console.log('name>'+namehandler.value+'<');
+            //console.log('name>'+namehandler.value+'<');
             if (namehandler.value == ''){
               namedisp.innerHTML = "Name: "+localStorage.getItem('name');
               name = localStorage.getItem('name');
@@ -731,8 +731,8 @@
               //overlapped
               if (eatwaiter < 0 || ((Math.abs(pointsArr[pointsArr.length-2]-lastapple[0])) > (height)/(boardSize+2)/10 && (Math.abs(pointsArr[pointsArr.length-1]-lastapple[1])) > (height)/(boardSize+2)/10)){
                 // checked to make sure wasnt last apple pos
-                console.log(pointsArr.length-2,overlapgetter);
-                console.log('overlapped');
+                //console.log(pointsArr.length-2,overlapgetter);
+                //console.log('overlapped');
                 //alert('you lost');
                 breaker = true;
                 break;
@@ -753,14 +753,14 @@
               } else {
                 waiter = 'down';
               }
-              console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
+              //console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
             } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 2*scalefactor){ // y coord is same
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
                 waiter = 'right';
               }
-              console.log(pointsArr[pointsArr.length-1], applepos[1]);
+              //console.log(pointsArr[pointsArr.length-1], applepos[1]);
             }
           }
 
@@ -771,14 +771,14 @@
               } else {
                 waiter = 'down';
               }
-              console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
+              //console.log(pointsArr[pointsArr.length-2], applepos[0]);       // used to have  && yd != 0
             } else if (Math.abs(pointsArr[pointsArr.length-1]-applepos[1]) < 7*scalefactor){ // y coord is same
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
                 waiter = 'left';
               } else {
                 waiter = 'right';
               }
-              console.log(pointsArr[pointsArr.length-1], applepos[1]);
+              //console.log(pointsArr[pointsArr.length-1], applepos[1]);
             }
 
             if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[0]) <= 40*scalefactor && yd == 0){ // close to left boundery
@@ -787,7 +787,7 @@
               } else {
                 waiter = 'down';
               }
-              console.log('got triggered1');
+              //console.log('got triggered1');
             }
             if (Math.abs(pointsArr[pointsArr.length-1] - bounderies[1]) <= 40*scalefactor && xd == 0){
               if (pointsArr[pointsArr.length-2] > applepos[0]){ //snake is right of apple
@@ -795,7 +795,7 @@
               } else {
                 waiter = 'right';
               }
-              console.log('got triggered');
+              //console.log('got triggered');
             }
             if (Math.abs(pointsArr[pointsArr.length-2] - bounderies[2]) <= 40*scalefactor && yd == 0){
               if (pointsArr[pointsArr.length-1] > applepos[1]){ //snake is below apple
@@ -911,7 +911,7 @@
             try {
               namedisp = document.getElementById('namedisplay');
               name = namedisp.innerHTML.replace('Name: ','');
-              console.log(name);
+              //console.log(name);
               let sendname = '&='+name;
               if (sendname == '&='){
                 sendname = "&= ";
@@ -934,8 +934,8 @@
                 if (true && !autopilot && score != 0){
                   async function start(){
                     try {
-                      console.log('into');
-                      console.log('done');
+                      //console.log('into');
+                      //console.log('done');
                       return await octokit.request('POST /repos/skparab1/snake/issues', {
                           owner: 'skparab1',
                           repo: 'snake',
@@ -946,7 +946,7 @@
                         notif = document.getElementById('notif');
                         notif.style.display = "block";
                         notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to write to database. Check your network connection. '+error+'</h3>';
-                        console.log('couldnt send');
+                        //console.log('couldnt send');
                       }
                   };
                   start();
@@ -1061,7 +1061,7 @@
         
         let actkey = event.code.replace('Key','')
         let filterletters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
-        console.log('pressed'+actkey);
+        //console.log('pressed'+actkey);
 
         if (lost && actkey == 'P' && closedintro){
           location.reload();
