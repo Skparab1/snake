@@ -945,7 +945,7 @@
                       } catch(error) {
                         notif = document.getElementById('notif');
                         notif.style.display = "block";
-                        notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">Unable to write to database. Check your network connection. '+error+'</h3>';
+                        notif.innerHTML = '<h3 style="color:rgb(255, 255, 255);">IK someone leaked my token so databse is off for now, should be back by 5pm pst</h3>';
                         //console.log('couldnt send');
                       }
                   };
