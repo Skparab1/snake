@@ -169,31 +169,4 @@
   //   i += 1;
   // }
 
-  const sleep = ms => new Promise(res => setTimeout(res, ms));
-  (async () => {
-    let loader = document.getElementById('loader');
-    loader.style.display="none"
-    let clr = -765;
-    let dir = 'left';
-    while (true){
-      let d = document.getElementById("d1");
-      d.style.background = "linear-gradient(to right, rgb("+Math.abs(255-clr)+","+Math.abs(510-clr)+","+(Math.abs(765-clr)+Math.abs(0-clr))+"), rgb("+Math.abs(255-(clr+153))+","+Math.abs(510-(clr+153))+","+(Math.abs(765-(clr+153))+Math.abs(-255-(clr+153)))+")";
-      d = document.getElementById("d2");
-      d.style.background = "linear-gradient(to right, rgb("+Math.abs(255-(clr+153))+","+Math.abs(510-(clr+153))+","+(Math.abs(765-(clr+153))+Math.abs(0-(clr+153)))+"), rgb("+Math.abs(255-(clr+306))+","+Math.abs(510-(clr+306))+","+(Math.abs(765-(clr+306))+Math.abs(-255-(clr+306)))+")";
-      d = document.getElementById("d3");
-      d.style.background = "linear-gradient(to right, rgb("+Math.abs(255-(clr+306))+","+Math.abs(510-(clr+306))+","+(Math.abs(765-(clr+306))+Math.abs(0-(clr+306)))+"), rgb("+Math.abs(255-(clr+459))+","+Math.abs(510-(clr+459))+","+(Math.abs(765-(clr+459))+Math.abs(-255-(clr+459)))+")";
-      d = document.getElementById("d4");
-      d.style.background = "linear-gradient(to right, rgb("+Math.abs(255-(clr+459))+","+Math.abs(510-(clr+459))+","+(Math.abs(765-(clr+459))+Math.abs(0-(clr+459)))+"), rgb("+Math.abs(255-(clr+612))+","+Math.abs(510-(clr+612))+","+(Math.abs(765-(clr+612))+Math.abs(-255-(clr+612)))+")";
-      d = document.getElementById("d5");
-      d.style.background = "linear-gradient(to right, rgb("+Math.abs(255-(clr+612))+","+Math.abs(510-(clr+612))+","+(Math.abs(765-(clr+612))+Math.abs(0-(clr+612)))+"), rgb("+Math.abs(255-(clr+765))+","+Math.abs(510-(clr+765))+","+(Math.abs(765-(clr+765))+Math.abs(-255-(clr+765)))+")";
-
-
-      if (clr >= 765){
-        clr = -765;
-      }
-      clr += 0.5;
-      await sleep(2);
-    }
-  })();
-
 })();
