@@ -77,7 +77,7 @@
 
   let ranker = 1;
   //console.log(subjlist);
-  while (subjlist.length > 0 && ranker <= 100){
+  while (subjlist.length > 0){
     let max = (subjlist.reduce(function(a, b) {
       return Math.max(a, b);
     }, -Infinity));
@@ -110,61 +110,30 @@
       if (ranker == 1){
         display.innerHTML += `
         <div style="background-color: `+bgclr+`" class="fullwidth">
-        <div id="d1" style="background: linear-gradient(to right, rgb(255,0,0), rgb(0,0,255));" class="left-container">
-          <h1 style="color: black">`+ranker+`</h1>
-        </div>
-        <div id="d2" style="background-color: `+bgclr+`;" class="right-container">
-          <h1 style="color: black">`+names[i].substring(0, 23)+`</h1>
-        </div>
         <div id="d3" style="background-color: `+bgclr+`" class="mid-container">
           <h1 style="color: black">`+points[i]+`</h1>
         </div>
-        <div id="d4" style="background-color: `+bgclr+`" class="mid-container">
-          <h1 style="color: black">`+times[i]+`</h1>
-        </div>
-        <div id="d5" style="background-color: `+bgclr+`" class="center-container">
-          <h1 style="color: black">`+rankscores[i]+`</h1>
-        </div>
+
       </div>
       <br>`;
       } else if (names[i] == ' ' || names[i] == ''){
         display.innerHTML += `
         <div style="background-color: `+bgclr+`" class="fullwidth">
-        <div style="background-color: `+bgclr+`" class="left-container">
-          <h1>`+ranker+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="right-container">
-          <h1>`+names[i].substring(0, 23)+`</h1>
-        </div>
+        
         <div style="background-color: `+bgclr+`" class="mid-container">
           <h1>`+points[i]+`</h1>
         </div>
-        <div style="background-color: `+bgclr+`" class="mid-container">
-          <h1>`+times[i]+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="center-container">
-          <h1>`+rankscores[i]+`</h1>
-        </div>
+        
       </div>
       <br>`;
     } else {
       display.innerHTML += `
         <div style="background-color: `+bgclr+`" class="fullwidth">
-        <div style="background-color: `+bgclr+`" class="left-container">
-          <h1>`+ranker+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="right-container">
-          <h1>`+names[i].substring(0, 23)+`</h1>
-        </div>
+        
         <div style="background-color: `+bgclr+`" class="mid-container">
           <h1>`+points[i]+`</h1>
         </div>
-        <div style="background-color: `+bgclr+`" class="mid-container">
-          <h1>`+times[i]+`</h1>
-        </div>
-        <div style="background-color: `+bgclr+`" class="center-container">
-          <h1>`+rankscores[i]+`</h1>
-        </div>
+       
       </div>
       <br>`;
     }
