@@ -107,36 +107,10 @@
 
       //255*3 = 765
 
-      if (ranker == 1){
-        display.innerHTML += `
-        <div style="background-color: `+bgclr+`" class="fullwidth">
-        <div id="d3" style="background-color: `+bgclr+`" class="mid-container">
-          <h1 style="color: black">`+points[i]+`</h1>
-        </div>
-
-      </div>
-      <br>`;
-      } else if (names[i] == ' ' || names[i] == ''){
-        display.innerHTML += `
-        <div style="background-color: `+bgclr+`" class="fullwidth">
-        
-        <div style="background-color: `+bgclr+`" class="mid-container">
-          <h1>`+points[i]+`</h1>
-        </div>
-        
-      </div>
-      <br>`;
-    } else {
+     
       display.innerHTML += `
-        <div style="background-color: `+bgclr+`" class="fullwidth">
-        
-        <div style="background-color: `+bgclr+`" class="mid-container">
-          <h1>`+points[i]+`</h1>
-        </div>
-       
-      </div>
-      <br>`;
-    }
+      <h2 style="color: white">`+ points[i]+`</h2>`;
+
     ranker += 1;
   }
   }
