@@ -438,7 +438,12 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
       //bascially deviation is higher if delay is higher
       
       // adjustment
-      speed = basespeed*((deviation-1)*0.9+1);
+      let newspeed = basespeed*((deviation-1)*0.9+1);
+      if (newspeed > speed){
+        speed = speed*1.01;
+      } else if (newspeed < speed){
+        speed = speed*0.99;
+      }
     }
 
     if (autopilot && counter >= 1){
