@@ -409,7 +409,7 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     speed = speed * 1.00001;
 
-    if (counter % 100 == 0 || true){
+    if (counter % 100 == 0 && counter > 1){
       // check fps
       let renderellapse = (Date.now() - lastfps);
       if (renderellapse < 0.5){
@@ -641,7 +641,22 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
       lastapple = applepos;
 
       //relocate apple
-      applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2), Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+      while (true) { 
+        old_applepos = applepos;
+        applepos = [Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+window.innerWidth/4+(height)/(boardSize+2)*1.5+(height)/(boardSize+2), Math.floor(Math.random()*(boardSize-2))*(height)/(boardSize+2)+(height)/(boardSize+2)+((height)/(boardSize+2)*1.5)];
+        works = true 
+        for (let i =0; i < pointsArr.length; i += 2) {
+          if (applepos[0] == pointsArr[i] && applepos[1] == pointsArr[i + 1]) {
+            works = false; break; 
+          }
+        }
+        
+        if (works) {
+          break; 
+        }  
+
+      }
+      
       //ignore overlap for some time
       eatwaiter = 7;
 
