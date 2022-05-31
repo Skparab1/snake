@@ -11,6 +11,17 @@
       function right(){
         waiter = 'right';
       }
+      function togglemusic(){
+        if (audioElement.paused){
+          audioElement.play();
+          let audiobtn = document.getElementById("audiobtn");
+          audiobtn.textContent = "Pause Music";
+        } else {
+          audioElement.pause();
+          let audiobtn = document.getElementById("audiobtn");
+          audiobtn.textContent = "Play Music";
+        }
+      }
       function maketheme(id,clr){
         let ab = document.getElementById(id);
         ab.style.color = clr;
