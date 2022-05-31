@@ -21,25 +21,72 @@
     <h1 id="header3">Snake game</h1>
 
     <!div class="center" style="width: 100%">
-    <div id="leftpanel" style="float: right; position: absolute; text-align: center; left: 25px; top: 100px;">
-      <h1 style="color: white" id="settings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1><br>
-      <label class="switch">
-      <input type="checkbox" onclick="toggletheme();">
-      <span class="slider round"></span>
-    </label>
-    <h2 style="color: white" id="themedisp">Theme: Dark</h2><br>
-    <button id="playbtn7" class="game-key" style="width: 50%" onclick="toggleautopilot();">Enable autopilot</button>
-    <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
-    <br>
-    <h2 style="color: white" id="namedisplay">Name: </h2>
-    <div style="text-align: center">
-      <button id="starter1" class="game-key" onclick="openintro();" style="width: 60%">Main menu</button>
-    </div>
-    <br>
-    <div style="text-align: center">
-      <button id="starter1" class="game-key" onclick="opencredits();" style="width: 60%">Contributers</button>
+    <div id="leftpanel" style="float: right; position: absolute; text-align: center; left: 25px; top: 100px; width: 22.5%">
+    <h1 style="color: white" id="settings">Settings</h1>
+      <div style="width: 100%">
+        <div style="text-align: center; width: 50%; float: left; padding-top: 14px;">
+          <label class="switch" style="width: 135px">
+            <input type="checkbox" onclick="toggletheme();">
+            <span class="slider round"></span>
+            <span class="labels" data-on="ON" data-off="OFF"></span>
+          </label>
+        </div>
+        <div style="text-align: center; width: 50%; float: left; padding-bottom: 1px;">
+          <h2 style="color: white" id="themedisp">Theme: Dark</h2>     
+        </div>
+      </div>
+      <br>  
+    <div style="width: 100%;">
+      <div style="text-align: center; width: 50%; float: right;">
+        <h2 style="color: white" id="ap notif">Autopilot: Off</h2>
+      </div>
+      <div style="text-align: center; width: 50%; float: left; padding-top: 8px; padding-bottom: 50px;">
+        <button id="playbtn7" class="game-key" style="width: 90%" onclick="toggleautopilot();">Enable autopilot</button>
+      </div>
     </div>
 
+    <div style="width: 100%; float: right">
+      <div style="text-align: center; width: 50%; float: left;">
+        <button id="starter1" class="game-key" onclick="openintro();" style="width: 90%">Main menu</button>
+      </div>
+      <div style="text-align: center; width: 50%; float: right;">
+        <button id="starter1" class="game-key" onclick="opencredits();" style="width: 90%">Contributers</button>
+      </div>
+      <br><br><br>
+    </div>
+
+    <br><br><br>
+
+    <div style="width: 100%; float: right">
+      <div style="text-align: center; width: 50%; float: left;">
+        <a href="https://skparab1.github.io/snake/leaderboard.html">
+          <button id="leaderboarder" class="game-key" style="width: 90%">Leaderboard</button>
+        </a>      
+      </div>
+      <div style="text-align: center; width: 50%; float: right; padding-bottom: 50px;">
+        <button id="starter1" class="game-key" onclick="opencredits();" style="width: 90%">Customize snake</button>
+      </div>
+    </div>
+
+
+
+    <div style="width: 100%; float: right; padding-bottom: 0px;">
+      <h1 style="padding-bottom: 0px;">Audio controls</h1>
+      <div style="text-align: center; width: 30%; float: right; padding-top: 10px;">
+        <button id="audiobtn" class="game-key" onclick="togglemusic();" style="width: 90%;">Pause music</button>
+      </div>
+      <div style="text-align: center; width: 70%; float: left;">
+        <div style="text-align: center; width: 10%; float: left; padding-top: 10px;">
+          <h3 style="color: white; padding-top: 0px;">Volume: </h3>
+        </div>
+        <div style="text-align: center; width: 90%; float: right; padding-top: 25px;">
+          <input type="range" class="range" min="1" max="100" value="100" id="volume-control">
+        </div>
+      </div>
+    </div>
+    
+   
+    
     </div>
     <div style="float: left">
     <canvas class="myCanvas">
@@ -70,12 +117,10 @@
     </div>
 
     <div class="empty" id="all" style="display: none;">
+    <h1 style="color: white" id="namedisplay">Name: </h1>
     <h1 id="score">Score: 0</h1>
     <h1 id="best">Best: 0</h1>
     <h1 id="time">Time: 0 sec</h1>
-    <a href="https://skparab1.github.io/snake/leaderboard.html">
-    <button id="leaderboarder" class="game-key" style="width: 10%">Leaderboard</button>
-    </a>
     <h1 id="display">Press any key to start</h1><br>
     <br>
     <h1 style="color:white" id="gc"> Game controls</h1>
