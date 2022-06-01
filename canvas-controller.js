@@ -189,6 +189,33 @@ function opencredits(){
   //intro1.style.display = "block";
 }
 
+function opensnake(){
+  startwaiter = true;
+  xd = speed;
+  closedintro = false;
+  let intro = document.getElementById('snakestyle');
+  let intro1 = document.getElementById('introducer-cover');
+
+  intro.style.display = "block";
+  //intro1.style.display = "block";
+
+  // let starter = document.querySelector('.starter');
+  // starter.addEventListener('click', closeintro());
+
+  intropc = 0;
+  (async () => {
+    while (intropc <= 50){
+      console.log('in');
+      //intro1.style.opacity = intropc+'%';
+      intro.style.opacity = intropc*2+'%';
+      await sleep(2);
+      intropc += 1;
+    }
+  })();
+  intro.style.display = "block";
+  //intro1.style.display = "block";
+}
+
 function animateboard(){
   ctx.beginPath();
   (async () => {
@@ -255,6 +282,7 @@ function drawcircle(x,y,rad,circlr){
   ctx.fill(); 
 }
 
+
 function cir(x,y,rad,circlr,start,end){
   ctx.beginPath();
   ctx.fillStyle = circlr;
@@ -316,6 +344,26 @@ function closecredits(){
   closedintro = true;
   (async () => {
     let intro = document.getElementById('credits');
+    let intro1 = document.getElementById('introducer-cover');
+    // intro1.style.display = "none";
+    // intro.style.display = "none";
+    let intropc1 = 50;
+    while (intropc1 >= 0){
+      //console.log('was '+intropc1);
+      intro1.style.opacity = intropc1+'%';
+      intro.style.opacity = intropc1+'%';
+      await sleep(2);
+      intropc1 -= 1;
+    }
+    intro1.style.display = "none";
+    intro.style.display = "none";
+  })();
+}
+
+function closesnake(){
+  closedintro = true;
+  (async () => {
+    let intro = document.getElementById('snakestyle');
     let intro1 = document.getElementById('introducer-cover');
     // intro1.style.display = "none";
     // intro.style.display = "none";
@@ -489,16 +537,21 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
       intro.style.top = window.innerHeight/4 +'px';
       intro.style.height = window.innerHeight/2 +'px';
 
+      intro = document.getElementById('snakestyle');
+      intro.style.left = bounderies[2]+2*byte +'px';
+      intro.style.width = (window.innerWidth - bounderies[2] - 3*byte) +'px';
+      intro.style.top = window.innerHeight/7 +'px';
+      intro.style.height = 5*window.innerHeight/7 +'px';
+
+
       let intro1 = document.getElementById('introducer-cover');
       intro1.style.left = '0px';
       intro1.style.width = window.innerWidth +'px';
       intro1.style.top = '0px';
       intro1.style.height = window.innerHeight +'px';
 
-      if (autopilot){
-        btn = document.getElementById('best');
-        btn.innerHTML = "Best: "+best;
-      }
+      btn = document.getElementById('best');
+      btn.innerHTML = "Best: "+best;
 
       if (!firsttime && counter == 1){
         intro.style.display = "none";
@@ -1022,10 +1075,12 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
         let closer = document.getElementById('introducer');
         let closer1 = document.getElementById('introducer-cover');
         let closer2 = document.getElementById('credits');
+        let closer3 = document.getElementById('snakestyle');
 
         closer.style.display = "none";
         closer1.style.display = "none";
         closer2.style.display = "none";
+        closer3.style.display = "none";
 
         let endgame = 0;
         let bordereraser = 0;

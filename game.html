@@ -19,7 +19,6 @@
     </ul> 
 
     <h1 id="header3">Snake game</h1>
-
     <!div class="center" style="width: 100%">
     <div id="leftpanel" style="float: right; position: absolute; text-align: center; left: 25px; top: 100px; width: 22.5%">
     <h1 style="color: white" id="settings">Settings</h1>
@@ -64,7 +63,7 @@
         </a>      
       </div>
       <div style="text-align: center; width: 50%; float: right; padding-bottom: 50px;">
-        <button id="starter1" class="game-key" onclick="opencredits();" style="width: 90%">Customize snake</button>
+        <button id="starter1" class="game-key" onclick="opensnake();" style="width: 90%">Customize snake</button>
       </div>
     </div>
 
@@ -155,11 +154,23 @@
 
     <div id="credits" style="position: absolute; background-color: #AAAAAA; opacity: 0%">
       <h1 style="color: black; text-align: center">Contributers</h1>
-      <h2 style="color: black; text-align: center">Developers: Shubham Parab, Anindit Pati, and Agastya Pawate</h2>
+      <h2 style="color: black; text-align: center">Developers: Shubham Parab, Anindit Pati, Agastya Pawate, and Anish Lakkapragada</h2>
       <h2 style="color: black; text-align: center">Design: Anindit Pati and Shubham Parab</h2>
       <h2 style="color: black; text-align: center">Music: Advaita Guruprasad</h2>
       <div style="text-align: center">
         <button id="starter" onclick="closecredits();" class="game-key" style="width: 25%">Close</button>
+      </div>
+    </div>
+
+    <div id="snakestyle" style="position: absolute; background-color: #AAAAAA; opacity: 0%">
+      <h1 style="color: black; text-align: center">Customize snake</h1>
+      <div style="text-align: center">
+        <label for="colorpicker">Color Picker:</label>
+        <input type="color" id="colorpicker" value="#0000ff">
+      </div>
+      <div style="text-align: center">
+
+        <button id="starter" onclick="closesnake();" class="game-key" style="width: 25%">Close</button>
       </div>
     </div>
 
