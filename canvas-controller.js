@@ -2,7 +2,7 @@
 // this is just to force resiez
 //window.reload();
 // act nvm
-var audioElement = new Audio('audio.mp3');
+var audioElement = new Audio('Waterflame - Hexagon Force.mp3');
 audioElement.addEventListener("canplaythrough", event => {
   /* the audio is now playable; play it if permissions allow */
   audioElement.play();
@@ -141,6 +141,8 @@ function drawboard(){
 function openintro(){
   closedintro = false;
   //console.log('opened it');
+  let credits = document.getElementById('credits');
+  credits.style.display= "none";
   let intro = document.getElementById('introducer');
   let intro1 = document.getElementById('introducer-cover');
 
@@ -165,6 +167,7 @@ function openintro(){
 }
 
 function opencredits(){
+  console.log('opened credits');
   closedintro = false;
   let intro = document.getElementById('credits');
   let intro1 = document.getElementById('introducer-cover');
@@ -302,7 +305,7 @@ function drawapple(x,y,rad){
 }
 
 function closeintro(){
-  //console.log('closed it');
+  console.log('closed it');
   closedintro = true;
   (async () => {
     let intro = document.getElementById('introducer');
@@ -323,10 +326,10 @@ function closeintro(){
     intro1.style.display = "none";
     intro.style.display = "none";
     censorer = 0;
-    console.log('checked');
+    //console.log('checked');
     let namehandler = document.getElementById('name');
     let namedisp = document.getElementById('namedisplay');
-    console.log(censored,namehandler.value);
+    //(censored,namehandler.value);
     while (censorer < censored.length){
       if (namehandler.value.toLowerCase().includes(censored[censorer].toLowerCase())){
         namedisp.innerHTML = "Name: Censored";
