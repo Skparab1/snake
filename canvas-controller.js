@@ -2,7 +2,7 @@
 // this is just to force resiez
 //window.reload();
 // act nvm
-var audioElement = new Audio('Waterflame - Hexagon Force.mp3');
+var audioElement = new Audio('audio.mp3');
 audioElement.addEventListener("canplaythrough", event => {
   /* the audio is now playable; play it if permissions allow */
   audioElement.play();
